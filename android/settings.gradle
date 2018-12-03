@@ -1,0 +1,3 @@
+rootProject.name = 'ProductScannerEjected'
+
+include ':app'
