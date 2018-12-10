@@ -20,6 +20,13 @@ const HomeStackNavigator = createStackNavigator({
     },
     Product: {
         screen: ProductScreen,
+        navigationOptions: () => ({
+            title: 'Détails Produit',
+            headerStyle: {
+                backgroundColor: '#4CA751'
+            },
+            headerTintColor: '#fff',
+        })
     }
 });
 

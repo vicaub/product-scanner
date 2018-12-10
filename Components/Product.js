@@ -7,6 +7,7 @@ class ProductScreen extends Component {
         return (
             <View style={styles.main_container}>
                 <Text>Détails</Text>
+                <Text>{this.props.navigation.getParam('productId')}</Text>
             </View>
         )
     }
