@@ -58,3 +58,5 @@ buck-out/
 # android and ios folders
 android/
 ios/
+
+package-lock.json
