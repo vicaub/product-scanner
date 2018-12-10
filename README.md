@@ -15,6 +15,7 @@ if you need to reset your ios and android projects, please run
 
 ```
 rm -rf android/ ios/
+react-native upgrade
 ```
 
 then you can update your android and ios folders with the following commands
