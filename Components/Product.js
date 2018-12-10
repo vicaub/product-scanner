@@ -45,7 +45,7 @@ class ProductScreen extends Component {
                 <ScrollView style={styles.scrollview_container}>
                     <Image
                         style={styles.image}
-                        source={{uri: 'https://static.openfoodfacts.org/images/products/310/322/003/2008/front_fr.16.400.jpg'}}
+                        source={{uri: product.image_url}}
                     />
                     <Text style={styles.title_text}>{product.product_name}</Text>
                     {/*<Text>{this.props.navigation.getParam('productId')}</Text>*/}
