@@ -3,6 +3,7 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 import MyHomeScreen from '../Components/Home';
 import HamburgerIcon from './HamburgerIcon';
+import ProductScreen from '../Components/Product';
 
 const HomeStackNavigator = createStackNavigator({
     Home: {
@@ -17,6 +18,9 @@ const HomeStackNavigator = createStackNavigator({
             headerTintColor: '#fff',
         })
     },
+    Product: {
+        screen: ProductScreen,
+    }
 });
 
 export default HomeStackNavigator;
