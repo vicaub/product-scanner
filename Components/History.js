@@ -1,12 +1,18 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, Platform, View, Text } from 'react-native';
+import { StyleSheet, Platform, View, Text, FlatList } from 'react-native';
+import films from '../Helper/productData'
+import ProductItem from './ProductItem'
 
 class HistoryScreen extends Component {
     render() {
         return (
-            <View style = { styles.historyContainer }>
-                <Text style={{fontSize: 23}}> History </Text>
+            <View style={styles.main_container}>
+                <FlatList
+                    data={films}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={({item}) => <ProductItem product={item}/>}
+                />
             </View>
         );
     }
@@ -15,10 +21,8 @@ class HistoryScreen extends Component {
 export default HistoryScreen;
 
 const styles = StyleSheet.create({
-    historyContainer: {
+    main_container: {
         flex: 1,
-        paddingTop: (Platform.OS) === 'ios' ? 20 : 0,
-        alignItems: 'center',
-        justifyContent: 'center',
-    }
+        marginTop: 20
+    },
 });
