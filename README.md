@@ -9,15 +9,21 @@ Idea :
 - click allow JS remote debugging
 - go to your computer navigator dev tools
 
+## Update dependencies
 
-# Installation
+```
+npm install
+react-native link
+```
 
-## Get NPM
+## Installation
+
+### Get NPM
 ```bash
 sudo apt-get install npm
 ```
 
-## Get React Native CLI
+### Get React Native CLI
 ```bash
 sudo npm install -g react-native-cli
 ```
