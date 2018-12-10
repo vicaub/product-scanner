@@ -1,7 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
 import {
-    AppRegistry,
     StyleSheet,
     Text,
     TouchableOpacity,
@@ -9,7 +8,7 @@ import {
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 
-export default class BadInstagramCloneApp extends Component {
+export default class BarcodeScanner extends Component {
     render() {
         console.log("render");
         return (
@@ -70,4 +69,3 @@ const styles = StyleSheet.create({
     }
 });
 
-// AppRegistry.registerComponent('BadInstagramCloneApp', () => BadInstagramCloneApp);
