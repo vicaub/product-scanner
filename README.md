@@ -9,15 +9,30 @@ Idea :
 - click allow JS remote debugging
 - go to your computer navigator dev tools
 
+## Update dependencies
 
-# Installation
+if you need to reset your ios and android projects, please run
 
-## Get NPM
+```
+rm -rf android/ ios/
+react-native upgrade
+```
+
+then you can update your android and ios folders with the following commands
+
+```
+npm install
+react-native link
+```
+
+## Installation
+
+### Get NPM
 ```bash
 sudo apt-get install npm
 ```
 
-## Get React Native CLI
+### Get React Native CLI
 ```bash
 sudo npm install -g react-native-cli
 ```

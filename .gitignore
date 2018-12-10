@@ -54,3 +54,9 @@ buck-out/
 
 # Bundle artifact
 *.jsbundle
+
+# android and ios folders
+android/
+ios/
+
+package-lock.json
