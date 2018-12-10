@@ -11,6 +11,14 @@ Idea :
 
 ## Update dependencies
 
+if you need to reset your ios and android projects, please run
+
+```
+react-native upgrade
+```
+
+then you can update your android and ios folders with the following commands
+
 ```
 npm install
 react-native link
