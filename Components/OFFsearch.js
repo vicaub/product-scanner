@@ -14,17 +14,10 @@ class Search extends React.Component {
         this.state = { ProductJson: {} }
     }
 
-    _loadProduct(barcode) {
+    loadProduct(barcode) {
         getProductFromBarcode(barcode).then(data => {
-            this.setState({ ProductJson: data.results })
+            this.setState({ ProductJson: JSON.parse(data.results).product_name_fr })
         });
     }
 
-    render(){
-        return(<FlatList
-            data={this.state.ProductJson}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({item}) => <Text>{item.key}</Text>}
-        />)
-    }
 }
