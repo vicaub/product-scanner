@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, ActivityIndicator } from 'react-native';
+import { getProductInfoFromApi } from '../API/OFFApi';
 
 class ProductScreen extends Component {
 
@@ -13,25 +14,19 @@ class ProductScreen extends Component {
     }
 
     componentDidMount() {
-        //fetch API
-        let data = {
-            "_id": "3103220032008",
-            "product_name": "Tagada Pink qui P!K",
-            "image_url": "https://static.openfoodfacts.org/images/products/310/322/003/2008/front_fr.16.400.jpg",
-            "quantity": "250 g (62 unités)",
-            "packaging": "Sachet plastique",
-            "brands": "Haribo",
-        };
-        this.setState({
-            product: data,
-            isLoading: false,
-        })
+        getProductInfoFromApi(this.props.navigation.getParam('barcode')).then(data => {
+            console.log(data);
+            this.setState({
+                product: data,
+                isLoading: false
+            });
+        });
     }
 
     _displayLoading() {
         if (this.state.isLoading) {
             return (
-                <View style={styles.loading_container}>
+                <View style={styles.loadingContainer}>
                     <ActivityIndicator size='large' />
                 </View>
             )
@@ -39,36 +34,43 @@ class ProductScreen extends Component {
     }
 
     _displayProductInfo() {
-        const { product } = this.state;
-        if (product !== undefined) {
-            return (
-                <ScrollView style={styles.scrollview_container}>
-                    <Image
-                        style={styles.image}
-                        source={{uri: product.image_url}}
-                    />
-                    <Text style={styles.title_text}>{product.product_name}</Text>
-                    <Text>{this.props.navigation.getParam('barcode')}</Text>
-                    <Text style={styles.description_text}>Code barre : {product._id}</Text>
-                    <Text style={styles.default_text}>Quantité : {product.quantity}</Text>
-                    <Text style={styles.default_text}>Conditionnement : {product.packaging}</Text>
-                    <Text style={styles.default_text}>Marques : {product.brands}</Text>
-                    <Image
-                        style={styles.image}
-                        source={{uri: 'https://static.openfoodfacts.org/images/misc/nova-group-4.svg'}}
-                    />
-                    <Image
-                        style={styles.image}
-                        source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-a.svg'}}
-                    />
-                </ScrollView>
-            )
+        const { product, isLoading } = this.state;
+        if (!isLoading) {
+            if (product !== undefined && !isLoading) {
+                return (
+                    <ScrollView style={styles.scrollViewContainer}>
+                        <Image
+                            style={styles.image}
+                            source={{uri: product.image_url}}
+                        />
+                        <Text style={styles.titleText}>{product.product_name}</Text>
+                        <Text style={styles.descriptionText}>Code barre : {product._id}</Text>
+                        <Text style={styles.defaultText}>Quantité : {product.quantity}</Text>
+                        <Text style={styles.defaultText}>Conditionnement : {product.packaging}</Text>
+                        <Text style={styles.defaultText}>Marques : {product.brands}</Text>
+                        <Image
+                            style={styles.image}
+                            source={{uri: 'https://static.openfoodfacts.org/images/misc/nova-group-4.svg'}}
+                        />
+                        <Image
+                            style={styles.image}
+                            source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-a.svg'}}
+                        />
+                    </ScrollView>
+                )
+            } else {
+                return (
+                    <View style={styles.center}>
+                        <Text>Oups, nous n'avons pas trouvé les informations sur ce produit :/</Text>
+                    </View>
+                );
+            }
         }
     }
 
     render() {
         return (
-            <View style={styles.main_container}>
+            <View style={styles.mainContainer}>
                 {this._displayLoading()}
                 {this._displayProductInfo()}
             </View>
@@ -80,16 +82,16 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1
     },
-    loading_container: {
+    loadingContainer: {
         position: 'absolute',
         left: 0,
         right: 0,
-        top: 0,
+        top: 100,
         bottom: 0,
         alignItems: 'center',
         justifyContent: 'center'
     },
-    scrollview_container: {
+    scrollViewContainer: {
         flex: 1
     },
     image: {
@@ -114,11 +116,16 @@ const styles = StyleSheet.create({
         margin: 5,
         marginBottom: 15
     },
-    default_text: {
+    defaultText: {
         marginLeft: 5,
         marginRight: 5,
         marginTop: 5,
+    },
+    center: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
     }
-})
+});
 
 export default ProductScreen;
