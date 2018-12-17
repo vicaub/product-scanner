@@ -2,7 +2,6 @@
 import { createDrawerNavigator, createAppContainer } from 'react-navigation';
 import HomeStackNavigator from "./HomeStackNavigator";
 import HistoryStackNavigator from "./HistoryStackNavigator";
-import CameraStackNavigator from "./CameraStackNavigator";
 
 const DrawerNavigator = createDrawerNavigator({
     Home: {
@@ -15,12 +14,6 @@ const DrawerNavigator = createDrawerNavigator({
         screen: HistoryStackNavigator,
         navigationOptions: {
             title: 'Historique'
-        }
-    },
-    Camera: {
-        screen: CameraStackNavigator,
-        navigationOptions: {
-            title: 'Camera'
         }
     }
 });
