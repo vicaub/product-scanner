@@ -3,14 +3,12 @@ import React, { Component } from 'react';
 import {
     StyleSheet,
     Text,
-    TouchableOpacity,
     View
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 
 export default class BarcodeScanner extends Component {
     render() {
-        console.log("render");
         return (
             <View style={styles.container}>
                 <RNCamera
@@ -38,14 +36,6 @@ export default class BarcodeScanner extends Component {
             </View>
         );
     }
-
-    takePicture = async function() {
-        if (this.camera) {
-            const options = { quality: 0.5, base64: true };
-            const data = await this.camera.takePictureAsync(options)
-            console.log(data.uri);
-        }
-    };
 }
 
 const styles = StyleSheet.create({
