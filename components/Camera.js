@@ -22,9 +22,14 @@ export default class BarcodeScanner extends Component {
                     flashMode={RNCamera.Constants.FlashMode.on}
                     permissionDialogTitle={'Permission to use camera'}
                     permissionDialogMessage={'We need your permission to use your camera phone'}
-                    onGoogleVisionBarcodesDetected={({ barcodes }) => {
+                    //barCodeTypes={[RNCamera.Constants.BarCodeType.ean13]}
+                    /*onGoogleVisionBarcodesDetected={({ barcodes }) => {
                         console.log(barcodes);
                         this.props.navigation.navigate("Product", {barcode: barcodes[0].data});
+                    }}*/
+                    onBarCodeRead={(barcode) => {
+                        console.log(barcode);
+                        this.props.navigation.navigate("Product", {barcode: barcode.data});
                     }}
                 />
                 <View style={{flex: 0, flexDirection: 'row', justifyContent: 'center',}}>
