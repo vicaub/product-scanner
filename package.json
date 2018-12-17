@@ -8,7 +8,11 @@
   },
   "dependencies": {
     "react": "16.6.1",
-    "react-native": "0.57.7"
+    "react-native": "0.57.7",
+    "react-native-camera": "^1.4.3",
+    "react-native-gesture-handler": "^1.0.10",
+    "react-navigation": "^3.0.4",
+    "realm": "^2.21.1"
   },
   "devDependencies": {
     "babel-jest": "23.6.0",
