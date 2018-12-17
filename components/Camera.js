@@ -23,16 +23,12 @@ export default class BarcodeScanner extends Component {
                     permissionDialogTitle={'Permission to use camera'}
                     permissionDialogMessage={'We need your permission to use your camera phone'}
                     onGoogleVisionBarcodesDetected={({ barcodes }) => {
-                        console.log(barcodes)
+                        console.log(barcodes);
+                        this.props.navigation.navigate("Product", {barcode: barcodes[0].data});
                     }}
                 />
                 <View style={{flex: 0, flexDirection: 'row', justifyContent: 'center',}}>
-                    <TouchableOpacity
-                        onPress={this.takePicture.bind(this)}
-                        style = {styles.capture}
-                    >
-                        <Text style={{fontSize: 14}}> SNAP </Text>
-                    </TouchableOpacity>
+                    <Text style={styles.default_text}>Scanne un code barre pour voir ce qui se cache derrière ce produit !</Text>
                 </View>
             </View>
         );
@@ -51,7 +47,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: 'black'
+        backgroundColor: 'white'
     },
     preview: {
         flex: 1,
@@ -66,6 +62,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         alignSelf: 'center',
         margin: 20
+    },
+    default_text: {
+        marginLeft: 5,
+        marginRight: 5,
+        marginTop: 5
     }
 });
 

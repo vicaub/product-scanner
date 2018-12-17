@@ -48,7 +48,7 @@ class ProductScreen extends Component {
                         source={{uri: product.image_url}}
                     />
                     <Text style={styles.title_text}>{product.product_name}</Text>
-                    {/*<Text>{this.props.navigation.getParam('productId')}</Text>*/}
+                    <Text>{this.props.navigation.getParam('barcode')}</Text>
                     <Text style={styles.description_text}>Code barre : {product._id}</Text>
                     <Text style={styles.default_text}>Quantité : {product.quantity}</Text>
                     <Text style={styles.default_text}>Conditionnement : {product.packaging}</Text>

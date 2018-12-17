@@ -42,6 +42,8 @@ Make it run for android:
 react-native run-android
 ```
 
+If you have the error `java 11.0 not found` you need to use gradle 5.0 instead of 4.4, juste change it in and`roid/gradle/wrapper/gradle-wrapper.properties`
+
 Make it run for iOS:
 ```bash
 react-native run-ios
