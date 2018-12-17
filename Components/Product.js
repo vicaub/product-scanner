@@ -77,7 +77,7 @@ class ProductScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-    main_container: {
+    mainContainer: {
         flex: 1
     },
     loading_container: {
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
         height: 169,
         margin: 5
     },
-    title_text: {
+    titleText: {
         fontWeight: 'bold',
         fontSize: 35,
         flex: 1,
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
         color: '#000000',
         textAlign: 'center'
     },
-    description_text: {
+    descriptionText: {
         fontStyle: 'italic',
         color: '#666666',
         margin: 5,

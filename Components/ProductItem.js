@@ -7,18 +7,18 @@ class ProductItem extends React.Component {
     render() {
         const product = this.props.product
         return (
-            <View style={styles.main_container}>
+            <View style={styles.mainContainer}>
                 <Image
                     style={styles.image}
                     source={{uri: 'https://www.planwallpaper.com/static/images/9-credit-1.jpg'}}
                 />
-                <View style={styles.content_container}>
-                    <View style={styles.header_container}>
-                        <Text style={styles.title_text}>{product.title}</Text>
-                        <Text style={styles.vote_text}>{product.nutritional_score}</Text>
+                <View style={styles.contentContainer}>
+                    <View style={styles.headerContainer}>
+                        <Text style={styles.titleText}>{product.title}</Text>
+                        <Text style={styles.voteText}>{product.nutritional_score}</Text>
                     </View>
-                    <View style={styles.description_container}>
-                        <Text style={styles.description_text}>{product.brand}</Text>
+                    <View style={styles.descriptionContainer}>
+                        <Text style={styles.descriptionText}>{product.brand}</Text>
                     </View>
                 </View>
             </View>
@@ -27,7 +27,7 @@ class ProductItem extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    main_container: {
+    mainContainer: {
         height: 190,
         flexDirection: 'row'
     },
@@ -36,37 +36,37 @@ const styles = StyleSheet.create({
         height: 180,
         margin: 5
     },
-    content_container: {
+    contentContainer: {
         flex: 1,
         margin: 5
     },
-    header_container: {
+    headerContainer: {
         flex: 3,
         flexDirection: 'row'
     },
-    title_text: {
+    titleText: {
         fontWeight: 'bold',
         fontSize: 20,
         flex: 1,
         flexWrap: 'wrap',
         paddingRight: 5
     },
-    vote_text: {
+    voteText: {
         fontWeight: 'bold',
         fontSize: 26,
         color: '#666666'
     },
-    description_container: {
+    descriptionContainer: {
         flex: 7
     },
-    description_text: {
+    descriptionText: {
         fontStyle: 'italic',
         color: '#666666'
     },
-    date_container: {
+    dateContainer: {
         flex: 1
     },
-    date_text: {
+    dateText: {
         textAlign: 'right',
         fontSize: 14
     }
