@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Button, TextInput } from 'react-native';
+import React, {Component} from 'react';
+import {StyleSheet, View, Button, TextInput} from 'react-native';
 
 class SearchScreen extends Component {
 
@@ -11,7 +11,7 @@ class SearchScreen extends Component {
     }
 
     _searchTextInputChanged(text) {
-        this.setState({ searchedText: text })
+        this.setState({searchedText: text})
     }
 
     _searchInfo() { //3103220025338
@@ -20,10 +20,14 @@ class SearchScreen extends Component {
 
     render() {
         return (
-            <View style = { styles.homeContainer }>
-                <TextInput style={styles.textInput} placeholder='Code barre'
-                           onChangeText={(text) => this._searchTextInputChanged(text)}/>
-                <Button style={{ height: 50 }} title="Rechercher" onPress={() => this._searchInfo()} />
+            <View style={styles.homeContainer}>
+                <TextInput
+                    style={styles.textInput}
+                    placeholder='Code barre'
+                    onChangeText={(text) => this._searchTextInputChanged(text)}
+                    keyboardType='number-pad'
+                />
+                <Button style={{height: 50}} title="Rechercher" onPress={() => this._searchInfo()}/>
             </View>
         );
     }

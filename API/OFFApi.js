@@ -5,7 +5,7 @@ export function getProductInfoFromApi(barcode) {
         .then((response) => response.json())
         .then((json) => {
             console.log(json);
-            if (json.code.length > 0) {
+            if (json.status !== 0 && json.code && json.code.length > 0) {
                 let jsonProduct = json.product;
                 return {
                     "_id": json.code,
