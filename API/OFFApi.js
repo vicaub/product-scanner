@@ -1,6 +1,6 @@
 
 export function getProductInfoFromApi(barcode) {
-    const url = 'https://world.openfoodfacts.org/api/v0/product/' + barcode + '.json';
+    const url = 'https://fr.openfoodfacts.org/api/v0/product/' + barcode + '.json';
     return fetch(url)
         .then((response) => response.json())
         .then((json) => {
