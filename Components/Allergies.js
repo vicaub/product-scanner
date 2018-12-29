@@ -33,8 +33,29 @@ const items = [{
     id: 'en:celery',
     name: 'Céleri',
   }, {
-    id: 'en:sesame-seeds',
+    id: 'en:sesame-seeds1',
     name: 'Graines de sésame',
+  }, {
+    id: 'en:sesame-seeds2',
+    name: 'Graines de sésame',
+  }, {
+    id: 'en:sesame-seeds3',
+    name: 'Graines de sésame',
+  }, {
+    id: 'en:sesame-seeds4',
+    name: 'Graines de sésame',
+  }, {
+    id: 'en:sesame-seeds5',
+    name: 'Graines de sésame',
+  }, {
+    id: 'en:sesame-seeds6',
+    name: 'Graines de sésame 6',
+  }, {
+    id: 'en:sesame-seeds7',
+    name: 'Graines de sésame 7',
+  }, {
+    id: 'en:sesame-seeds8',
+    name: 'Graines de sésame 8',
   }];
 
 class Allergies extends Component {
@@ -67,7 +88,8 @@ class Allergies extends Component {
                     <MultiSelect 
                         items={items}
                         uniqueKey="id"
-                        ref={(component) => { this.multiSelect = component }}
+                        // fixedHeight => scroll and submit issues
+                        autoFocusInput={false}
                         onSelectedItemsChange={this.onSelectedItemsChange}
                         selectedItems={this.state.selectedItems}
                         selectText="Allergies"
