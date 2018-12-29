@@ -3,23 +3,18 @@ import React, { Component } from 'react';
 import {
     StyleSheet,
     Button,
-    View
+    View,
+    Text
 } from 'react-native';
 import t from 'tcomb-form-native';
 import moment from 'moment';
 
 const Form = t.form.Form;
 
-const Allergen = t.struct({
-    id: t.String,
-    name: t.String,
-});
-
 const User = t.struct({
     name: t.String,
     username: t.String,
     birthDate: t.maybe(t.Date),
-    allergies: t.maybe(t.list(Allergen)),
 });
 
 const options = {
@@ -36,13 +31,6 @@ const options = {
             config: {
                 format: (date) => moment(date).format('L'),
                 dialogMode: 'spinner',
-            }
-        },
-        allergies: {
-            item: {
-                fields: {
-                    
-                }
             }
         }
     },
@@ -63,7 +51,7 @@ class UpdateProfile extends Component {
         super(props);
         this.state = {
             user: props.navigation.getParam('user'),
-        }
+        };
     }
 
     handleSubmit() {
@@ -86,7 +74,7 @@ class UpdateProfile extends Component {
                     value={this.state.user}
                 />
                 <Button 
-                    title="Enregistrer"
+                    title="Sauvegarder"
                     onPress={() => this.handleSubmit()}
                 />
             </View>

@@ -12,7 +12,7 @@ const HistoryStackNavigator = createStackNavigator({
             headerLeft : <HamburgerIcon navigationProps={ navigation }/>,
 
             headerStyle: {
-                backgroundColor: '#4CA751'
+                backgroundColor: '#00C378'
             },
             headerTintColor: '#fff',
         })

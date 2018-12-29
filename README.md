@@ -58,6 +58,8 @@ react-native run-android
 
 - "`Failed to install the following Android SDK packages as some licences have not been accepted.`" : install the missing components using the Android Studio SDK Manager (Android SDK Build-Tools 27.0.3).
 
+- "`Cannot add task 'wrapper' as a task with that name already exists.`" : rename the task 'wrapper' to 'wrapper2' for example at the end of `build.gradle`
+
 ### iOS
 
 You need to register an Apple developer account.

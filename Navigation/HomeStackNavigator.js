@@ -13,7 +13,7 @@ const HomeStackNavigator = createStackNavigator({
             headerLeft : <HamburgerIcon navigationProps={ navigation }/>,
 
             headerStyle: {
-                backgroundColor: '#4CA751'
+                backgroundColor: '#00C378'
             },
             headerTintColor: '#fff',
         })
@@ -23,7 +23,7 @@ const HomeStackNavigator = createStackNavigator({
         navigationOptions: () => ({
             title: 'Détails Produit',
             headerStyle: {
-                backgroundColor: '#4CA751'
+                backgroundColor: '#00C378'
             },
             headerTintColor: '#fff',
         })

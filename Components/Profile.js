@@ -18,12 +18,16 @@ class Profile extends Component {
                 username: "Pseudo",
                 birthDate: new Date("1999/01/01"),
                 // allergies: "Allergies",
-            }
+            },
         }
     }
 
     _handleEdit() {
         this.props.navigation.navigate("Update", {user: this.state.user});
+    }
+
+    _handleAllergies() {
+        this.props.navigation.navigate("Allergies", {userId: this.state.user.username});
     }
 
     render() {
@@ -44,8 +48,12 @@ class Profile extends Component {
                     Date de naissance : { moment(user.birthDate).format('L') }
                 </Text>
                 <Text>
-                    Allergies : { user.allergies }
+                    Allergies :
                 </Text>
+                <Button
+                    title="Mes allergies"
+                    onPress={() => this._handleAllergies()}
+                />
             </View>
         )
     }

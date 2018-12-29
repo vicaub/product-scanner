@@ -4,6 +4,7 @@ import { createStackNavigator } from 'react-navigation';
 import HamburgerIcon from './HamburgerIcon';
 import Profile from '../Components/Profile';
 import UpdateProfile from '../Components/UpdateProfile';
+import Allergies from '../Components/Allergies';
 
 const ProfileStackNavigator = createStackNavigator({
     UserProfile: {
@@ -12,7 +13,7 @@ const ProfileStackNavigator = createStackNavigator({
             title: 'Mon profil',
             headerLeft: <HamburgerIcon navigationProps={ navigation }/>,
             headerStyle: {
-                backgroundColor: '#4CA751'
+                backgroundColor: '#00C378'
             },
             headerTintColor: '#fff',
         })
@@ -22,7 +23,17 @@ const ProfileStackNavigator = createStackNavigator({
         navigationOptions: () => ({
             title: 'Modifier mes informations',
             headerStyle: {
-                backgroundColor: '#4CA751'
+                backgroundColor: '#00C378'
+            },
+            headerTintColor: '#fff',
+        })
+    },
+    Allergies: {
+        screen: Allergies,
+        navigationOptions: () => ({
+            title: 'Mes allergies',
+            headerStyle: {
+                backgroundColor: '#00C378'
             },
             headerTintColor: '#fff',
         })
