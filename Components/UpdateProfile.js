@@ -24,15 +24,23 @@ const options = {
     }
 };
 
-export default class UpdateProfile extends Component {
+class UpdateProfile extends Component {
+
+    constructor(props) {
+        super(props);
+        console.log(props.navigation.getParam('user'));
+    }
 
     handleSubmit() {
-        const value = this._form.getValue(); // use that ref to get the form value
-        console.log('value: ', value);
+        if (this._form) {
+            const value = this._form.getValue(); // use that ref to get the form value
+            if (value) {
+                console.log('value: ', value);
+            }
+        }
     }
 
     render() {
-        console.log(this.props.navigation.getParam('user'));
         return (
             <View style={styles.container}>
                 <Form 
@@ -42,12 +50,14 @@ export default class UpdateProfile extends Component {
                 />
                 <Button 
                     title="Enregistrer"
-                    onPress={this.handleSubmit}
+                    onPress={() => this.handleSubmit()}
                 />
             </View>
         )
     }
 }
+
+export default UpdateProfile;
 
 const styles = StyleSheet.create({
     container: {
