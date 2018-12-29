@@ -3,8 +3,15 @@ import { createDrawerNavigator, createAppContainer } from 'react-navigation';
 import HomeStackNavigator from "./HomeStackNavigator";
 import HistoryStackNavigator from "./HistoryStackNavigator";
 import SearchStackNavigator from "./SearchStackNavigator";
+import ProfileStackNavigator from "./ProfileStackNavigator";
 
 const DrawerNavigator = createDrawerNavigator({
+    Update: {
+        screen: ProfileStackNavigator,
+        navigationOptions: {
+            title: 'Mon profil',
+        }
+    },
     Home: {
         screen: HomeStackNavigator,
         navigationOptions: {
