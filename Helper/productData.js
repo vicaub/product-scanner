@@ -3,17 +3,17 @@
 var data;
 export default data = [
     {
-        id:181808,
+        id:3103220025338,
         nutritional_score:"D",
-        title:"Tagada Pink qui P!K",
+        title:"Dragibus",
         brand:"Haribo",
-        image:"https://static.openfoodfacts.org/images/products/310/322/002/5338/front_fr.29.100.jpg"
+        image:"https://static.openfoodfacts.org/images/products/310/322/002/5338/front_fr.29.400.jpg"
     },
     {
-        id:181809,
+        id:7622210888082,
         nutritional_score:"C",
-        title:"M&Ms Peanut",
-        brand:"Mars",
-        image:"https://static.openfoodfacts.org/images/products/310/322/002/5338/front_fr.29.100.jpg"
+        title:"Encore !",
+        brand:"Cote d'Or",
+        image:"https://static.openfoodfacts.org/images/products/762/221/088/8082/front_fr.14.400.jpg"
     }
 ]

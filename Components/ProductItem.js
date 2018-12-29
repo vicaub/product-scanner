@@ -10,7 +10,7 @@ class ProductItem extends React.Component {
             <View style={styles.mainContainer}>
                 <Image
                     style={styles.image}
-                    source={{uri: 'https://www.planwallpaper.com/static/images/9-credit-1.jpg'}}
+                    source={{uri: product.image}}
                 />
                 <View style={styles.contentContainer}>
                     <View style={styles.headerContainer}>
