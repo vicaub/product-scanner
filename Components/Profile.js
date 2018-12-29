@@ -23,7 +23,6 @@ class Profile extends Component {
     }
 
     _handleEdit() {
-        console.log(this.props);
         this.props.navigation.navigate("Update", {user: this.state.user});
     }
 

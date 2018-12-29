@@ -19,8 +19,15 @@ const User = t.struct({
 
 const options = {
     fields: {
+        name: {
+            label: 'Nom',
+        },
+        username: {
+            label: 'Pseudo',
+        },
         birthDate: {
-            mode: 'date', // display the Date field as a DatePickerAndroid
+            label: 'Date de naissance',
+            mode: 'date',
             config: {
                 format: (date) => moment(date).format('L'),
                 dialogMode: 'spinner',
@@ -33,14 +40,9 @@ class UpdateProfile extends Component {
 
     constructor(props) {
         super(props);
-        console.log(props.navigation.getParam('user'));
         this.state = {
             user: props.navigation.getParam('user'),
         }
-    }
-
-    onChange(value) {
-        this.setState({user: value});
     }
 
     handleSubmit() {
@@ -48,6 +50,7 @@ class UpdateProfile extends Component {
             const value = this._form.getValue(); // use that ref to get the form value
             if (value) {
                 console.log('value: ', value);
+                // save new values
             }
         }
     }
@@ -60,7 +63,6 @@ class UpdateProfile extends Component {
                     type={User} 
                     options={options}
                     value={this.state.user}
-                    onChnage={this.onChange}
                 />
                 <Button 
                     title="Enregistrer"
