@@ -6,6 +6,7 @@ import {
     View
 } from 'react-native';
 import t from 'tcomb-form-native';
+import moment from 'moment';
 
 const Form = t.form.Form;
 
@@ -19,7 +20,11 @@ const User = t.struct({
 const options = {
     fields: {
         birthDate: {
-            mode: 'date' // display the Date field as a DatePickerAndroid
+            mode: 'date', // display the Date field as a DatePickerAndroid
+            config: {
+                format: (date) => moment(date).format('L'),
+                dialogMode: 'spinner',
+            }
         }
     }
 };
@@ -29,6 +34,13 @@ class UpdateProfile extends Component {
     constructor(props) {
         super(props);
         console.log(props.navigation.getParam('user'));
+        this.state = {
+            user: props.navigation.getParam('user'),
+        }
+    }
+
+    onChange(value) {
+        this.setState({user: value});
     }
 
     handleSubmit() {
@@ -47,6 +59,8 @@ class UpdateProfile extends Component {
                     ref={c => this._form = c}
                     type={User} 
                     options={options}
+                    value={this.state.user}
+                    onChnage={this.onChange}
                 />
                 <Button 
                     title="Enregistrer"

@@ -6,6 +6,7 @@ import {
     View,
     Button,
 } from 'react-native';
+import moment from 'moment';
 
 class Profile extends Component {
 
@@ -15,7 +16,7 @@ class Profile extends Component {
             user: {
                 name: "Name",
                 username: "Pseudo",
-                birthDate: "01/01/1999",
+                birthDate: new Date("1999/01/01"),
                 allergies: "Allergies",
             }
         }
@@ -41,7 +42,7 @@ class Profile extends Component {
                     Pseudo : { user.username }
                 </Text>
                 <Text>
-                    Date de naissance : { user.birthDate }
+                    Date de naissance : { moment(user.birthDate).format('L') }
                 </Text>
                 <Text>
                     Allergies : { user.allergies }
