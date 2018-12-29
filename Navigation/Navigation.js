@@ -6,7 +6,7 @@ import SearchStackNavigator from "./SearchStackNavigator";
 import ProfileStackNavigator from "./ProfileStackNavigator";
 
 const DrawerNavigator = createDrawerNavigator({
-    Update: {
+    Profile: {
         screen: ProfileStackNavigator,
         navigationOptions: {
             title: 'Mon profil',

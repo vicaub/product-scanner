@@ -3,21 +3,48 @@ import React, { Component } from 'react';
 import {
     StyleSheet,
     Text,
-    View
+    View,
+    Button,
 } from 'react-native';
 
-export default class Profile extends Component {
+class Profile extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: {
+                name: "Name",
+                username: "Pseudo",
+                birthDate: "01/01/1999",
+                allergies: "Allergies",
+            }
+        }
+    }
+
+    _handleEdit() {
+        console.log(this.props);
+        this.props.navigation.navigate("Update", {user: this.state.user});
+    }
+
     render() {
+        const { user } = this.state;
         return (
             <View style={styles.container}>
+                <Button
+                    title="Modifier"
+                    onPress={() => this._handleEdit()}
+                />
                 <Text>
-                    Nom
+                    Nom : { user.name }
                 </Text>
                 <Text>
-                    Pseudo
+                    Pseudo : { user.username }
                 </Text>
                 <Text>
-                    Allergies
+                    Date de naissance : { user.birthDate }
+                </Text>
+                <Text>
+                    Allergies : { user.allergies }
                 </Text>
             </View>
         )
@@ -27,8 +54,9 @@ export default class Profile extends Component {
 const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
-        marginTop: 50,
         padding: 20,
         backgroundColor: '#ffffff',
     },
 });
+
+export default Profile;
