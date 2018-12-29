@@ -14,12 +14,22 @@ class Profile extends Component {
         super(props);
         this.state = {
             user: {
+                name: "",
+                username: "",
+                birthDate: new Date("1979/01/01"),
+            },
+        }
+    }
+
+    componentDidMount() {
+        // fetch user info
+        this.setState({
+            user: {
                 name: "Name",
                 username: "Pseudo",
                 birthDate: new Date("1999/01/01"),
-                // allergies: "Allergies",
             },
-        }
+        });
     }
 
     _handleEdit() {
@@ -46,9 +56,6 @@ class Profile extends Component {
                 </Text>
                 <Text>
                     Date de naissance : { moment(user.birthDate).format('L') }
-                </Text>
-                <Text>
-                    Allergies :
                 </Text>
                 <Button
                     title="Mes allergies"

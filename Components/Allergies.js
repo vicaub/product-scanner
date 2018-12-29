@@ -8,43 +8,47 @@ import {
 } from 'react-native';
 import MultiSelect from 'react-native-multiple-select';
 
+const items = [{
+    id: 'en:milk',
+    name: 'Lait',
+  }, {
+    id: 'en:gluten',
+    name: 'Gluten',
+  }, {
+    id: 'en:eggs',
+    name: 'Œufs',
+  }, {
+    id: 'en:soybeans',
+    name: 'Soja',
+  }, {
+    id: 'en:nuts',
+    name: 'Fruits à coque',
+  }, {
+    id: 'en:fish',
+    name: 'Poisson',
+  }, {
+    id: 'en:mustard',
+    name: 'Moutarde',
+  }, {
+    id: 'en:celery',
+    name: 'Céleri',
+  }, {
+    id: 'en:sesame-seeds',
+    name: 'Graines de sésame',
+  }];
 
 class Allergies extends Component {
 
     constructor(props) {
         super(props);
-        console.log(props.navigation.getParam('userId'));
         this.state = {
             selectedItems: [],
         };
-        this.items = [{
-            id: 'en:milk',
-            name: 'Lait',
-          }, {
-            id: 'en:gluten',
-            name: 'Gluten',
-          }, {
-            id: 'en:eggs',
-            name: 'Œufs',
-          }, {
-            id: 'en:soybeans',
-            name: 'Soja',
-          }, {
-            id: 'en:nuts',
-            name: 'Fruits à coque',
-          }, {
-            id: 'en:fish',
-            name: 'Poisson',
-          }, {
-            id: 'en:mustard',
-            name: 'Moutarde',
-          }, {
-            id: 'en:celery',
-            name: 'Céleri',
-          }, {
-            id: 'en:sesame-seeds',
-            name: 'Graines de sésame',
-          }];
+    }
+
+    componentDidMount() {
+        console.log('Fetch allergies for : ' + this.props.navigation.getParam('userId'));
+        this.setState({selectedItems: ['en:nuts']});
     }
 
     onSelectedItemsChange = selectedItems => {
@@ -53,6 +57,7 @@ class Allergies extends Component {
 
     handleSubmit() {
         console.log(this.state.selectedItems);
+        // save in database
     }
 
     render() {
@@ -60,15 +65,13 @@ class Allergies extends Component {
             <View style={styles.container}>
                 <View>
                     <MultiSelect 
-                        hideTags
-                        items={this.items}
+                        items={items}
                         uniqueKey="id"
                         ref={(component) => { this.multiSelect = component }}
                         onSelectedItemsChange={this.onSelectedItemsChange}
                         selectedItems={this.state.selectedItems}
                         selectText="Allergies"
                         searchInputPlaceholderText="Recherche..."
-                        onChangeInput={(text) => console.log(text)}
                         altFontFamily="ProximaNova-Light"
                         tagRemoveIconColor="#00C378"
                         tagBorderColor="#00C378"
@@ -81,12 +84,6 @@ class Allergies extends Component {
                         submitButtonColor="#CCC"
                         submitButtonText="Valider"
                     />
-                    <View>
-                        {this.multiSelect ? 
-                            this.multiSelect.getSelectedItemsExt(this.state.selectedItems)
-                            : <Text></Text>
-                        }
-                    </View>
                 </View>
                 <View style={styles.bottomView}>
                     <Button 
