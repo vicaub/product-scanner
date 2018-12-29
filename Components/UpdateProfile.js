@@ -12,18 +12,19 @@ import moment from 'moment';
 const Form = t.form.Form;
 
 const User = t.struct({
-    name: t.String,
     username: t.String,
+    name: t.String,
     birthDate: t.maybe(t.Date),
 });
 
 const options = {
     fields: {
-        name: {
-            label: 'Nom',
-        },
         username: {
             label: 'Pseudo',
+            editable: false,
+        },
+        name: {
+            label: 'Nom',
         },
         birthDate: {
             label: 'Date de naissance',
@@ -73,10 +74,14 @@ class UpdateProfile extends Component {
                     options={options}
                     value={this.state.user}
                 />
-                <Button 
-                    title="Sauvegarder"
-                    onPress={() => this.handleSubmit()}
-                />
+                <View style={styles.bottomView}>
+                    <Button 
+                        style={styles.button}
+                        title="Sauvegarder"
+                        color="#FFDC32"
+                        onPress={() => this.handleSubmit()}
+                    />
+                </View>
             </View>
         )
     }
@@ -86,8 +91,18 @@ export default UpdateProfile;
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         justifyContent: 'center',
         padding: 20,
         backgroundColor: '#ffffff',
     },
+    bottomView: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        marginBottom: 36
+    },
+    button: {
+        position: 'absolute',
+        bottom: 0
+    }
 });
