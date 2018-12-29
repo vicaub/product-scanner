@@ -10,11 +10,16 @@ import moment from 'moment';
 
 const Form = t.form.Form;
 
+const Allergen = t.struct({
+    id: t.String,
+    name: t.String,
+});
+
 const User = t.struct({
     name: t.String,
     username: t.String,
     birthDate: t.maybe(t.Date),
-    allergies: t.maybe(t.String),
+    allergies: t.maybe(t.list(Allergen)),
 });
 
 const options = {
@@ -32,8 +37,24 @@ const options = {
                 format: (date) => moment(date).format('L'),
                 dialogMode: 'spinner',
             }
+        },
+        allergies: {
+            item: {
+                fields: {
+                    
+                }
+            }
         }
-    }
+    },
+    i18n: {
+        optional: ' (optionnel)',
+        required: '',
+        add: 'Ajouter',   // add button
+        remove: '✘',  // remove button
+        up: '↑',      // move up button
+        down: '↓'     // move down button
+    },
+    disableOrder: true
 };
 
 class UpdateProfile extends Component {

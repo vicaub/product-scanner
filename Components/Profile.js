@@ -17,7 +17,7 @@ class Profile extends Component {
                 name: "Name",
                 username: "Pseudo",
                 birthDate: new Date("1999/01/01"),
-                allergies: "Allergies",
+                // allergies: "Allergies",
             }
         }
     }
