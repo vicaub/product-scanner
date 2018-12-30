@@ -4,11 +4,15 @@ import {
     StyleSheet,
     Button,
     View,
-    Text
+    ActivityIndicator
 } from 'react-native';
 import MultiSelect from 'react-native-multiple-select';
+import { getAllergensFromApi } from '../API/OFFApi';
 
-const items = [{
+let items = [{
+    id: 'lol',
+    name: 'Troll'
+  }, {
     id: 'en:milk',
     name: 'Lait',
   }, {
@@ -64,10 +68,20 @@ class Allergies extends Component {
         super(props);
         this.state = {
             selectedItems: [],
+            allergens: [],
+            isLoading: true,
         };
     }
 
     componentDidMount() {
+        getAllergensFromApi().then((data) => {
+            console.log(data);
+            this.setState({
+                allergens: data,
+                isLoading: false,
+            });
+        });
+
         console.log('Fetch allergies for : ' + this.props.navigation.getParam('userId'));
         this.setState({selectedItems: ['en:nuts']});
     }
@@ -81,40 +95,62 @@ class Allergies extends Component {
         // save in database
     }
 
+    _displayLoading() {
+        if (this.state.isLoading) {
+            return (
+                <View style={styles.loadingContainer}>
+                    <ActivityIndicator size='large' />
+                </View>
+            )
+        }
+    }
+
+    _displayAllergies() {
+        const { selectedItems, allergens, isLoading } = this.state;
+        if (!isLoading) {
+            return (
+                <View style={styles.container}>
+                    <View>
+                        <MultiSelect 
+                            items={allergens}
+                            uniqueKey="id"
+                            // fixedHeight // => scroll and submit issues
+                            autoFocusInput={false}
+                            onSelectedItemsChange={this.onSelectedItemsChange}
+                            selectedItems={selectedItems}
+                            selectText="Allergies"
+                            searchInputPlaceholderText="Recherche..."
+                            altFontFamily="ProximaNova-Light"
+                            tagRemoveIconColor="#00C378"
+                            tagBorderColor="#00C378"
+                            tagTextColor="#00C378"
+                            selectedItemTextColor="#00C378"
+                            selectedItemIconColor="#00C378"
+                            itemTextColor="#000"
+                            displayKey="name"
+                            searchInputStyle={{ color: '#CCC' }}
+                            submitButtonColor="#CCC"
+                            submitButtonText="Valider"
+                        />
+                    </View>
+                    <View style={styles.bottomView}>
+                        <Button 
+                            style={styles.button}
+                            title="Sauvegarder"
+                            color="#FFDC32"
+                            onPress={() => this.handleSubmit()}
+                        />
+                    </View>
+                </View>
+            );
+        }
+    }
+
     render() {
-        return (
-            <View style={styles.container}>
-                <View>
-                    <MultiSelect 
-                        items={items}
-                        uniqueKey="id"
-                        // fixedHeight => scroll and submit issues
-                        autoFocusInput={false}
-                        onSelectedItemsChange={this.onSelectedItemsChange}
-                        selectedItems={this.state.selectedItems}
-                        selectText="Allergies"
-                        searchInputPlaceholderText="Recherche..."
-                        altFontFamily="ProximaNova-Light"
-                        tagRemoveIconColor="#00C378"
-                        tagBorderColor="#00C378"
-                        tagTextColor="#00C378"
-                        selectedItemTextColor="#00C378"
-                        selectedItemIconColor="#00C378"
-                        itemTextColor="#000"
-                        displayKey="name"
-                        searchInputStyle={{ color: '#CCC' }}
-                        submitButtonColor="#CCC"
-                        submitButtonText="Valider"
-                    />
-                </View>
-                <View style={styles.bottomView}>
-                    <Button 
-                        style={styles.button}
-                        title="Sauvegarder"
-                        color="#FFDC32"
-                        onPress={() => this.handleSubmit()}
-                    />
-                </View>
+        return(
+            <View style={styles.mainContainer}>
+                {this._displayLoading()}
+                {this._displayAllergies()}
             </View>
         )
     }
@@ -123,11 +159,23 @@ class Allergies extends Component {
 export default Allergies;
 
 const styles = StyleSheet.create({
+    mainContainer: {
+        flex: 1
+    },
     container: {
         flex: 1,
         justifyContent: 'center',
         padding: 20,
         backgroundColor: '#ffffff',
+    },
+    loadingContainer: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 100,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     bottomView: {
         flex: 1,
