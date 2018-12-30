@@ -5,36 +5,38 @@ import HistoryStackNavigator from "./HistoryStackNavigator";
 import SearchStackNavigator from "./SearchStackNavigator";
 import ProfileStackNavigator from "./ProfileStackNavigator";
 
-const DrawerNavigator = createDrawerNavigator({
-    Profile: {
-        screen: ProfileStackNavigator,
-        navigationOptions: {
-            title: 'Mon profil',
+const DrawerNavigator = createDrawerNavigator(
+    {
+        Home: {
+            screen: HomeStackNavigator,
+            navigationOptions: {
+                title: 'Accueil',
+            }
+        },
+        Search: {
+            screen: SearchStackNavigator,
+            navigationOptions: {
+                title: 'Recherche'
+            }
+        },
+        History: {
+            screen: HistoryStackNavigator,
+            navigationOptions: {
+                title: 'Historique'
+            }
+        },
+        Profile: {
+            screen: ProfileStackNavigator,
+            navigationOptions: {
+                title: 'Mon profil',
+            }
+        },
+    }, {
+        contentOptions: {
+            activeTintColor: '#00C378'
         }
-    },
-    Home: {
-        screen: HomeStackNavigator,
-        navigationOptions: {
-            title: 'Accueil',
-        }
-    },
-    Search: {
-        screen: SearchStackNavigator,
-        navigationOptions: {
-            title: 'Recherche'
-        }
-    },
-    History: {
-        screen: HistoryStackNavigator,
-        navigationOptions: {
-            title: 'Historique'
-        }
-    },
-}, {
-    contentOptions: {
-        activeTintColor: '#00C378'
     }
-});
+);
 
 const Navigator = createAppContainer(DrawerNavigator);
 

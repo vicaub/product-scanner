@@ -112,8 +112,4 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         marginBottom: 36
     },
-    /* button: {
-        position: 'absolute',
-        bottom: 0
-    } */
 });
