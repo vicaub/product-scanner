@@ -11,10 +11,16 @@ import moment from 'moment';
 
 const Form = t.form.Form;
 
+const Gender = t.enums({
+    M: 'Homme',
+    F: 'Femme'
+  });
+
 const User = t.struct({
     username: t.String,
     name: t.String,
     birthDate: t.maybe(t.Date),
+    gender: t.maybe(Gender),
 });
 
 const options = {
@@ -33,7 +39,11 @@ const options = {
                 format: (date) => moment(date).format('L'),
                 dialogMode: 'spinner',
             }
-        }
+        },
+        gender: {
+            label: 'Genre',
+            nullOption: {value: '', text: 'Choisir...'}
+        },
     },
     i18n: {
         optional: ' (optionnel)',

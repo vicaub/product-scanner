@@ -17,6 +17,7 @@ class Profile extends Component {
                 name: "",
                 username: "",
                 birthDate: new Date("1979/01/01"),
+                gender: "",
             },
         }
     }
@@ -28,6 +29,7 @@ class Profile extends Component {
                 name: "Name",
                 username: "Pseudo",
                 birthDate: new Date("1999/01/01"),
+                gender: "F",
             },
         });
     }
