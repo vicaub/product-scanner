@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, ActivityIndicator } from 'react-native';
 import { getProductInfoFromApi } from '../API/OFFApi';
-import OupsScreen from './Oups';
+import OupsScreen from './Common/Oups';
 
 class ProductScreen extends Component {
 

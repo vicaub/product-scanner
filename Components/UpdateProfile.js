@@ -2,9 +2,8 @@
 import React, { Component } from 'react';
 import {
     StyleSheet,
-    Button,
     View,
-    Text
+    ScrollView,
 } from 'react-native';
 import t from 'tcomb-form-native';
 import moment from 'moment';
@@ -78,21 +77,23 @@ class UpdateProfile extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <Form 
-                    ref={c => this._form = c}
-                    type={User} 
-                    options={options}
-                    value={this.state.user}
-                />
-                <View style={styles.bottomView}>
-                    <ActionButton 
-                        title="Sauvegarder"
-                        color="#FFDC32"
-                        onPress={() => this.handleSubmit()}
+            <ScrollView>
+                <View style={styles.container}>
+                    <Form 
+                        ref={c => this._form = c}
+                        type={User} 
+                        options={options}
+                        value={this.state.user}
                     />
+                    <View style={styles.bottomView}>
+                        <ActionButton 
+                            title="Sauvegarder"
+                            color="#FFDC32"
+                            onPress={() => this.handleSubmit()}
+                        />
+                    </View>
                 </View>
-            </View>
+            </ScrollView>
         )
     }
 }
