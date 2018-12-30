@@ -2,12 +2,12 @@
 import React, { Component } from 'react';
 import {
     StyleSheet,
-    Button,
     View,
     ActivityIndicator
 } from 'react-native';
 import MultiSelect from 'react-native-multiple-select';
 import { getAllergensFromApi } from '../API/OFFApi';
+import ActionButton from './Common/ActionButton';
 
 let items = [{
     id: 'lol',
@@ -134,8 +134,7 @@ class Allergies extends Component {
                         />
                     </View>
                     <View style={styles.bottomView}>
-                        <Button 
-                            style={styles.button}
+                        <ActionButton 
                             title="Sauvegarder"
                             color="#FFDC32"
                             onPress={() => this.handleSubmit()}
@@ -182,8 +181,4 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         marginBottom: 36
     },
-    button: {
-        position: 'absolute',
-        bottom: 0
-    }
 });

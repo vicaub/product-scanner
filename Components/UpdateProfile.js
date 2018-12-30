@@ -8,13 +8,14 @@ import {
 } from 'react-native';
 import t from 'tcomb-form-native';
 import moment from 'moment';
+import ActionButton from './Common/ActionButton';
 
 const Form = t.form.Form;
 
 const Gender = t.enums({
     M: 'Homme',
     F: 'Femme'
-  });
+});
 
 const User = t.struct({
     username: t.String,
@@ -85,8 +86,7 @@ class UpdateProfile extends Component {
                     value={this.state.user}
                 />
                 <View style={styles.bottomView}>
-                    <Button 
-                        style={styles.button}
+                    <ActionButton 
                         title="Sauvegarder"
                         color="#FFDC32"
                         onPress={() => this.handleSubmit()}
@@ -111,8 +111,8 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         marginBottom: 36
     },
-    button: {
+    /* button: {
         position: 'absolute',
         bottom: 0
-    }
+    } */
 });
