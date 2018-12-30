@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, ActivityIndicator } from 'react-native';
 import { getProductInfoFromApi } from '../API/OFFApi';
+import OupsScreen from './Oups';
 
 class ProductScreen extends Component {
 
@@ -60,9 +61,7 @@ class ProductScreen extends Component {
                 )
             } else {
                 return (
-                    <View style={styles.center}>
-                        <Text>Oups, nous n'avons pas trouvé les informations sur ce produit :/</Text>
-                    </View>
+                    <OupsScreen message="Nous n'avons pas trouvé les informations de ce produit :/" />
                 );
             }
         }
@@ -121,11 +120,6 @@ const styles = StyleSheet.create({
         marginRight: 5,
         marginTop: 5,
     },
-    center: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    }
 });
 
 export default ProductScreen;
