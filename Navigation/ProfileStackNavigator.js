@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
+import { View } from 'react-native';
 import HamburgerIcon from './HamburgerIcon';
 import Profile from '../Components/Profile';
 import UpdateProfile from '../Components/UpdateProfile';
@@ -12,30 +13,58 @@ const ProfileStackNavigator = createStackNavigator({
         navigationOptions: ({ navigation }) => ({
             title: 'Mon profil',
             headerLeft: <HamburgerIcon navigationProps={ navigation }/>,
-            headerStyle: {
-                backgroundColor: '#00C378'
+            
+            headerRight: <View></View>,
+            headerTitleStyle: {
+                fontFamily: 'Lobster Regular',
+                fontWeight: 'normal',
+                fontSize: 30,
+                textAlign: 'center',
+                flex: 1,
+                marginTop: 5,
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#00C378',
+            headerStyle: {
+                backgroundColor: '#fff',
+            }
         })
     },
     Update: {
         screen: UpdateProfile,
         navigationOptions: () => ({
-            title: 'Modifier mes informations',
-            headerStyle: {
-                backgroundColor: '#00C378'
+            title: 'Modifier',
+            headerRight: <View></View>,
+            headerTitleStyle: {
+                fontFamily: 'Lobster Regular',
+                fontWeight: 'normal',
+                fontSize: 30,
+                textAlign: 'center',
+                flex: 1,
+                marginTop: 5,
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#00C378',
+            headerStyle: {
+                backgroundColor: '#fff',
+            }
         })
     },
     Allergies: {
         screen: Allergies,
         navigationOptions: () => ({
             title: 'Mes allergies',
-            headerStyle: {
-                backgroundColor: '#00C378'
+            headerRight: <View></View>,
+            headerTitleStyle: {
+                fontFamily: 'Lobster Regular',
+                fontWeight: 'normal',
+                fontSize: 30,
+                textAlign: 'center',
+                flex: 1,
+                marginTop: 5,
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#00C378',
+            headerStyle: {
+                backgroundColor: '#fff',
+            }
         })
     }
 });
