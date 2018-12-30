@@ -61,7 +61,8 @@ class ProductScreen extends Component {
             } else {
                 return (
                     <View style={styles.center}>
-                        <Text>Oups, nous n'avons pas trouvé les informations sur ce produit :/</Text>
+                        <Text style={styles.header}>Oups...</Text>
+                        <Text style={styles.infoText}>Nous n'avons pas trouvé les informations de ce produit :/</Text>
                     </View>
                 );
             }
@@ -121,10 +122,18 @@ const styles = StyleSheet.create({
         marginRight: 5,
         marginTop: 5,
     },
+    header: {
+        fontFamily: 'Lobster Regular',
+        fontSize: 50,
+    },
+    infoText: {
+        textAlign: 'center',
+    },
     center: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        padding: 10,
     }
 });
 
