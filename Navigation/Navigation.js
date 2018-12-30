@@ -23,6 +23,10 @@ const DrawerNavigator = createDrawerNavigator({
             title: 'Historique'
         }
     },
+}, {
+    contentOptions: {
+        activeTintColor: '#00C378'
+    }
 });
 
 const Navigator = createAppContainer(DrawerNavigator);
