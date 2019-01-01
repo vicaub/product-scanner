@@ -4,6 +4,7 @@ import { createStackNavigator } from 'react-navigation';
 import { View } from 'react-native';
 import HistoryScreen from '../Components/History';
 import HamburgerIcon from './HamburgerIcon';
+import ProductScreen from "../Components/Product";
 
 const HistoryStackNavigator = createStackNavigator({
     History: {
@@ -26,6 +27,16 @@ const HistoryStackNavigator = createStackNavigator({
             }
         })
     },
+    Product: {
+        screen: ProductScreen,
+        navigationOptions: () => ({
+            title: 'Détails Produit',
+            headerStyle: {
+                backgroundColor: '#4CA751'
+            },
+            headerTintColor: '#fff',
+        })
+    }
 });
 
 export default HistoryStackNavigator;
