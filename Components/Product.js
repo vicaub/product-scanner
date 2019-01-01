@@ -1,7 +1,6 @@
-
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, ActivityIndicator } from 'react-native';
-import { getProductInfoFromApi } from '../API/OFFApi';
+import React, {Component} from 'react';
+import {StyleSheet, Text, View, ScrollView, Image, ActivityIndicator} from 'react-native';
+import {getProductInfoFromApi} from '../API/OFFApi';
 import OupsScreen from './Common/Oups';
 
 class ProductScreen extends Component {
@@ -28,40 +27,67 @@ class ProductScreen extends Component {
         if (this.state.isLoading) {
             return (
                 <View style={styles.loadingContainer}>
-                    <ActivityIndicator size='large' />
+                    <ActivityIndicator size='large'/>
                 </View>
             )
         }
     }
 
     _displayProductInfo() {
-        const { product, isLoading } = this.state;
+        const {product, isLoading} = this.state;
         if (!isLoading) {
             if (product !== undefined && !isLoading) {
                 return (
-                    <ScrollView style={styles.scrollViewContainer}>
-                        <Image
-                            style={styles.image}
-                            source={{uri: product.image_url}}
-                        />
-                        <Text style={styles.titleText}>{product.product_name}</Text>
-                        <Text style={styles.descriptionText}>Code barre : {product._id}</Text>
-                        <Text style={styles.defaultText}>Quantité : {product.quantity}</Text>
-                        <Text style={styles.defaultText}>Conditionnement : {product.packaging}</Text>
-                        <Text style={styles.defaultText}>Marques : {product.brands}</Text>
-                        <Image
-                            style={styles.image}
-                            source={{uri: 'https://static.openfoodfacts.org/images/misc/nova-group-4.svg'}}
-                        />
-                        <Image
-                            style={styles.image}
-                            source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-a.svg'}}
-                        />
+                    <ScrollView>
+                        <View style={styles.headerContainer}>
+                            <Image
+                                style={styles.image_product}
+                                source={{uri: product.image_url}}
+                            />
+                            <View style={styles.headerDescription}>
+                                <Text style={styles.titleText}>{product.product_name}</Text>
+                                <Text style={styles.defaultText}>Quantité : {product.quantity}</Text>
+                                <Text style={styles.defaultText}>Marque : {product.brands}</Text>
+                                <Text style={styles.descriptionText}>Code barre : {product._id}</Text>
+                            </View>
+                        </View>
+
+                        <View style={styles.bodyContainer}>
+                            {/*<Text style={styles.titleText}>Nutri-Score</Text>*/}
+
+                            {/*<Text style={styles.defaultText}>Conditionnement : {product.packaging}</Text>*/}
+
+                            {/*le label nova ne fonctionne pas car il est en svg*/}
+                            {/*<Image*/}
+                            {/*style={styles.image}*/}
+                            {/*source={{uri: 'https://static.openfoodfacts.org/images/misc/nova-group-4'+ product.nova_group}}*/}
+                            {/*/>*/}
+
+                            <Image
+                                style={styles.image_nutri}
+                                // source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-'+ product.nutrition_grades + '.png'}}
+                                source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-e.png'}}
+                            />
+                        </View>
+
+                        <View style={styles.bodyContainer}>
+                            <Text style={styles.titleText}>Ingredients</Text>
+
+                            <Text style={styles.defaultText}>{product.ingredients}</Text>
+
+                        </View>
+
+                        <View style={styles.bodyContainer}>
+                            <Text style={styles.titleText}>Ingredients</Text>
+
+                            <Text style={styles.defaultText}>{product.ingredients}</Text>
+
+                        </View>
                     </ScrollView>
                 )
             } else {
                 return (
-                    <OupsScreen message="Nous n'avons pas trouvé les informations de ce produit :/" />
+                    <OupsScreen message="Nous n'avons pas trouvé les informations de ce produit :/"/>
                 );
             }
         }
@@ -81,6 +107,32 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1
     },
+    scrollViewContainer: {
+        flex: 1,
+        backgroundColor: "blue",
+    },
+    headerContainer: {
+        flex: 1,
+        flexDirection: "row",
+        backgroundColor: "red",
+    },
+    image_product: {
+        flex: 1,
+        margin: 5,
+    },
+    image_nutri: {
+        // flex: 1,
+        margin: 5,
+    },
+    headerDescription: {
+        flex: 1,
+    },
+    bodyContainer: {
+        flex: 1,
+        backgroundColor: "yellow",
+    },
+
+
     loadingContainer: {
         position: 'absolute',
         left: 0,
@@ -90,24 +142,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    scrollViewContainer: {
-        flex: 1
-    },
-    image: {
-        height: 169,
-        margin: 5
-    },
+
+
     titleText: {
         fontWeight: 'bold',
-        fontSize: 35,
-        flex: 1,
+        fontSize: 30,
+        // flex: 1,
         flexWrap: 'wrap',
         marginLeft: 5,
         marginRight: 5,
         marginTop: 10,
         marginBottom: 10,
         color: '#000000',
-        textAlign: 'center'
+        textAlign: 'left'
     },
     descriptionText: {
         fontStyle: 'italic',
@@ -115,7 +162,8 @@ const styles = StyleSheet.create({
         margin: 5,
         marginBottom: 15
     },
-    defaultText: {
+    defaultText: {
+        // flex: 1,
         marginLeft: 5,
         marginRight: 5,
         marginTop: 5,
