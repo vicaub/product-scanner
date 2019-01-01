@@ -33,56 +33,82 @@ class ProductScreen extends Component {
         }
     }
 
+    static _parseIngredientWithAllergens(ingredientsWithAllergens) {
+        const regex = /<span class="allergen">([^<>]+)<\/span>/gm;
+        const textComponent = <Text>ingredientsWithAllergens</Text>
+        console.log(textComponent);
+        const parsedString = textComponent.props.children.replace(regex, (match, group) => {
+            return <Text style={{fontWeight: 'bold'}}>{group}</Text>;
+        });
+
+        console.log(textComponent);
+        return parsedString;
+
+/*        let parsedText = <Text></Text>
+
+        let allergen = false;
+        let i = 0;
+        while (i < ingredientsWithAllergens.length) {
+            if (allergen && ingredientsWithAllergens.substr(i, 7) === "</span>") {
+                allergen = false;
+                i = i + 6
+            }
+            if (!allergen) {
+                if (ingredientsWithAllergens.substr(i, 23) === "<span class=\"allergen\">") {
+                    allergen = true;
+                    parsedText.value += <Text style={{fontWeight: 'bold'}}>{group}</Text>
+                }
+                else {
+                    parsedText.value += ingredientsWithAllergens[i];
+                }
+            }
+            i += 1;
+        }*/
+
+    }
+
     _displayProductInfo() {
         const {product, isLoading} = this.state;
+        const B = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>;
         if (!isLoading) {
             if (product !== undefined && !isLoading) {
                 return (
-                    <ScrollView>
+                    <ScrollView style={styles.scrollview_container}>
                         <View style={styles.headerContainer}>
                             <Image
                                 style={styles.image_product}
                                 source={{uri: product.image_url}}
                             />
                             <View style={styles.headerDescription}>
-                                <Text style={styles.titleText}>{product.product_name}</Text>
+                                <Text style={styles.productNameText}>{product.product_name}</Text>
                                 <Text style={styles.defaultText}>Quantité : {product.quantity}</Text>
                                 <Text style={styles.defaultText}>Marque : {product.brands}</Text>
                                 <Text style={styles.descriptionText}>Code barre : {product._id}</Text>
                             </View>
                         </View>
 
-                        <View style={styles.bodyContainer}>
-                            {/*<Text style={styles.titleText}>Nutri-Score</Text>*/}
+                        {/*<Text style={styles.defaultText}>Conditionnement : {product.packaging}</Text>*/}
 
-                            {/*<Text style={styles.defaultText}>Conditionnement : {product.packaging}</Text>*/}
+                        {/*le label nova ne fonctionne pas car il est en svg*/}
+                        {/*<Image*/}
+                        {/*style={styles.image}*/}
+                        {/*source={{uri: 'https://static.openfoodfacts.org/images/misc/nova-group-4' + product.nova_group}}*/}
+                        {/*/>*/}
 
-                            {/*le label nova ne fonctionne pas car il est en svg*/}
-                            {/*<Image*/}
-                            {/*style={styles.image}*/}
-                            {/*source={{uri: 'https://static.openfoodfacts.org/images/misc/nova-group-4'+ product.nova_group}}*/}
-                            {/*/>*/}
+                        <Image
+                            style={styles.image_nutri}
+                            // source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-'+ product.nutrition_grades + '.png'}}
+                            source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-e.png'}}
+                        />
 
-                            <Image
-                                style={styles.image_nutri}
-                                // source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-'+ product.nutrition_grades + '.png'}}
-                                source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-e.png'}}
-                            />
-                        </View>
+                        <Text style={styles.titleText}>Ingredients</Text>
 
-                        <View style={styles.bodyContainer}>
-                            <Text style={styles.titleText}>Ingredients</Text>
+                        <View style={styles.defaultText}>{ProductScreen._parseIngredientWithAllergens(product.ingredients)}</View>
 
-                            <Text style={styles.defaultText}>{product.ingredients}</Text>
+                        <Text style={styles.titleText}>Allergènes</Text>
 
-                        </View>
+                        <Text style={styles.defaultText}>{product.allergens}</Text>
 
-                        <View style={styles.bodyContainer}>
-                            <Text style={styles.titleText}>Ingredients</Text>
-
-                            <Text style={styles.defaultText}>{product.ingredients}</Text>
-
-                        </View>
                     </ScrollView>
                 )
             } else {
@@ -107,32 +133,27 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1
     },
-    scrollViewContainer: {
+    scrollview_container: {
         flex: 1,
-        backgroundColor: "blue",
     },
     headerContainer: {
-        flex: 1,
+        // flex: 1,
         flexDirection: "row",
-        backgroundColor: "red",
     },
     image_product: {
         flex: 1,
         margin: 5,
+        resizeMode: 'contain',
     },
     image_nutri: {
-        // flex: 1,
+        height: 100,
         margin: 5,
+        resizeMode: 'contain',
+
     },
     headerDescription: {
         flex: 1,
     },
-    bodyContainer: {
-        flex: 1,
-        backgroundColor: "yellow",
-    },
-
-
     loadingContainer: {
         position: 'absolute',
         left: 0,
@@ -142,17 +163,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-
-
-    titleText: {
+    productNameText: {
         fontWeight: 'bold',
         fontSize: 30,
-        // flex: 1,
         flexWrap: 'wrap',
         marginLeft: 5,
         marginRight: 5,
         marginTop: 10,
         marginBottom: 10,
+        color: '#000000',
+        textAlign: 'left'
+    },
+    titleText: {
+        fontWeight: 'bold',
+        fontSize: 18,
+        flexWrap: 'wrap',
+        marginLeft: 5,
+        marginRight: 5,
         color: '#000000',
         textAlign: 'left'
     },
@@ -162,11 +189,10 @@ const styles = StyleSheet.create({
         margin: 5,
         marginBottom: 15
     },
+
     defaultText: {
-        // flex: 1,
         marginLeft: 5,
         marginRight: 5,
-        marginTop: 5,
     },
 });
 
