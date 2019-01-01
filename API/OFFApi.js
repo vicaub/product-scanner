@@ -1,6 +1,9 @@
 
+const lang = 'fr';
+const apiUrl = 'https://' + lang + '.openfoodfacts.org';
+
 export function getProductInfoFromApi(barcode) {
-    const url = 'https://fr.openfoodfacts.org/api/v0/product/' + barcode + '.json';
+    const url = apiUrl + '/api/v0/product/' + barcode + '.json';
     return fetch(url)
         .then((response) => response.json())
         .then((json) => {
@@ -18,6 +21,28 @@ export function getProductInfoFromApi(barcode) {
             } else {
                 return undefined;
             }
+        })
+        .catch((error) => console.error(error))
+}
+
+export function getAllergensFromApi() {
+    const url = apiUrl + '/allergens.json';
+    return fetch(url)
+        .then((response) => response.json())
+        .then((json) => {
+            // console.log(json);
+            let allergens = [];
+            if (json.tags) {
+                allergens = json.tags
+                    .filter((obj => (obj.id !== obj.name) && obj.products > 50))
+                    .map((obj) => {
+                        return {
+                            id: obj.id,
+                            name: obj.name,
+                        }
+                    });
+            }
+            return allergens;
         })
         .catch((error) => console.error(error))
 }

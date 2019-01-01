@@ -7,12 +7,16 @@
     "test": "jest"
   },
   "dependencies": {
+    "moment": "^2.23.0",
     "react": "16.6.1",
     "react-native": "0.57.7",
     "react-native-camera": "^1.4.3",
     "react-native-gesture-handler": "^1.0.10",
+    "react-native-multiple-select": "^0.4.4",
+    "react-native-vector-icons": "^6.1.0",
     "react-navigation": "^3.0.4",
-    "realm": "^2.21.1"
+    "realm": "^2.21.1",
+    "tcomb-form-native": "^0.6.20"
   },
   "devDependencies": {
     "babel-jest": "23.6.0",
@@ -24,6 +28,8 @@
     "preset": "react-native"
   },
   "rnpm": {
-    "assets": ["assets/fonts"]
+    "assets": [
+      "assets/fonts"
+    ]
   }
 }

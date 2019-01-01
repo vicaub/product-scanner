@@ -17,7 +17,7 @@ export default OupsScreen;
 
 const styles = StyleSheet.create({
     header: {
-        fontFamily: 'Lobster Regular',
+        fontFamily: 'Lobster-Regular',
         fontSize: 50,
     },
     infoText: {

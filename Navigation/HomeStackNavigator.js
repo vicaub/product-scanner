@@ -14,7 +14,7 @@ const HomeStackNavigator = createStackNavigator({
             headerLeft : <HamburgerIcon navigationProps={ navigation }/>,
             headerRight: <View></View>,
             headerTitleStyle: {
-                fontFamily: 'Lobster Regular',
+                fontFamily: 'Lobster-Regular',
                 fontWeight: 'normal',
                 fontSize: 30,
                 textAlign: 'center',
@@ -33,7 +33,7 @@ const HomeStackNavigator = createStackNavigator({
             title: 'Détails Produit',
             headerRight: <View></View>,
             headerTitleStyle: {
-                fontFamily: 'Lobster Regular',
+                fontFamily: 'Lobster-Regular',
                 fontWeight: 'normal',
                 fontSize: 30,
                 textAlign: 'center',

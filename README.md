@@ -58,15 +58,34 @@ react-native run-android
 
 - "`Failed to install the following Android SDK packages as some licences have not been accepted.`" : install the missing components using the Android Studio SDK Manager (Android SDK Build-Tools 27.0.3).
 
+- "`Cannot add task 'wrapper' as a task with that name already exists.`" : rename the task 'wrapper' to 'wrapper2' for example at the end of `build.gradle`
+
 ### iOS
 
-You need to register an Apple developer account.
-Download XCode as well.
+[React Native - Running On Device](https://facebook.github.io/react-native/docs/running-on-device.html)
 
-Make it run for iOS:
+You need to register an Apple developer account.
+Download XCode as well and open the `product-scanner/ios/ProductScanner.xcodeproj` project.
+
+For the 1st time: [configure code signing](https://facebook.github.io/react-native/docs/running-on-device.html#2-configure-code-signing).
+
+If everything is set up correctly, your device will be listed as the build target in the Xcode toolbar, and it will also appear in the Devices panel. You can now press the Build and run button (⌘R) or select Run from the Product menu. The app will launch on your device shortly.
+
+(Make it run for iOS:)
 ```bash
 react-native run-ios
 ```
+
+Additional things you need to do:
+
+- Add in `product-scanner/ios/ProductScanner/Info.plist`:
+  ```
+  <key>NSCameraUsageDescription</key>
+  <string>We need access to your device camera in order to allow you to scan products.</string>
+  ```
+  
+- Authorize applications from your Apple developer account on your iPhone (Settings/General/Manage profiles and device)
+
 
 ## Remote Debugging
 
