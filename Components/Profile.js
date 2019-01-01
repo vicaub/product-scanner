@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     },
     name: {
         fontSize: 40,
-        fontFamily: 'Lobster Regular',
+        fontFamily: 'Lobster-Regular',
     },
     username: {
         fontSize: 20,

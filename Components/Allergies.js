@@ -120,7 +120,6 @@ class Allergies extends Component {
                             selectedItems={selectedItems}
                             selectText="Allergies"
                             searchInputPlaceholderText="Recherche..."
-                            altFontFamily="ProximaNova-Light"
                             tagRemoveIconColor="#00C378"
                             tagBorderColor="#00C378"
                             tagTextColor="#00C378"

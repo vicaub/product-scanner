@@ -16,7 +16,7 @@ const ProfileStackNavigator = createStackNavigator({
             
             headerRight: <View></View>,
             headerTitleStyle: {
-                fontFamily: 'Lobster Regular',
+                fontFamily: 'Lobster-Regular',
                 fontWeight: 'normal',
                 fontSize: 30,
                 textAlign: 'center',
@@ -35,7 +35,7 @@ const ProfileStackNavigator = createStackNavigator({
             title: 'Modifier',
             headerRight: <View></View>,
             headerTitleStyle: {
-                fontFamily: 'Lobster Regular',
+                fontFamily: 'Lobster-Regular',
                 fontWeight: 'normal',
                 fontSize: 30,
                 textAlign: 'center',
@@ -54,7 +54,7 @@ const ProfileStackNavigator = createStackNavigator({
             title: 'Mes allergies',
             headerRight: <View></View>,
             headerTitleStyle: {
-                fontFamily: 'Lobster Regular',
+                fontFamily: 'Lobster-Regular',
                 fontWeight: 'normal',
                 fontSize: 30,
                 textAlign: 'center',
