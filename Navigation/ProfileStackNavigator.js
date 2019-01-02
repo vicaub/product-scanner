@@ -29,6 +29,25 @@ const ProfileStackNavigator = createStackNavigator({
             }
         })
     },
+    Create: {
+        screen: UpdateProfile,
+        navigationOptions: () => ({
+            title: 'Créer',
+            headerRight: <View></View>,
+            headerTitleStyle: {
+                fontFamily: 'Lobster-Regular',
+                fontWeight: 'normal',
+                fontSize: 30,
+                textAlign: 'center',
+                flex: 1,
+                marginTop: 5,
+            },
+            headerTintColor: '#00C378',
+            headerStyle: {
+                backgroundColor: '#fff',
+            }
+        })
+    },
     Update: {
         screen: UpdateProfile,
         navigationOptions: () => ({

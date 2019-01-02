@@ -11,6 +11,7 @@ import {
 import moment from 'moment';
 import ActionButton from './Common/ActionButton';
 import UserService from '../Services/UserService';
+import UpdateProfile from './UpdateProfile';
 
 class Profile extends Component {
 
@@ -28,12 +29,6 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-        // fetch user info
-        /*UserService.save({
-            username: "hellou",
-            name: "Bob Test",
-            gender: 'M',
-        });*/
         this.willFocus = this.props.navigation.addListener(
             'willFocus',
             () => {
@@ -48,16 +43,23 @@ class Profile extends Component {
 
     fetchUserInfo() {
         let userList = UserService.findAll();
-        let user = userList[0];
-        this.setState({
-            user: {
-                name: user.name,
-                username: user.username,
-                birthDate: user.birthDate,
-                gender: user.gender,
-            },
-            isLoading: false,
-        });
+        console.log(userList);
+        if (userList.length > 0) {
+            let user = userList[0];
+            this.setState({
+                user: {
+                    name: user.name,
+                    username: user.username,
+                    birthDate: user.birthDate,
+                    gender: user.gender,
+                },
+                isLoading: false,
+            });
+        } else {
+            this.setState({
+                isLoading: false,
+            })
+        }
     }
 
     _displayLoading() {
@@ -71,7 +73,11 @@ class Profile extends Component {
     }
 
     _handleEdit() {
-        this.props.navigation.navigate("Update", {user: this.state.user});
+        this.props.navigation.navigate("Update", {user: this.state.user, new: false});
+    }
+
+    _handleCreate() {
+        this.props.navigation.navigate("Create", {user: this.state.user, new: true});
     }
 
     _handleAllergies() {
@@ -81,39 +87,61 @@ class Profile extends Component {
     _displayProfile() {
         const { user, isLoading } = this.state;
         if (!isLoading) {
-            return (
-                <View style={styles.container}>
-                    <View>
-                        <TouchableOpacity onPress={() => this._handleEdit()} style={styles.smallButton}>
-                            <Text>Modifier</Text>
-                        </TouchableOpacity>
+            if (user.username.length > 0) {
+                return (
+                    <View style={styles.container}>
+                        <View>
+                            <TouchableOpacity onPress={() => this._handleEdit()} style={styles.smallButton}>
+                                <Text>Modifier</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.center}>
+                            <Text style={styles.name}>
+                                { user.name }
+                            </Text>
+                            <Text style={styles.username}>
+                                @{ user.username }
+                            </Text>
+                            <Text style={styles.header}>
+                                À propos
+                            </Text>
+                            <Text>
+                                Date de naissance : { user.birthDate ? moment(user.birthDate).format('L') : '' }
+                            </Text>
+                            <Text>
+                                Genre : { user.gender }
+                            </Text>
+                        </View>
+                        <View>
+                            <ActionButton
+                                title="Mes allergies"
+                                color="#00C378"
+                                onPress={() => this._handleAllergies()}
+                            />
+                        </View>
                     </View>
-                    <View style={styles.center}>
-                        <Text style={styles.name}>
-                            { user.name }
-                        </Text>
-                        <Text style={styles.username}>
-                            @{ user.username }
-                        </Text>
-                        <Text style={styles.header}>
-                            À propos
-                        </Text>
-                        <Text>
-                            Date de naissance : { user.birthDate ? moment(user.birthDate).format('L') : '' }
-                        </Text>
-                        <Text>
-                            Genre : { user.gender }
-                        </Text>
+                );
+            } else {
+                return (
+                    <View style={styles.container}>
+                        <View style={styles.center}>
+                            <Text style={styles.name}>
+                                Bienvenue !
+                            </Text>
+                            <Text style={styles.info}>
+                                Créez un compte pour pouvoir renseigner vos allergies et être mieux accompagné(e)
+                            </Text>
+                            <View>
+                                <ActionButton
+                                    title="Créer"
+                                    color="#00C378"
+                                    onPress={() => this._handleCreate()}
+                                />
+                            </View>
+                        </View>
                     </View>
-                    <View>
-                        <ActionButton 
-                            title="Mes allergies"
-                            color="#00C378"
-                            onPress={() => this._handleAllergies()}
-                        />
-                    </View>
-                </View>
-            );
+                )
+            }
         }
     }
 
@@ -160,6 +188,11 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginBottom: 20,
     },
+    info: {
+        paddingTop: 50,
+        paddingBottom: 150,
+        textAlign: 'center',
+    }
 });
 
 export default Profile;

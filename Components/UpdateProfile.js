@@ -4,6 +4,7 @@ import {
     StyleSheet,
     View,
     ScrollView,
+    Text,
 } from 'react-native';
 import t from 'tcomb-form-native';
 import moment from 'moment';
@@ -62,6 +63,7 @@ class UpdateProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            new: props.navigation.getParam('new'),
             user: props.navigation.getParam('user'),
         };
     }
@@ -70,17 +72,30 @@ class UpdateProfile extends Component {
         if (this._form) {
             const userInfo = this._form.getValue(); // use that ref to get the form value
             if (userInfo) {
-                UserService.update(userInfo, () => {
-                    this.props.navigation.goBack();
-                });
+                if (this.state.new) {
+                    UserService.save(userInfo, () => {
+                        this.props.navigation.goBack();
+                    });
+                } else {
+                    UserService.update(userInfo, () => {
+                        this.props.navigation.goBack();
+                    });
+                }
             }
         }
     }
 
     render() {
+        if (this.state.new) {
+            options.fields.username.editable = true;
+        }
         return (
             <ScrollView>
                 <View style={styles.container}>
+                    {this.state.new ?
+                        <Text style={styles.info}>Vous n'avez pas encore créé votre compte, rejoignez la grande famille !</Text>
+                        : undefined
+                    }
                     <Form 
                         ref={c => this._form = c}
                         type={User} 
@@ -114,4 +129,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         marginBottom: 36
     },
+    info: {
+        paddingBottom: 20,
+    }
 });

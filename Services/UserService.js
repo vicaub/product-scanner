@@ -3,17 +3,24 @@ import DBConnector from '../Database/DBConnector';
 let userDB = DBConnector.objects('User');
 
 let UserService = {
-    findAll: () => { // will not be used
+    findAll: () => {
         return Array.from(userDB);
     },
 
-    save: (user) => {
+    save: (user, callback) => {
         if (userDB.filtered("username = '" + user.username + "'").length) return;
-
-        DBConnector.write(() => {
-            user.updatedAt = new Date();
-            DBConnector.create('User', user);
-        });
+        try {
+            DBConnector.write(() => {
+                try {
+                    DBConnector.create('User', user);
+                } catch(e) {
+                    console.log(e);
+                }
+                callback();
+            });
+        } catch(e) {
+            console.log(e);
+        }
     },
 
     update: (user, callback) => {
@@ -22,6 +29,12 @@ let UserService = {
             user.updatedAt = new Date();
             DBConnector.create('User', user, true);
             callback();
+        })
+    },
+
+    deleteAll: () => { // will not be used
+        DBConnector.write(() => {
+            DBConnector.delete(userDB);
         })
     }
 };
