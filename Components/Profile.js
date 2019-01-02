@@ -34,12 +34,16 @@ class Profile extends Component {
             name: "Bob Test",
             gender: 'M',
         });*/
-        this.props.navigation.addListener(
+        this.willFocus = this.props.navigation.addListener(
             'willFocus',
             () => {
                 this.fetchUserInfo();
             }
         );
+    }
+
+    componentWillUnmount() {
+        this.willFocus.remove();
     }
 
     fetchUserInfo() {
