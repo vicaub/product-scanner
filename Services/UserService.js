@@ -11,6 +11,7 @@ let UserService = {
         if (userDB.filtered("username = '" + user.username + "'").length) return;
 
         DBConnector.write(() => {
+            user.updatedAt = new Date();
             DBConnector.create('User', user);
         });
     },
@@ -18,6 +19,8 @@ let UserService = {
     update: (user, callback) => {
         if (!callback) return;
         DBConnector.write(() => {
+            user.updatedAt = new Date();
+            DBConnector.create('User', user, true);
             callback();
         })
     }

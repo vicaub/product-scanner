@@ -34,8 +34,16 @@ class Profile extends Component {
             name: "Bob Test",
             gender: 'M',
         });*/
+        this.props.navigation.addListener(
+            'willFocus',
+            () => {
+                this.fetchUserInfo();
+            }
+        );
+    }
+
+    fetchUserInfo() {
         let userList = UserService.findAll();
-        console.log(userList);
         let user = userList[0];
         this.setState({
             user: {

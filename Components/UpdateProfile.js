@@ -8,6 +8,7 @@ import {
 import t from 'tcomb-form-native';
 import moment from 'moment';
 import ActionButton from './Common/ActionButton';
+import UserService from '../Services/UserService';
 
 const Form = t.form.Form;
 
@@ -67,10 +68,11 @@ class UpdateProfile extends Component {
 
     handleSubmit() {
         if (this._form) {
-            const value = this._form.getValue(); // use that ref to get the form value
-            if (value) {
-                console.log('value: ', value);
-                // save new values
+            const userInfo = this._form.getValue(); // use that ref to get the form value
+            if (userInfo) {
+                UserService.update(userInfo, () => {
+                    this.props.navigation.goBack();
+                });
             }
         }
     }
