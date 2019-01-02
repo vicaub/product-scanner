@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import ActionButton from './Common/ActionButton';
+import UserService from '../Services/UserService';
 
 class Profile extends Component {
 
@@ -28,12 +29,20 @@ class Profile extends Component {
 
     componentDidMount() {
         // fetch user info
+        /*UserService.save({
+            username: "hellou",
+            name: "Bob Test",
+            gender: 'M',
+        });*/
+        let userList = UserService.findAll();
+        console.log(userList);
+        let user = userList[0];
         this.setState({
             user: {
-                name: "Mary Poppins",
-                username: "helloyou",
-                birthDate: new Date("1999/01/01"),
-                gender: "F",
+                name: user.name,
+                username: user.username,
+                birthDate: user.birthDate,
+                gender: user.gender,
             },
             isLoading: false,
         });
@@ -78,7 +87,7 @@ class Profile extends Component {
                             À propos
                         </Text>
                         <Text>
-                            Date de naissance : { moment(user.birthDate).format('L') }
+                            Date de naissance : { user.birthDate ? moment(user.birthDate).format('L') : '' }
                         </Text>
                         <Text>
                             Genre : { user.gender }
