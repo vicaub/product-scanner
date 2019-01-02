@@ -8,6 +8,7 @@ import {
 import MultiSelect from 'react-native-multiple-select';
 import { getAllergensFromApi } from '../API/OFFApi';
 import ActionButton from './Common/ActionButton';
+import UserService from "../Services/UserService";
 
 let items = [{
     id: 'lol',
@@ -76,14 +77,14 @@ class Allergies extends Component {
     componentDidMount() {
         getAllergensFromApi().then((data) => {
             console.log(data);
+            let user = UserService.findAll()[0];
+            console.log(Array.from(user.allergies));
             this.setState({
+                selectedItems: Array.from(user.allergies),
                 allergens: data,
                 isLoading: false,
             });
         });
-
-        console.log('Fetch allergies for : ' + this.props.navigation.getParam('userId'));
-        this.setState({selectedItems: ['en:nuts']});
     }
 
     onSelectedItemsChange = selectedItems => {
@@ -91,8 +92,12 @@ class Allergies extends Component {
     };
 
     handleSubmit() {
-        console.log(this.state.selectedItems);
-        // save in database
+        UserService.update({
+            username: this.props.navigation.getParam('userId'),
+            allergies: this.state.selectedItems,
+        }, () => {
+            this.props.navigation.goBack();
+        });
     }
 
     _displayLoading() {

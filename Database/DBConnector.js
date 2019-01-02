@@ -15,7 +15,7 @@ User.schema = {
         name: 'string',
         birthDate: 'date?',
         gender: 'string?',
-        allergens: {type: 'list', objectType: 'string', default: []},
+        allergies: {type: 'list', objectType: 'string', default: []},
         updatedAt: 'date',
     },
 };
@@ -50,4 +50,4 @@ Ingredient.schema = {
 };
 
 // incrémenter schemaVersion à chaque modification des tables
-export default new Realm({schema: [User, Product], schemaVersion: 6});
+export default new Realm({schema: [User, Product], schemaVersion: 7});
