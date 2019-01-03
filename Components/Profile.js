@@ -9,9 +9,9 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import moment from 'moment';
+import 'moment/locale/fr';
 import ActionButton from './Common/ActionButton';
 import UserService from '../Services/UserService';
-import UpdateProfile from './UpdateProfile';
 
 class Profile extends Component {
 
@@ -29,7 +29,6 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-        moment.locale('fr');
         this.willFocus = this.props.navigation.addListener(
             'willFocus',
             () => {
@@ -107,7 +106,7 @@ class Profile extends Component {
                                 À propos
                             </Text>
                             <Text>
-                                { user.birthDate ? 'Date de naissance : ' + moment(user.birthDate).format('L') : '' }
+                                { user.birthDate ? 'Date de naissance : ' + moment(user.birthDate).locale('fr').format('L') : '' }
                             </Text>
                             <Text>
                                 { user.gender && user.gender.length > 0 ?
