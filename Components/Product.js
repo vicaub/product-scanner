@@ -33,37 +33,35 @@ class ProductScreen extends Component {
         }
     }
 
+    /**
+     * Input: string of ingredients with allergens
+     * Output: JSX corresponding to the <Text> with allergens in bold
+     */
     static _parseIngredientWithAllergens(ingredientsWithAllergens) {
-        const regex = /<span class="allergen">([^<>]+)<\/span>/gm;
-        const textComponent = <Text>ingredientsWithAllergens</Text>
-        console.log(textComponent);
-        const parsedString = textComponent.props.children.replace(regex, (match, group) => {
-            return <Text style={{fontWeight: 'bold'}}>{group}</Text>;
-        });
 
-        console.log(textComponent);
-        return parsedString;
+        const splitedIngredients = ingredientsWithAllergens.split(/<span class=\"allergen\">|<\/span>/);
+        console.log("splitedIngredients");
+        console.log(splitedIngredients);
 
-/*        let parsedText = <Text></Text>
+        const allergens = splitedIngredients.filter((value, index) => index % 2 === 1);
+        console.log("allergens");
+        console.log(allergens);
 
-        let allergen = false;
-        let i = 0;
-        while (i < ingredientsWithAllergens.length) {
-            if (allergen && ingredientsWithAllergens.substr(i, 7) === "</span>") {
-                allergen = false;
-                i = i + 6
-            }
-            if (!allergen) {
-                if (ingredientsWithAllergens.substr(i, 23) === "<span class=\"allergen\">") {
-                    allergen = true;
-                    parsedText.value += <Text style={{fontWeight: 'bold'}}>{group}</Text>
-                }
-                else {
-                    parsedText.value += ingredientsWithAllergens[i];
-                }
-            }
-            i += 1;
-        }*/
+        return (
+            <Text style={styles.defaultText}>
+                {splitedIngredients.map((value, index) => {
+                    if (index % 2 === 1) {
+                        return (
+                            <Text style={{fontWeight: 'bold'}}>{value}</Text>
+                        )
+                    } else {
+                        return (
+                            <Text>{value}</Text>
+                        )
+                    }
+                })}
+            </Text>
+        )
 
     }
 
@@ -87,27 +85,25 @@ class ProductScreen extends Component {
                             </View>
                         </View>
 
-                        {/*<Text style={styles.defaultText}>Conditionnement : {product.packaging}</Text>*/}
+                        <Text style={styles.titleText}>Categories</Text>
 
-                        {/*le label nova ne fonctionne pas car il est en svg*/}
-                        {/*<Image*/}
-                        {/*style={styles.image}*/}
-                        {/*source={{uri: 'https://static.openfoodfacts.org/images/misc/nova-group-4' + product.nova_group}}*/}
-                        {/*/>*/}
+                        <Text style={styles.defaultText}>{product.categories}</Text>
+
+                        <Text style={styles.titleText}>Ingredients</Text>
+
+                        <View style={styles.defaultText}>
+                            {ProductScreen._parseIngredientWithAllergens(product.ingredients)}
+                        </View>
+
+                        <Text style={styles.titleText}>Allergènes</Text>
+
+                        <Text style={styles.defaultText}>{product.allergens}</Text>
 
                         <Image
                             style={styles.image_nutri}
                             // source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-'+ product.nutrition_grades + '.png'}}
                             source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-e.png'}}
                         />
-
-                        <Text style={styles.titleText}>Ingredients</Text>
-
-                        <View style={styles.defaultText}>{ProductScreen._parseIngredientWithAllergens(product.ingredients)}</View>
-
-                        <Text style={styles.titleText}>Allergènes</Text>
-
-                        <Text style={styles.defaultText}>{product.allergens}</Text>
 
                     </ScrollView>
                 )
@@ -135,9 +131,9 @@ const styles = StyleSheet.create({
     },
     scrollview_container: {
         flex: 1,
+        flexDirection: "column"
     },
     headerContainer: {
-        // flex: 1,
         flexDirection: "row",
     },
     image_product: {
@@ -146,10 +142,9 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     image_nutri: {
-        height: 100,
+        height: 80,
         margin: 5,
-        resizeMode: 'contain',
-
+        resizeMode: "contain",
     },
     headerDescription: {
         flex: 1,

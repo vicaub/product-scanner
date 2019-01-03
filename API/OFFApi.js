@@ -18,7 +18,7 @@ export function getProductInfoFromApi(barcode) {
                     packaging: jsonProduct.packaging,
                     brands: jsonProduct.brands,
                     manufacturing_places: jsonProduct.manufacturing_places,
-                    categories_hierarchy: jsonProduct.categories_hierarchy,
+                    categories: jsonProduct.categories,
                     ingredients: jsonProduct.ingredients_text_with_allergens,
                     allergens: jsonProduct.allergens_from_ingredients,
                     nutrition_grades: jsonProduct.nutrition_grades,
