@@ -29,6 +29,7 @@ class Profile extends Component {
     }
 
     componentDidMount() {
+        moment.locale('fr');
         this.willFocus = this.props.navigation.addListener(
             'willFocus',
             () => {
@@ -106,10 +107,13 @@ class Profile extends Component {
                                 À propos
                             </Text>
                             <Text>
-                                Date de naissance : { user.birthDate ? moment(user.birthDate).format('L') : '' }
+                                { user.birthDate ? 'Date de naissance : ' + moment(user.birthDate).format('L') : '' }
                             </Text>
                             <Text>
-                                Genre : { user.gender }
+                                { user.gender && user.gender.length > 0 ?
+                                    'Genre : ' + user.gender
+                                    : ''
+                                }
                             </Text>
                         </View>
                         <View>
@@ -129,7 +133,8 @@ class Profile extends Component {
                                 Bienvenue !
                             </Text>
                             <Text style={styles.info}>
-                                Créez un compte pour pouvoir renseigner vos allergies et être mieux accompagné(e)
+                                Créez un compte pour pouvoir renseigner vos allergies et être mieux accompagné(e).
+                                Vos informations ne seront conservées que sur cet appareil.
                             </Text>
                             <View>
                                 <ActionButton
