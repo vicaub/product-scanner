@@ -40,12 +40,8 @@ class ProductScreen extends Component {
     static _parseIngredientWithAllergens(ingredientsWithAllergens) {
 
         const splitedIngredients = ingredientsWithAllergens.split(/<span class=\"allergen\">|<\/span>/);
-        console.log("splitedIngredients");
-        console.log(splitedIngredients);
 
         const allergens = splitedIngredients.filter((value, index) => index % 2 === 1);
-        console.log("allergens");
-        console.log(allergens);
 
         return (
             <Text style={styles.defaultText}>
@@ -101,8 +97,8 @@ class ProductScreen extends Component {
 
                         <Image
                             style={styles.image_nutri}
-                            // source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-'+ product.nutrition_grades + '.png'}}
-                            source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-e.png'}}
+                            source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-'+ product.nutrition_grades + '.png'}}
+                            // source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-e.png'}}
                         />
 
                     </ScrollView>
