@@ -81,11 +81,11 @@ class ProductScreen extends Component {
                             </View>
                         </View>
 
-                        <Text style={styles.titleText}>Categories</Text>
+                        <Text style={styles.titleText}>Catégories</Text>
 
                         <Text style={styles.defaultText}>{product.categories}</Text>
 
-                        <Text style={styles.titleText}>Ingredients</Text>
+                        <Text style={styles.titleText}>Ingrédients</Text>
 
                         <View style={styles.defaultText}>
                             {ProductScreen._parseIngredientWithAllergens(product.ingredients)}
