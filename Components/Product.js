@@ -38,26 +38,42 @@ class ProductScreen extends Component {
      * Output: JSX corresponding to the <Text> with allergens in bold
      */
     static _parseIngredientWithAllergens(ingredientsWithAllergens) {
+        if (!ingredientsWithAllergens) {
+            return (<Text style={styles.defaultText}>Non renseigné</Text>)
+        } else {
+            const splitedIngredients = ingredientsWithAllergens.split(/<span class=\"allergen\">|<\/span>/);
 
-        const splitedIngredients = ingredientsWithAllergens.split(/<span class=\"allergen\">|<\/span>/);
+            const allergens = splitedIngredients.filter((value, index) => index % 2 === 1);
 
-        const allergens = splitedIngredients.filter((value, index) => index % 2 === 1);
+            return (
+                <Text style={styles.defaultText}>
+                    {splitedIngredients.map((value, index) => {
+                        if (index % 2 === 1) {
+                            return (
+                                <Text style={{fontWeight: 'bold'}} key={index}>{value}</Text>
+                            )
+                        } else {
+                            return (
+                                <Text>{value}</Text>
+                            )
+                        }
+                    })}
+                </Text>
+            )
+        }
+    }
 
-        return (
-            <Text style={styles.defaultText}>
-                {splitedIngredients.map((value, index) => {
-                    if (index % 2 === 1) {
-                        return (
-                            <Text style={{fontWeight: 'bold'}}>{value}</Text>
-                        )
-                    } else {
-                        return (
-                            <Text>{value}</Text>
-                        )
-                    }
-                })}
-            </Text>
-        )
+    static _parseAllergens(allergens) {
+        if (!allergens) {
+            return (<View></View>);
+        } else {
+            return (
+                <View>
+                    <Text style={styles.titleText}>Allergènes</Text>
+                    <Text style={styles.defaultText}>{allergens}</Text>
+                </View>
+            )
+        }
 
     }
 
@@ -71,33 +87,34 @@ class ProductScreen extends Component {
                         <View style={styles.headerContainer}>
                             <Image
                                 style={styles.image_product}
-                                source={{uri: product.image_url}}
+                                source={product.image_url ? {uri: product.image_url} : require('./images/No-images-placeholder.png')}
                             />
                             <View style={styles.headerDescription}>
-                                <Text style={styles.productNameText}>{product.product_name}</Text>
-                                <Text style={styles.defaultText}>Quantité : {product.quantity}</Text>
-                                <Text style={styles.defaultText}>Marque : {product.brands}</Text>
+                                <Text
+                                    style={styles.productNameText}>{product.product_name ? product.product_name : "Nom inconnu"}</Text>
+                                <Text style={styles.defaultText}>Quantité
+                                    : {product.quantity ? product.quantity : "Non renseignée"}</Text>
+                                <Text style={styles.defaultText}>Marque
+                                    : {product.brands ? product.brands : "Non renseignée"}</Text>
                                 <Text style={styles.descriptionText}>Code barre : {product._id}</Text>
                             </View>
                         </View>
 
                         <Text style={styles.titleText}>Catégories</Text>
 
-                        <Text style={styles.defaultText}>{product.categories}</Text>
+                        <Text
+                            style={styles.defaultText}>{product.categories ? product.categories : "Non renseigné"}
+                        </Text>
 
                         <Text style={styles.titleText}>Ingrédients</Text>
 
-                        <View style={styles.defaultText}>
-                            {ProductScreen._parseIngredientWithAllergens(product.ingredients)}
-                        </View>
+                        {ProductScreen._parseIngredientWithAllergens(product.ingredients)}
 
-                        <Text style={styles.titleText}>Allergènes</Text>
-
-                        <Text style={styles.defaultText}>{product.allergens}</Text>
+                        {ProductScreen._parseAllergens(product.allergens)}
 
                         <Image
                             style={styles.image_nutri}
-                            source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-'+ product.nutrition_grades + '.png'}}
+                            source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-' + product.nutrition_grades + '.png'}}
                             // source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-e.png'}}
                         />
 
