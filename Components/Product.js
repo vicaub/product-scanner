@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, Image, ActivityIndicator} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Image, ActivityIndicator, Alert} from 'react-native';
 import {getProductInfoFromApi} from '../API/OFFApi';
 import OupsScreen from './Common/Oups';
+import UserService from "../Services/UserService";
 
 class ProductScreen extends Component {
 
@@ -128,11 +129,33 @@ class ProductScreen extends Component {
         }
     }
 
+    _checkAllergies() {
+        const { product, isLoading} = this.state;
+        if (!isLoading) {
+            let user = UserService.findAll()[0];
+            console.log(product.allergens_ids);
+            console.log(Array.from(user.allergies));
+            for (let allergen in product.allergens_ids) {
+                console.log(allergen);
+                if (allergen in Array.from(user.allergies)) {
+                    console.log(allergen);
+                    Alert.alert(
+                        'Attention',
+                        'Nous avons détecté des ingrédients dont vous êtes allergiques dans ce produit'
+                    );
+                    break;
+                }
+            }
+        }
+    }
+
     render() {
+        console.log('render');
         return (
             <View style={styles.mainContainer}>
                 {this._displayLoading()}
                 {this._displayProductInfo()}
+                {this._checkAllergies()}
             </View>
         )
     }

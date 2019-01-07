@@ -22,7 +22,8 @@ export function getProductInfoFromApi(barcode) {
                     ingredients: jsonProduct.ingredients_text_with_allergens,
                     allergens: jsonProduct.allergens_from_ingredients,
                     nutrition_grades: jsonProduct.nutrition_grades,
-                    nova_group: jsonProduct.nova_group
+                    nova_group: jsonProduct.nova_group,
+                    allergens_ids: jsonProduct.allergens_tags
                 };
             } else {
                 return undefined;
