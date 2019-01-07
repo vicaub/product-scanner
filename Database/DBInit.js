@@ -1,13 +1,22 @@
+// file never reached
+
+
 import DBConnector from "./DBConnector";
 
 
 let user = DBConnector.objects('User');
 let product = DBConnector.objects('Product');
 
+console.log(user.length);
+
 if (user.length === 0) {
     console.log("creating new user");
     DBConnector.write(() => {
-        DBConnector.create('User', {text: 'nom prenom', allergenes: []});
+        DBConnector.create('User', {
+            username: "hellou",
+            name: "Bob Test",
+            gender: 'M',
+        });
     });
 
 
@@ -29,7 +38,7 @@ if (user.length === 0) {
             scanDate: new Date(),
             imageUrl: "456.com",
             ingredients: [],
-            allergenes: []
+            allergens: []
         })
     });
 
@@ -41,11 +50,12 @@ if (user.length === 0) {
             scanDate: new Date(),
             imageUrl: "789.com",
             ingredients: [],
-            allergenes: []
+            allergens: []
         })
     });
 }
 else {
+    console.log("delete user");
     DBConnector.write(() => {
         DBConnector.delete(user);
     });
