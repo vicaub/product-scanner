@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, Image, ActivityIndicator} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Image, ActivityIndicator, TextInput} from 'react-native';
 import {getProductInfoFromApi} from '../API/OFFApi';
 import OupsScreen from './Common/Oups';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import NumericInput from 'react-native-numeric-input'
 
 class ProductScreen extends Component {
 
@@ -117,6 +119,13 @@ class ProductScreen extends Component {
                             source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-' + product.nutrition_grades + '.png'}}
                             // source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-e.png'}}
                         />
+
+
+                        <View style={{flexDirection: "row", justifyContent: "center"}}>
+                            <Icon name="cart-arrow-down" size={50} color="#00C378"/>
+                            <NumericInput onChange={value => console.log(value)} />
+                        </View>
+
 
                     </ScrollView>
                 )
