@@ -9,9 +9,14 @@ class User extends Realm.Object {
 
 User.schema = {
     name: 'User',
+    primaryKey: 'username',
     properties: {
-        text: 'string',
-        allergenes: {type: 'list', objectType: 'string'},
+        username: 'string',
+        name: 'string',
+        birthDate: 'date?',
+        gender: 'string?',
+        allergies: {type: 'list', objectType: 'string', default: []},
+        updatedAt: 'date?',
     },
 };
 
@@ -27,7 +32,7 @@ Product.schema = {
         scanDate: 'date',
         imageUrl: 'string',
         ingredients: {type: 'list', objectType: 'string', default: []},
-        allergenes: {type: 'list', objectType: 'string', default: []}
+        allergens: {type: 'list', objectType: 'string', default: []}
     },
 };
 
@@ -38,11 +43,11 @@ Ingredient.schema = {
     name: 'Ingredient',
     properties: {
         name: 'string',
-        allergene: {type: 'bool', default: false},
+        allergen: {type: 'bool', default: false},
         imageUrl: 'string',
         ingredients: {type: 'list', objectType: 'string'},
     },
 };
 
 // incrémenter schemaVersion à chaque modification des tables
-export default new Realm({schema: [User, Product], schemaVersion: 3});
+export default new Realm({schema: [User, Product], schemaVersion: 8});
