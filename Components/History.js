@@ -1,8 +1,9 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, Platform, View, Text, FlatList, TouchableOpacity } from 'react-native';
-import products from '../Helper/productData'
-import ProductItem from './ProductItem'
+import { StyleSheet, View, FlatList, TouchableOpacity } from 'react-native';
+import products from '../Helper/productData';
+import ProductItem from './ProductItem';
+import OupsScreen from './Common/Oups';
 
 class HistoryScreen extends Component {
     _searchInfo(code) { //3103220025338
@@ -10,18 +11,24 @@ class HistoryScreen extends Component {
     }
 
     render() {
-        return (
-            <View style={styles.mainContainer}>
-                <FlatList
-                    data={products}
-                    keyExtractor={(item) => item.id.toString()}
-                    renderItem={({item}) => (
-                        <TouchableOpacity onPress={ () => this._searchInfo(item.id)}>
-                            <ProductItem product={item}/>
-                        </TouchableOpacity>)}
-                />
-            </View>
-        );
+        if (products.length > 0) {
+            return (
+                <View style={styles.mainContainer}>
+                    <FlatList
+                        data={products}
+                        keyExtractor={(item) => item.id.toString()}
+                        renderItem={({item}) => (
+                            <TouchableOpacity onPress={ () => this._searchInfo(item.id)}>
+                                <ProductItem product={item}/>
+                            </TouchableOpacity>)}
+                    />
+                </View>
+            );
+        } else {
+            return (
+                <OupsScreen message="Vous n'avez pas encore scanné de produit ! Commencez par scanner un produit depuis l'écran d'accueil. Vous retrouverez tous vos scans ici !"/>
+            );
+        }
     }
 }
 
