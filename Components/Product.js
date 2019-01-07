@@ -87,7 +87,7 @@ class ProductScreen extends Component {
                         <View style={styles.headerContainer}>
                             <Image
                                 style={styles.image_product}
-                                source={product.image_url ? {uri: product.image_url} : require('./images/No-images-placeholder.png')}
+                                source={product.image_url ? {uri: product.image_url} : require('../assets/images/No-images-placeholder.png')}
                             />
                             <View style={styles.headerDescription}>
                                 <Text
