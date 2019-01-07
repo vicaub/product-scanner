@@ -54,7 +54,7 @@ class ProductScreen extends Component {
                             )
                         } else {
                             return (
-                                <Text>{value}</Text>
+                                <Text key={index}>{value}</Text>
                             )
                         }
                     })}
