@@ -1,6 +1,7 @@
+import ProductService from "../Services/ProductService";
 
 const lang = 'fr';
-const apiUrl = 'https://' + lang + '.openfoodfacts.org';
+const apiUrl = 'http://' + lang + '.openfoodfacts.org';
 
 export function getProductInfoFromApi(barcode) {
     const url = apiUrl + '/api/v0/product/' + barcode + '.json';
@@ -10,6 +11,19 @@ export function getProductInfoFromApi(barcode) {
             console.log(json);
             if (json.status !== 0 && json.code && json.code.length > 0) {
                 let jsonProduct = json.product;
+                console.log("création de la constante");
+                const productinfo = {
+                    barCode: barcode,
+                    name: jsonProduct.product_name_fr,
+                    scanDate: new Date(),
+                    nbScans: 0,
+                    imageUrl: jsonProduct.image_url,
+                    ingredients: [],
+                    allergens: []
+                };
+                console.log("création du produit");
+                ProductService.scan(productinfo);
+                console.log("produit ajouté à la db");
                 return {
                     _id: json.code,
                     product_name: jsonProduct.product_name_fr,
