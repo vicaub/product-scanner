@@ -30,24 +30,24 @@ Product.schema = {
         barCode: 'string',
         name: 'string',
         scanDate: 'date',
+        nbScans: 'int',
         imageUrl: 'string',
         ingredients: {type: 'list', objectType: 'string', default: []},
         allergens: {type: 'list', objectType: 'string', default: []}
     },
 };
 
-class Ingredient extends Realm.Object {
+class Allergen extends Realm.Object {
 }
 
-Ingredient.schema = {
-    name: 'Ingredient',
+Allergen.schema = {
+    name: 'Allergen',
     properties: {
+        id: 'string',
         name: 'string',
-        allergen: {type: 'bool', default: false},
-        imageUrl: 'string',
-        ingredients: {type: 'list', objectType: 'string'},
     },
 };
 
+
 // incrémenter schemaVersion à chaque modification des tables
-export default new Realm({schema: [User, Product], schemaVersion: 8});
+export default new Realm({schema: [User, Product], schemaVersion: 9});
