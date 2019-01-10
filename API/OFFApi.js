@@ -11,19 +11,11 @@ export function getProductInfoFromApi(barcode) {
             console.log(json);
             if (json.status !== 0 && json.code && json.code.length > 0) {
                 let jsonProduct = json.product;
-                console.log("création de la constante");
-                const productinfo = {
-                    barCode: barcode,
-                    name: jsonProduct.product_name_fr,
-                    scanDate: new Date(),
-                    nbScans: 0,
-                    imageUrl: jsonProduct.image_url,
-                    ingredients: [],
-                    allergens: []
-                };
-                console.log("création du produit");
-                ProductService.scan(productinfo);
-                console.log("produit ajouté à la db");
+                console.log("création du produit depuis le json");
+                let product = ProductService.findProduct(jsonProduct, barcode);
+                console.log("produit créé avec succès");
+                ProductService.scan(product);
+
                 return {
                     _id: json.code,
                     product_name: jsonProduct.product_name_fr,

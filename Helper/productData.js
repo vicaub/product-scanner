@@ -1,7 +1,10 @@
 // Helpers/filmsData.js
 
+import ProductService from "../Services/ProductService";
+
 var data;
-export default data = [
+export default data =
+    [
     {
         id:3103220025338,
         nutritional_score:"D",

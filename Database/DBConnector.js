@@ -50,4 +50,4 @@ Allergen.schema = {
 
 
 // incrémenter schemaVersion à chaque modification des tables
-export default new Realm({schema: [User, Product], schemaVersion: 9});
+export default new Realm({schema: [User, Product], schemaVersion: 10});
