@@ -133,19 +133,16 @@ class ProductScreen extends Component {
         const { product, isLoading} = this.state;
         if (!isLoading) {
             let user = UserService.findAll()[0];
-            console.log(product.allergens_ids);
-            console.log(Array.from(user.allergies));
-            for (let allergen in product.allergens_ids) {
-                console.log(allergen);
-                if (allergen in Array.from(user.allergies)) {
-                    console.log(allergen);
-                    Alert.alert(
-                        'Attention',
-                        'Nous avons détecté des ingrédients dont vous êtes allergiques dans ce produit'
-                    );
-                    break;
+            let allergens = [];
+            for (let allergen of product.allergens_ids) {
+                if (Array.from(user.allergies).includes(allergen)) {
+                    allergens.push(allergen); //change to allergen name instead of id
                 }
             }
+            Alert.alert(
+                'Attention',
+                'Nous avons détecté des ingrédients dont vous êtes allergiques dans ce produit: '+ allergens.toString()
+            );
         }
     }
 
