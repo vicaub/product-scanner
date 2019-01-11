@@ -29,6 +29,7 @@ Product.schema = {
     properties: {
         barCode: 'string',
         name: 'string',
+        categories: {type : 'list', objectType: 'string', default: []},
         scanDate: 'date',
         nbScans: 'int',
         imageUrl: 'string',
@@ -50,4 +51,4 @@ Allergen.schema = {
 
 
 // incrémenter schemaVersion à chaque modification des tables
-export default new Realm({schema: [User, Product], schemaVersion: 10});
+export default new Realm({schema: [User, Product], schemaVersion: 11});

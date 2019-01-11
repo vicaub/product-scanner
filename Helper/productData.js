@@ -20,3 +20,6 @@ export default data =
         image:"https://static.openfoodfacts.org/images/products/762/221/088/8082/front_fr.14.400.jpg"
     }
 ]
+
+var bdData;
+export default bdData = ProductService.findAll();

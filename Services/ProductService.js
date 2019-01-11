@@ -4,7 +4,7 @@ let productDB = DBConnector.objects('Product');
 
 let ProductService = {
     findAll: () => {
-        return Array.from(productDB)
+        return Array.from(productDB.sorted('scanDate'))
     },
 
     findProduct: (jsonProduct, barcode) => {
@@ -15,11 +15,12 @@ let ProductService = {
             const productinfo = {
                 barCode: barcode,
                 name: jsonProduct.product_name_fr,
+                categories: jsonProduct.categories.split(","),
                 scanDate: new Date(),
                 nbScans: 1,
                 imageUrl: jsonProduct.image_url,
-                ingredients: [],
-                allergens: []
+                ingredients: [jsonProduct.ingredients_text_with_allergens],
+                allergens: jsonProduct.allergens_from_ingredients.split(","),
             };
             return productinfo;
         }
@@ -28,31 +29,42 @@ let ProductService = {
 
     scan : (product) => {
         if (productDB.filtered("barCode = '" + product.barCode + "'").length) {
-            console.log("déja dans la db");
+            //TODO delete logs
+            //console.log("déja dans la db");
             ProductService.update(product);
+
+            //TODO delete logs
             let products = DBConnector.objects('Product');
             for (let p of products) {
                 console.log(`  ${p.name}`);
                 console.log(`  ${p.nbScans}`);
+                console.log(`  ${p.scanDate}`);
+                console.log(`  ${p.ingredients[0]}`);
+                console.log(`  ${p.allergens[0]}`);
+                console.log(`  ${p.categories[0]}`);
+                console.log(`  ${p.categories[1]}`);
+
             }
             return
         }
         else {
             ProductService.add(product);
-            console.log("product created and added to db");
-            let products = DBConnector.objects('Product');
-            for (let p of products) {
-                console.log(`  ${p.name}`);
-                console.log(`  ${p.nbScans}`);
-            }
+
+        //    //TODO delete logs
+        //    console.log("product created and added to db");
+        //    let products = DBConnector.objects('Product');
+        //    for (let p of products) {
+        //        console.log(`  ${p.name}`);
+        //        console.log(`  ${p.nbScans}`);
+        //    }
 
         }
 
     },
 
     update : (product, callback) => {
-
-        console.log("begin update");
+//TODO delete logs
+     //   console.log("begin update");
         DBConnector.write(() => {
             product.scanDate = new Date();
             product.nbScans += 1;
