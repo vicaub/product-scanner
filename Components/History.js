@@ -12,27 +12,37 @@ class HistoryScreen extends Component {
         this.props.navigation.navigate("Product", {barcode: code, update : false});
     }
 
-
     constructor(props) {
         super(props);
         this.state = {
-            products: undefined,
+            //products: ProductService.findAll(),
+            //empty : true,
         }
     }
 
+    componentDidMount() {
+        this.willFocus = this.props.navigation.addListener(
+            'willFocus',
+            () => {
+                this.setState({
+                    products : ProductService.findAll(),
+                    //empty : false
+                })
+            }
+        );
+    }
 
-    componentDidMount(){
-        this.setState({
-            products: ProductService.findAll() ,
-        });
+    componentWillUnmount() {
+        this.willFocus.remove();
     }
 
     render() {
-        if (this.products.length > 0) {
+        console.log( `call render`);
+        if (this.state.products && this.state.products.length > 0) {
             return (
                 <View style={styles.mainContainer}>
                     <FlatList
-                        data= {this.products}
+                        data= {this.state.products}
                         keyExtractor={(item) => item.barCode}
                         renderItem={({item}) => (
                             <TouchableOpacity onPress={ () => this._searchInfo(parseInt(item.barCode))}>

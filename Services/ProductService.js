@@ -4,7 +4,7 @@ let productDB = DBConnector.objects('Product');
 
 let ProductService = {
     findAll: () => {
-        return Array.from(productDB)
+        return Array.from( (productDB.sorted('nbScans')))
     },
 
     findProduct: (data, barcode) => {
@@ -72,6 +72,7 @@ let ProductService = {
             DBConnector.write(() => {
                 try {
                     DBConnector.create('Product', product);
+
                 } catch (e) {
                     console.log(e);
                 }

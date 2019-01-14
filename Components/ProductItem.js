@@ -20,7 +20,7 @@ class ProductItem extends React.Component {
 
                     </View>
                     <View style={styles.descriptionContainer}>
-                        <Text style={styles.descriptionText}>{product.ingredients[0]}</Text>
+                        <Text style={styles.descriptionText}>{product.barCode}</Text>
                     </View>
                 </View>
             </View>
