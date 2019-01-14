@@ -21,5 +21,5 @@ export default data =
     }
 ]
 
-var bdData;
-export default bdData = ProductService.findAll();
+//var bdData;
+//export default bdData = ProductService.findAll();

@@ -1,6 +1,7 @@
 import ProductService from "../Services/ProductService";
 
 const lang = 'fr';
+//TODO switch back to https
 const apiUrl = 'https://' + lang + '.openfoodfacts.org';
 
 export function getProductInfoFromApi(barcode) {

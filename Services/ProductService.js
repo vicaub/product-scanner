@@ -29,35 +29,25 @@ let ProductService = {
 
     scan : (product) => {
         if (productDB.filtered("barCode = '" + product.barCode + "'").length) {
-            //TODO delete logs
-            //console.log("déja dans la db");
+
             ProductService.update(product);
 
-            //TODO delete logs
-            let products = DBConnector.objects('Product');
-            for (let p of products) {
-                console.log(`  ${p.name}`);
-                console.log(`  ${p.nbScans}`);
-                console.log(`  ${p.scanDate}`);
-                console.log(`  ${p.ingredients[0]}`);
-                console.log(`  ${p.allergens[0]}`);
-                console.log(`  ${p.categories[0]}`);
-                console.log(`  ${p.categories[1]}`);
-
-            }
+    //        //TODO delete logs
+    //        let products = DBConnector.objects('Product');
+    //        for (let p of products) {
+    //            console.log(`  ${p.name}`);
+    //            console.log(`  ${p.nbScans}`);
+    //            console.log(`  ${p.scanDate}`);
+    //            console.log(`  ${p.ingredients[0]}`);
+    //            console.log(`  ${p.allergens[0]}`);
+    //            console.log(`  ${p.categories[0]}`);
+    //            console.log(`  ${p.categories[1]}`);
+//
+  //          }
             return
         }
         else {
             ProductService.add(product);
-
-        //    //TODO delete logs
-        //    console.log("product created and added to db");
-        //    let products = DBConnector.objects('Product');
-        //    for (let p of products) {
-        //        console.log(`  ${p.name}`);
-        //        console.log(`  ${p.nbScans}`);
-        //    }
-
         }
 
     },
