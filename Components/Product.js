@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView, Image, ActivityIndicator} from 'react-native';
 import {getProductInfoFromApi} from '../API/OFFApi';
 import OupsScreen from './Common/Oups';
+import ProductService from "../Services/ProductService";
 
 class ProductScreen extends Component {
 
@@ -20,6 +21,10 @@ class ProductScreen extends Component {
                 product: data,
                 isLoading: false
             });
+            if (this.props.navigation.getParam('update')) {
+                let product = ProductService.findProduct(data, this.props.navigation.getParam('barcode'));
+                ProductService.scan(product);
+            }
         });
     }
 

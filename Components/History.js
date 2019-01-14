@@ -2,21 +2,23 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, View, FlatList, TouchableOpacity } from 'react-native';
-import products from '../Helper/productData';
+//import products from '../Helper/productData';
 import ProductItem from './ProductItem';
 import OupsScreen from './Common/Oups';
+import ProductService from 'Service/ProductService';
 
 class HistoryScreen extends Component {
     _searchInfo(code) { //3103220025338
-        this.props.navigation.navigate("Product", {barcode: code});
+        this.props.navigation.navigate("Product", {barcode: code, update : false});
     }
 
     render() {
+        let products = ProductService.findAll();
         if (products.length > 0) {
             return (
                 <View style={styles.mainContainer}>
                     <FlatList
-                        data={products}
+                        data= {products}
                         keyExtractor={(item) => item.id.toString()}
                         renderItem={({item}) => (
                             <TouchableOpacity onPress={ () => this._searchInfo(item.id)}>

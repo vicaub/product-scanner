@@ -12,15 +12,15 @@ class ProductItem extends React.Component {
             <View style={styles.mainContainer}>
                 <Image
                     style={styles.image}
-                    source={{uri: 'https://www.planwallpaper.com/static/images/9-credit-1.jpg'}}
+                    source={{uri: product.image_url}}
                 />
                 <View style={styles.contentContainer}>
                     <View style={styles.headerContainer}>
-                        <Text style={styles.titleText}>{product.title}</Text>
-                        <Text style={styles.voteText}>{product.nutritional_score}</Text>
+                        <Text style={styles.titleText}>{product.name}</Text>
+
                     </View>
                     <View style={styles.descriptionContainer}>
-                        <Text style={styles.descriptionText}>{product.brand}</Text>
+                        <Text style={styles.descriptionText}>{product.ingredients[0]}</Text>
                     </View>
                 </View>
             </View>

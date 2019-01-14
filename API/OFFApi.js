@@ -2,7 +2,7 @@ import ProductService from "../Services/ProductService";
 
 const lang = 'fr';
 //TODO switch back to https
-const apiUrl = 'https://' + lang + '.openfoodfacts.org';
+const apiUrl = 'http://' + lang + '.openfoodfacts.org';
 
 export function getProductInfoFromApi(barcode) {
     const url = apiUrl + '/api/v0/product/' + barcode + '.json';
@@ -13,10 +13,8 @@ export function getProductInfoFromApi(barcode) {
             if (json.status !== 0 && json.code && json.code.length > 0) {
 //TODO delete logs
                 let jsonProduct = json.product;
-           //     console.log("création du produit depuis le json");
-                let product = ProductService.findProduct(jsonProduct, barcode);
-             //   console.log("produit créé avec succès");
-                ProductService.scan(product);
+        //        let product = ProductService.findProduct(jsonProduct, barcode);
+         //       ProductService.scan(product);
 
                 return {
                     _id: json.code,
