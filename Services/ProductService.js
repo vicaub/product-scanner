@@ -36,6 +36,7 @@ let ProductService = {
            let products = DBConnector.objects('Product');
            for (let p of products) {
                console.log(`  ${p.name}`);
+               console.log(`  ${p.barCode}`);
                console.log(`  ${p.nbScans}`);
                console.log(`  ${p.scanDate}`);
                console.log(`  ${p.ingredients[0]}`);
