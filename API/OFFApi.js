@@ -10,7 +10,7 @@ export function getProductInfoFromApi(barcode) {
 }
 
 export function parseProductInfo(rawJson) {
-        console.log(json);
+        console.log(rawJson);
         if (rawJson.status !== 0 && rawJson.code && rawJson.code.length > 0) {
             let jsonProduct = rawJson.product;
             return {

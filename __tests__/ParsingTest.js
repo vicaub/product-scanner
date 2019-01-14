@@ -1,13 +1,13 @@
 import React from 'react';
-import ProductItem from '../Components/ProductItem';
 
 import renderer from 'react-test-renderer';
-import sample from '../Helpers/productData'
-import products from "../Helper/productData";
+import sample from '../Helpers/sample'
+import {parseProductInfo} from '../API/OFFApi';
 
 
-test('Parsing is correct', () => {
-    const tree = renderer.create(<ProductItem product={products[0]}/>).toJSON();
-    expect(tree).toMatchSnapshot();
-});
-
+describe('Parsing', () => {
+    jest.unmock('../API/OFFApi');
+    it('should parse things right', () => {
+        expect(parseProductInfo(sample)).toMatchSnapshot();
+    });
+})
