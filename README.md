@@ -60,6 +60,17 @@ react-native run-android
 
 - "`Cannot add task 'wrapper' as a task with that name already exists.`" : rename the task 'wrapper' to 'wrapper2' for example at the end of `build.gradle`
 
+- Error when running tests : "`Couldn't find preset "module:metro-react-native-babel-preset" relative to directory`" : create `babel.config.js` containing :
+```module.exports = function (api) {
+     api.cache(true)
+   
+     return {
+       presets: ['module:metro-react-native-babel-preset']
+     }
+   }
+   ```
+   Then remove `./babelrc` and run `yarn add --dev babel-jest babel-core@^7.0.0-bridge.0 @babel/core`
+
 ### iOS
 
 [React Native - Running On Device](https://facebook.github.io/react-native/docs/running-on-device.html)

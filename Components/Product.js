@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, ActivityIndicator } from 'react-native';
-import { getProductInfoFromApi } from '../API/OFFApi';
+import { getProductInfoFromApi, parseProductInfo } from '../API/OFFApi';
 import OupsScreen from './Common/Oups';
 
 class ProductScreen extends Component {
@@ -15,7 +15,11 @@ class ProductScreen extends Component {
     }
 
     componentDidMount() {
-        getProductInfoFromApi(this.props.navigation.getParam('barcode')).then(data => {
+        getProductInfoFromApi(this.props.navigation.getParam('barcode'))
+            .then(rawJson => {
+                parseProductInfo(rawJson)
+            })
+            .then(data => {
             console.log(data);
             this.setState({
                 product: data,
