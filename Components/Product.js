@@ -3,7 +3,8 @@ import {StyleSheet, Text, View, ScrollView, Image, ActivityIndicator, TextInput}
 import {getProductInfoFromApi} from '../API/OFFApi';
 import OupsScreen from './Common/Oups';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import NumericInput from 'react-native-numeric-input'
+import NumericInput from 'react-native-numeric-input';
+import Emoji from 'react-native-emoji';
 
 class ProductScreen extends Component {
 
@@ -12,7 +13,9 @@ class ProductScreen extends Component {
         this.state = {
             product: undefined,
             isLoading: true,
-        }
+        };
+        // Initialize numeric input value
+        this.cartCounter = 1;
     }
 
     componentDidMount() {
@@ -76,7 +79,11 @@ class ProductScreen extends Component {
                 </View>
             )
         }
+    }
 
+    _addProductToCart() {
+        console.log(this.cartCounter);
+        // TODO: DB call to add product to today's cart
     }
 
     _displayProductInfo() {
@@ -120,11 +127,33 @@ class ProductScreen extends Component {
                             // source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-e.png'}}
                         />
 
+                        <View
+                            style={{
+                                borderBottomColor: 'grey',
+                                borderBottomWidth: 1,
+                            }}
+                        />
 
-                        <View style={{flexDirection: "row", justifyContent: "center"}}>
-                            <Icon name="cart-arrow-down" size={50} color="#00C378"/>
-                            <NumericInput onChange={value => console.log(value)} />
+                        <View styles={{}}>
+                            <Text style={{textAlign: "center", marginTop: 10}}>
+                                Ajoute cet article à ton panier <Emoji name={"wink"}/>
+                            </Text>
+                            <View style={{flexDirection: "row", justifyContent: "center"}}>
+                                <View style={[styles.cartButton, {marginTop: 12}]}>
+                                    <NumericInput initValue={this.cartCounter} onChange={value => this.cartCounter = value} />
+                                </View>
+                                <View style={styles.cartButton}>
+                                    <Icon.Button
+                                        name="cart-arrow-down"
+                                        size={50}
+                                        color="#00C378"
+                                        backgroundColor="transparent"
+                                        onPress={() => this._addProductToCart()}
+                                    />
+                                </View>
+                            </View>
                         </View>
+
 
 
                     </ScrollView>
@@ -165,7 +194,8 @@ const styles = StyleSheet.create({
     },
     image_nutri: {
         height: 80,
-        margin: 5,
+        marginTop: 5,
+        marginBottom: 10,
         resizeMode: "contain",
     },
     headerDescription: {
@@ -206,11 +236,14 @@ const styles = StyleSheet.create({
         margin: 5,
         marginBottom: 15
     },
-
     defaultText: {
         marginLeft: 5,
         marginRight: 5,
     },
+    cartButton: {
+        marginLeft: 15,
+        marginRight: 15,
+    }
 });
 
 export default ProductScreen;
