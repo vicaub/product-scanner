@@ -13,9 +13,10 @@ class ProductScreen extends Component {
         this.state = {
             product: undefined,
             isLoading: true,
+            fromBasket: this.props.navigation.getParam('fromBasket'),
         };
         // Initialize numeric input value
-        this.cartCounter = 1;
+        this.cartCounter =  this.props.navigation.getParam('cartCounter') ?  this.props.navigation.getParam('cartCounter') : 1;
     }
 
     componentDidMount() {
@@ -86,6 +87,60 @@ class ProductScreen extends Component {
         // TODO: DB call to add product to today's cart
     }
 
+    _printBasketOptions() {
+
+        if (this.state.fromBasket === true) {
+            return (
+                <View styles={{}}>
+                    <Text style={{textAlign: "center", marginTop: 10}}>
+                        Supprimer l'article du panier
+                    </Text>
+                    <View style={{flexDirection: "row", justifyContent: "center"}}>
+                        <Text>{this.cartCounter}</Text>
+                        <View style={styles.cartButton}>
+                            <Icon.Button
+                                name="trash"
+                                size={50}
+                                color="#00C378"
+                                backgroundColor="transparent"
+                                onPress={() => {
+                                    this._addProductToCart()
+                                    this.setState({fromBasket: false})
+                                }}
+                            />
+                        </View>
+                    </View>
+                </View>
+            )
+        } else {
+            return (
+                <View styles={{}}>
+                    <Text style={{textAlign: "center", marginTop: 10}}>
+                        Ajoute cet article à ton panier d'aujourd'hui <Emoji name={"wink"}/>
+                    </Text>
+                    <View style={{flexDirection: "row", justifyContent: "center"}}>
+                        <View style={[styles.cartButton, {marginTop: 12}]}>
+                            <NumericInput initValue={this.cartCounter} onChange={value => this.cartCounter = value}/>
+                        </View>
+                        <View style={styles.cartButton}>
+                            <Icon.Button
+                                name="cart-arrow-down"
+                                size={50}
+                                color="#00C378"
+                                backgroundColor="transparent"
+                                underlayColor="transparent"
+                                onPress={() => {
+                                    this._addProductToCart()
+                                    this.setState({fromBasket: true})}
+                                }
+                            />
+                        </View>
+                    </View>
+                </View>
+            )
+        }
+    }
+
     _displayProductInfo() {
         const {product, isLoading} = this.state;
         const B = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>;
@@ -134,26 +189,7 @@ class ProductScreen extends Component {
                             }}
                         />
 
-                        <View styles={{}}>
-                            <Text style={{textAlign: "center", marginTop: 10}}>
-                                Ajoute cet article à ton panier <Emoji name={"wink"}/>
-                            </Text>
-                            <View style={{flexDirection: "row", justifyContent: "center"}}>
-                                <View style={[styles.cartButton, {marginTop: 12}]}>
-                                    <NumericInput initValue={this.cartCounter} onChange={value => this.cartCounter = value} />
-                                </View>
-                                <View style={styles.cartButton}>
-                                    <Icon.Button
-                                        name="cart-arrow-down"
-                                        size={50}
-                                        color="#00C378"
-                                        backgroundColor="transparent"
-                                        onPress={() => this._addProductToCart()}
-                                    />
-                                </View>
-                            </View>
-                        </View>
-
+                        {this._printBasketOptions()}
 
 
                     </ScrollView>
