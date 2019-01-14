@@ -71,6 +71,7 @@ class Allergies extends Component {
                             onSelectedItemsChange={this.onSelectedItemsChange}
                             selectedItems={selectedItems}
                             selectText="Allergies"
+                            selectTextInfo="sélectionnée(s)"
                             searchInputPlaceholderText="Recherche..."
                             tagRemoveIconColor="#00C378"
                             tagBorderColor="#00C378"
@@ -80,8 +81,8 @@ class Allergies extends Component {
                             itemTextColor="#000"
                             displayKey="name"
                             searchInputStyle={{ color: '#CCC' }}
-                            submitButtonColor="#CCC"
-                            submitButtonText="Valider"
+                            hideSubmitButton={true}
+                            noResultText="Aucun résultat trouvé."
                         />
                     </View>
                     <View style={styles.bottomView}>
