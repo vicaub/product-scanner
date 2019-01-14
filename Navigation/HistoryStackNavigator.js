@@ -10,7 +10,7 @@ const HistoryStackNavigator = createStackNavigator({
     History: {
         screen: HistoryScreen,
         navigationOptions: ({ navigation }) => ({
-            title: 'Historique',
+            title: 'Mes Scans',
             headerLeft: <HamburgerIcon navigationProps={ navigation }/>,
             headerRight: <View></View>,
             headerTitleStyle: {
