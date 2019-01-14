@@ -2,7 +2,7 @@
 
 var data;
 export default data = [
-    {
+    /*{
         id:3103220025338,
         nutritional_score:"D",
         title:"Dragibus",
@@ -15,5 +15,5 @@ export default data = [
         title:"Encore !",
         brand:"Cote d'Or",
         image:"https://static.openfoodfacts.org/images/products/762/221/088/8082/front_fr.14.400.jpg"
-    }
+    }*/
 ]
