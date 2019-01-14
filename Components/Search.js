@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Button, TextInput} from 'react-native';
+import ActionButton from './Common/ActionButton';
 
 class SearchScreen extends Component {
 
@@ -22,12 +23,17 @@ class SearchScreen extends Component {
         return (
             <View style={styles.homeContainer}>
                 <TextInput
-                    style={styles.textInput}
+                    style={styles.searchInput}
                     placeholder='Code barre'
                     onChangeText={(text) => this._searchTextInputChanged(text)}
                     keyboardType='number-pad'
+                    clearButtonMode='always'
                 />
-                <Button style={{height: 50}} title="Rechercher" onPress={() => this._searchInfo()}/>
+                <ActionButton
+                    title="Rechercher"
+                    color="#FFDC32"
+                    onPress={() => this._searchInfo()}
+                />
             </View>
         );
     }
@@ -41,12 +47,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    textInput: {
+    searchInput: {
         marginBottom: 10,
         height: 50,
         width: 300,
-        paddingLeft: 5,
-        borderColor: '#000000', 
+        borderColor: '#8c8c8c',
         borderWidth: 1,
-    }
+        borderRadius: 100,
+        textAlign: 'center',
+        color: '#8c8c8c',
+    },
 });

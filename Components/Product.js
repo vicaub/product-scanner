@@ -1,8 +1,10 @@
-
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, ActivityIndicator } from 'react-native';
-import { getProductInfoFromApi, parseProductInfo } from '../API/OFFApi';
+import React, {Component} from 'react';
+import {StyleSheet, Text, View, ScrollView, Image, ActivityIndicator, TextInput} from 'react-native';
+import {getProductInfoFromApi} from '../API/OFFApi';
 import OupsScreen from './Common/Oups';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import NumericInput from 'react-native-numeric-input';
+import Emoji from 'react-native-emoji';
 
 class ProductScreen extends Component {
 
@@ -11,7 +13,9 @@ class ProductScreen extends Component {
         this.state = {
             product: undefined,
             isLoading: true,
-        }
+        };
+        // Initialize numeric input value
+        this.cartCounter = 1;
     }
 
     componentDidMount() {
@@ -32,40 +36,135 @@ class ProductScreen extends Component {
         if (this.state.isLoading) {
             return (
                 <View style={styles.loadingContainer}>
-                    <ActivityIndicator size='large' />
+                    <ActivityIndicator size='large'/>
                 </View>
             )
         }
     }
 
+    /**
+     * Input: string of ingredients with allergens
+     * Output: JSX corresponding to the <Text> with allergens in bold
+     */
+    static _parseIngredientWithAllergens(ingredientsWithAllergens) {
+        if (!ingredientsWithAllergens) {
+            return (<Text style={styles.defaultText}>Non renseigné</Text>)
+        } else {
+            const splitedIngredients = ingredientsWithAllergens.split(/<span class=\"allergen\">|<\/span>/);
+
+            const allergens = splitedIngredients.filter((value, index) => index % 2 === 1);
+
+            return (
+                <Text style={styles.defaultText}>
+                    {splitedIngredients.map((value, index) => {
+                        if (index % 2 === 1) {
+                            return (
+                                <Text style={{fontWeight: 'bold'}} key={index}>{value}</Text>
+                            )
+                        } else {
+                            return (
+                                <Text key={index}>{value}</Text>
+                            )
+                        }
+                    })}
+                </Text>
+            )
+        }
+    }
+
+    static _parseAllergens(allergens) {
+        if (!allergens) {
+            return (<View></View>);
+        } else {
+            return (
+                <View>
+                    <Text style={styles.titleText}>Allergènes</Text>
+                    <Text style={styles.defaultText}>{allergens}</Text>
+                </View>
+            )
+        }
+    }
+
+    _addProductToCart() {
+        console.log(this.cartCounter);
+        // TODO: DB call to add product to today's cart
+    }
+//TODO switch request back to https
     _displayProductInfo() {
-        const { product, isLoading } = this.state;
+        const {product, isLoading} = this.state;
+        const B = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>;
         if (!isLoading) {
             if (product !== undefined && !isLoading) {
                 return (
-                    <ScrollView style={styles.scrollViewContainer}>
+                    <ScrollView style={styles.scrollview_container}>
+                        <View style={styles.headerContainer}>
+                            <Image
+                                style={styles.image_product}
+                                source={product.image_url ? {uri: product.image_url} : require('../assets/images/No-images-placeholder.png')}
+                            />
+                            <View style={styles.headerDescription}>
+                                <Text
+                                    style={styles.productNameText}>{product.product_name ? product.product_name : "Nom inconnu"}</Text>
+                                <Text style={styles.defaultText}>Quantité
+                                    : {product.quantity ? product.quantity : "Non renseignée"}</Text>
+                                <Text style={styles.defaultText}>Marque
+                                    : {product.brands ? product.brands : "Non renseignée"}</Text>
+                                <Text style={styles.descriptionText}>Code barre : {product._id}</Text>
+                            </View>
+                        </View>
+
+                        <Text style={styles.titleText}>Catégories</Text>
+
+                        <Text
+                            style={styles.defaultText}>{product.categories ? product.categories : "Non renseigné"}
+                        </Text>
+
+                        <Text style={styles.titleText}>Ingrédients</Text>
+
+                        {ProductScreen._parseIngredientWithAllergens(product.ingredients)}
+
+                        {ProductScreen._parseAllergens(product.allergens)}
+
                         <Image
-                            style={styles.image}
-                            source={{uri: product.image_url}}
+                            style={styles.image_nutri}
+                            source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-' + product.nutrition_grades + '.png'}}
+                            // source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-e.png'}}
                         />
-                        <Text style={styles.titleText}>{product.product_name}</Text>
-                        <Text style={styles.descriptionText}>Code barre : {product._id}</Text>
-                        <Text style={styles.defaultText}>Quantité : {product.quantity}</Text>
-                        <Text style={styles.defaultText}>Conditionnement : {product.packaging}</Text>
-                        <Text style={styles.defaultText}>Marques : {product.brands}</Text>
-                        <Image
-                            style={styles.image}
-                            source={{uri: 'https://static.openfoodfacts.org/images/misc/nova-group-4.svg'}}
+
+                        <View
+                            style={{
+                                borderBottomColor: 'grey',
+                                borderBottomWidth: 1,
+                            }}
                         />
-                        <Image
-                            style={styles.image}
-                            source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-a.svg'}}
-                        />
+
+                        <View styles={{}}>
+                            <Text style={{textAlign: "center", marginTop: 10}}>
+                                Ajoute cet article à ton panier <Emoji name={"wink"}/>
+                            </Text>
+                            <View style={{flexDirection: "row", justifyContent: "center"}}>
+                                <View style={[styles.cartButton, {marginTop: 12}]}>
+                                    <NumericInput initValue={this.cartCounter} onChange={value => this.cartCounter = value} />
+                                </View>
+                                <View style={styles.cartButton}>
+                                    <Icon.Button
+                                        name="cart-arrow-down"
+                                        size={50}
+                                        color="#00C378"
+                                        backgroundColor="transparent"
+                                        onPress={() => this._addProductToCart()}
+                                    />
+                                </View>
+                            </View>
+                        </View>
+
+
+
                     </ScrollView>
                 )
             } else {
                 return (
-                    <OupsScreen message="Nous n'avons pas trouvé les informations de ce produit :/" />
+                    <OupsScreen message="Nous n'avons pas trouvé les informations de ce produit :/"/>
                 );
             }
         }
@@ -85,6 +184,27 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1
     },
+    scrollview_container: {
+        flex: 1,
+        flexDirection: "column"
+    },
+    headerContainer: {
+        flexDirection: "row",
+    },
+    image_product: {
+        flex: 1,
+        margin: 5,
+        resizeMode: 'contain',
+    },
+    image_nutri: {
+        height: 80,
+        marginTop: 5,
+        marginBottom: 10,
+        resizeMode: "contain",
+    },
+    headerDescription: {
+        flex: 1,
+    },
     loadingContainer: {
         position: 'absolute',
         left: 0,
@@ -94,24 +214,25 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    scrollViewContainer: {
-        flex: 1
-    },
-    image: {
-        height: 169,
-        margin: 5
-    },
-    titleText: {
+    productNameText: {
         fontWeight: 'bold',
-        fontSize: 35,
-        flex: 1,
+        fontSize: 30,
         flexWrap: 'wrap',
         marginLeft: 5,
         marginRight: 5,
         marginTop: 10,
         marginBottom: 10,
         color: '#000000',
-        textAlign: 'center'
+        textAlign: 'left'
+    },
+    titleText: {
+        fontWeight: 'bold',
+        fontSize: 18,
+        flexWrap: 'wrap',
+        marginLeft: 5,
+        marginRight: 5,
+        color: '#000000',
+        textAlign: 'left'
     },
     descriptionText: {
         fontStyle: 'italic',
@@ -119,11 +240,14 @@ const styles = StyleSheet.create({
         margin: 5,
         marginBottom: 15
     },
-    defaultText: {
+    defaultText: {
         marginLeft: 5,
         marginRight: 5,
-        marginTop: 5,
     },
+    cartButton: {
+        marginLeft: 15,
+        marginRight: 15,
+    }
 });
 
 export default ProductScreen;
