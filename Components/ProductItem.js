@@ -1,5 +1,7 @@
 // Components/FilmItem.js
 
+// Components/FilmItem.js
+
 import React from 'react'
 import { StyleSheet, View, Text, Image } from 'react-native'
 
@@ -10,7 +12,7 @@ class ProductItem extends React.Component {
             <View style={styles.mainContainer}>
                 <Image
                     style={styles.image}
-                    source={{uri: product.image}}
+                    source={{uri: 'https://www.planwallpaper.com/static/images/9-credit-1.jpg'}}
                 />
                 <View style={styles.contentContainer}>
                     <View style={styles.headerContainer}>
