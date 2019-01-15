@@ -141,6 +141,7 @@ class ProductScreen extends Component {
         }
     }
 
+//TODO switch request back to https
     _displayProductInfo() {
         const {product, isLoading} = this.state;
         const B = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>;
