@@ -5,6 +5,7 @@ import OupsScreen from './Common/Oups';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import NumericInput from 'react-native-numeric-input';
 import Emoji from 'react-native-emoji';
+import UserService from '../Services/UserService'
 
 
 class ProductScreen extends Component {
@@ -173,14 +174,18 @@ class ProductScreen extends Component {
             let user = UserService.findAll()[0];
             let allergens = [];
             for (let allergen of product.allergens_ids) {
-                if (Array.from(user.allergies).includes(allergen)) {
-                    allergens.push(allergen); //change to allergen name instead of id
+                for (let user_allergen of Array.from(user.allergies)) {
+                    if (user_allergen.id === allergen) {
+                        allergens.push(user_allergen.name); //change to allergen name instead of id
+                    }
                 }
             }
-            Alert.alert(
-                'Attention',
-                'Nous avons détecté des ingrédients dont vous êtes allergiques dans ce produit: '+ allergens.toString()
-            );
+            if (allergens.length !== 0){
+                Alert.alert(
+                    'Attention',
+                    'Nous avons détecté des ingrédients dont vous êtes allergiques dans ce produit : '+ allergens.toString()
+                );
+            }
         }
     }
 
