@@ -2,7 +2,10 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView, Image, ActivityIndicator, Alert} from 'react-native';
 import {getProductInfoFromApi} from '../API/OFFApi';
 import OupsScreen from './Common/Oups';
-import UserService from "../Services/UserService";
+import Icon from 'react-native-vector-icons/FontAwesome';
+import NumericInput from 'react-native-numeric-input';
+import Emoji from 'react-native-emoji';
+
 
 class ProductScreen extends Component {
 
@@ -11,7 +14,9 @@ class ProductScreen extends Component {
         this.state = {
             product: undefined,
             isLoading: true,
-        }
+        };
+        // Initialize numeric input value
+        this.cartCounter = 1;
     }
 
     componentDidMount() {
@@ -55,7 +60,7 @@ class ProductScreen extends Component {
                             )
                         } else {
                             return (
-                                <Text>{value}</Text>
+                                <Text key={index}>{value}</Text>
                             )
                         }
                     })}
@@ -75,9 +80,13 @@ class ProductScreen extends Component {
                 </View>
             )
         }
-
     }
 
+    _addProductToCart() {
+        console.log(this.cartCounter);
+        // TODO: DB call to add product to today's cart
+    }
+//TODO switch request back to https
     _displayProductInfo() {
         const {product, isLoading} = this.state;
         const B = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>;
@@ -88,7 +97,7 @@ class ProductScreen extends Component {
                         <View style={styles.headerContainer}>
                             <Image
                                 style={styles.image_product}
-                                source={product.image_url ? {uri: product.image_url} : require('./images/No-images-placeholder.png')}
+                                source={product.image_url ? {uri: product.image_url} : require('../assets/images/No-images-placeholder.png')}
                             />
                             <View style={styles.headerDescription}>
                                 <Text
@@ -118,6 +127,35 @@ class ProductScreen extends Component {
                             source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-' + product.nutrition_grades + '.png'}}
                             // source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-e.png'}}
                         />
+
+                        <View
+                            style={{
+                                borderBottomColor: 'grey',
+                                borderBottomWidth: 1,
+                            }}
+                        />
+
+                        <View styles={{}}>
+                            <Text style={{textAlign: "center", marginTop: 10}}>
+                                Ajoute cet article à ton panier <Emoji name={"wink"}/>
+                            </Text>
+                            <View style={{flexDirection: "row", justifyContent: "center"}}>
+                                <View style={[styles.cartButton, {marginTop: 12}]}>
+                                    <NumericInput initValue={this.cartCounter} onChange={value => this.cartCounter = value} />
+                                </View>
+                                <View style={styles.cartButton}>
+                                    <Icon.Button
+                                        name="cart-arrow-down"
+                                        size={50}
+                                        color="#00C378"
+                                        backgroundColor="transparent"
+                                        onPress={() => this._addProductToCart()}
+                                    />
+                                </View>
+                            </View>
+                        </View>
+
+
 
                     </ScrollView>
                 )
@@ -176,7 +214,8 @@ const styles = StyleSheet.create({
     },
     image_nutri: {
         height: 80,
-        margin: 5,
+        marginTop: 5,
+        marginBottom: 10,
         resizeMode: "contain",
     },
     headerDescription: {
@@ -217,11 +256,14 @@ const styles = StyleSheet.create({
         margin: 5,
         marginBottom: 15
     },
-
     defaultText: {
         marginLeft: 5,
         marginRight: 5,
     },
+    cartButton: {
+        marginLeft: 15,
+        marginRight: 15,
+    }
 });
 
 export default ProductScreen;

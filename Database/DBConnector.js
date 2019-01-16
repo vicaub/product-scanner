@@ -4,6 +4,18 @@ import Realm from 'realm';
 // exemple
 // https://github.com/realm/realm-js/tree/master/examples/ReactExample/components
 
+
+class Allergen extends Realm.Object {
+}
+
+Allergen.schema = {
+    name: 'Allergen',
+    properties: {
+        id: 'string',
+        name: 'string',
+    },
+};
+
 class User extends Realm.Object {
 }
 
@@ -15,7 +27,7 @@ User.schema = {
         name: 'string',
         birthDate: 'date?',
         gender: 'string?',
-        allergies: {type: 'list', objectType: 'string', default: []},
+        allergies: 'Allergen[]',
         updatedAt: 'date?',
     },
 };
@@ -29,25 +41,16 @@ Product.schema = {
     properties: {
         barCode: 'string',
         name: 'string',
+        categories: {type : 'list', objectType: 'string', default: []},
         scanDate: 'date',
+        nbScans: 'int',
         imageUrl: 'string',
         ingredients: {type: 'list', objectType: 'string', default: []},
         allergens: {type: 'list', objectType: 'string', default: []}
     },
 };
 
-class Ingredient extends Realm.Object {
-}
 
-Ingredient.schema = {
-    name: 'Ingredient',
-    properties: {
-        name: 'string',
-        allergen: {type: 'bool', default: false},
-        imageUrl: 'string',
-        ingredients: {type: 'list', objectType: 'string'},
-    },
-};
 
 // incrémenter schemaVersion à chaque modification des tables
-export default new Realm({schema: [User, Product], schemaVersion: 8});
+export default new Realm({schema: [Allergen, User, Product], schemaVersion: 12});
