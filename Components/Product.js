@@ -176,14 +176,14 @@ class ProductScreen extends Component {
             for (let allergen of product.allergens_ids) {
                 for (let user_allergen of Array.from(user.allergies)) {
                     if (user_allergen.id === allergen) {
-                        allergens.push(user_allergen.name); //change to allergen name instead of id
+                        allergens.push(user_allergen.name);
                     }
                 }
             }
             if (allergens.length !== 0){
                 Alert.alert(
                     'Attention',
-                    'Nous avons détecté des ingrédients dont vous êtes allergiques dans ce produit : '+ allergens.toString()
+                    'Nous avons détecté des ingrédients dont vous êtes allergique dans ce produit : '+ allergens.toString()
                 );
             }
         }
