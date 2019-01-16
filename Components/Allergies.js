@@ -10,59 +10,6 @@ import { getAllergensFromApi } from '../API/OFFApi';
 import ActionButton from './Common/ActionButton';
 import UserService from "../Services/UserService";
 
-let items = [{
-    id: 'lol',
-    name: 'Troll'
-  }, {
-    id: 'en:milk',
-    name: 'Lait',
-  }, {
-    id: 'en:gluten',
-    name: 'Gluten',
-  }, {
-    id: 'en:eggs',
-    name: 'Œufs',
-  }, {
-    id: 'en:soybeans',
-    name: 'Soja',
-  }, {
-    id: 'en:nuts',
-    name: 'Fruits à coque',
-  }, {
-    id: 'en:fish',
-    name: 'Poisson',
-  }, {
-    id: 'en:mustard',
-    name: 'Moutarde',
-  }, {
-    id: 'en:celery',
-    name: 'Céleri',
-  }, {
-    id: 'en:sesame-seeds1',
-    name: 'Graines de sésame',
-  }, {
-    id: 'en:sesame-seeds2',
-    name: 'Graines de sésame',
-  }, {
-    id: 'en:sesame-seeds3',
-    name: 'Graines de sésame',
-  }, {
-    id: 'en:sesame-seeds4',
-    name: 'Graines de sésame',
-  }, {
-    id: 'en:sesame-seeds5',
-    name: 'Graines de sésame',
-  }, {
-    id: 'en:sesame-seeds6',
-    name: 'Graines de sésame 6',
-  }, {
-    id: 'en:sesame-seeds7',
-    name: 'Graines de sésame 7',
-  }, {
-    id: 'en:sesame-seeds8',
-    name: 'Graines de sésame 8',
-  }];
-
 class Allergies extends Component {
 
     constructor(props) {
@@ -119,11 +66,12 @@ class Allergies extends Component {
                         <MultiSelect 
                             items={allergens}
                             uniqueKey="id"
-                            // fixedHeight // => scroll and submit issues
+                            fixedHeight // => scroll and submit issues
                             autoFocusInput={false}
                             onSelectedItemsChange={this.onSelectedItemsChange}
                             selectedItems={selectedItems}
                             selectText="Allergies"
+                            selectTextInfo="sélectionnée(s)"
                             searchInputPlaceholderText="Recherche..."
                             tagRemoveIconColor="#00C378"
                             tagBorderColor="#00C378"
@@ -133,8 +81,8 @@ class Allergies extends Component {
                             itemTextColor="#000"
                             displayKey="name"
                             searchInputStyle={{ color: '#CCC' }}
-                            submitButtonColor="#CCC"
-                            submitButtonText="Valider"
+                            hideSubmitButton={true}
+                            noResultText="Aucun résultat trouvé."
                         />
                     </View>
                     <View style={styles.bottomView}>
