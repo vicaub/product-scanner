@@ -95,8 +95,8 @@ class ProductScreen extends Component {
                     <Text style={{textAlign: "center", marginTop: 10}}>
                         Supprimer l'article du panier
                     </Text>
-                    <View style={{flexDirection: "row", justifyContent: "center"}}>
-                        <Text>{this.cartCounter}</Text>
+                    <View style={{flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+                        <Text style={{fontSize: 20}}>{this.cartCounter}</Text>
                         <View style={styles.cartButton}>
                             <Icon.Button
                                 name="trash"
@@ -120,7 +120,7 @@ class ProductScreen extends Component {
                     </Text>
                     <View style={{flexDirection: "row", justifyContent: "center"}}>
                         <View style={[styles.cartButton, {marginTop: 12}]}>
-                            <NumericInput initValue={this.cartCounter} onChange={value => this.cartCounter = value}/>
+                            <NumericInput minValue={0} initValue={this.cartCounter} onChange={value => this.cartCounter = value}/>
                         </View>
                         <View style={styles.cartButton}>
                             <Icon.Button
