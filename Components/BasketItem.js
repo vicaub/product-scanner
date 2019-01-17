@@ -1,11 +1,11 @@
 // Components/FilmItem.js
 
 import React from 'react'
-import { StyleSheet, View, Text, Image } from 'react-native'
+import {StyleSheet, View, Text, Image} from 'react-native'
 
 class BasketItem extends React.Component {
 
-    _getTotalQuantity () {
+    _getTotalQuantity() {
         let totalQuantity = 0;
         this.props.basket.products.forEach((product) => {
             totalQuantity += product.quantity;
@@ -15,6 +15,13 @@ class BasketItem extends React.Component {
 
     render() {
         const basket = this.props.basket;
+        const dateString = basket.date.toLocaleDateString("fr-FR", {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        console.log(dateString);
         return (
             <View style={styles.mainContainer}>
                 <Image
@@ -23,7 +30,9 @@ class BasketItem extends React.Component {
                 />
                 <View style={styles.contentContainer}>
                     <View style={styles.headerContainer}>
-                        <Text style={styles.titleText}>Panier du {basket.date}</Text>
+                        <Text style={styles.titleText}>
+                            Panier du {dateString}
+                        </Text>
                         {/*<Text style={styles.voteText}>{basket.nutritional_score}</Text>*/}
                     </View>
                     <View style={styles.descriptionContainer}>

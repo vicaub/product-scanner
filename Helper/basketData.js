@@ -4,7 +4,7 @@ var data;
 export default data = [
     {
         id: 1,
-        date: new Date().toDateString(),
+        date: new Date(),
         products: [
             {
                 id: 3103220025338,
@@ -24,7 +24,7 @@ export default data = [
     },
     {
         id: 0,
-        date: new Date(Date.parse("Jan 9 2019")).toDateString(),
+        date: new Date(Date.parse("Jan 9 2019")),
         products: [
             {
                 id: 5000159442053,
