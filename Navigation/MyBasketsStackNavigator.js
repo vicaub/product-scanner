@@ -50,7 +50,6 @@ const MyBasketsStackNavigator = createStackNavigator({
         screen: BasketDetails,
         navigationOptions: ({ navigation }) => ({
             title: 'Détails du Panier',
-            headerLeft: <HamburgerIcon navigationProps={ navigation }/>,
             headerRight: <View></View>,
             headerTitleStyle: {
                 fontFamily: 'Lobster-Regular',
