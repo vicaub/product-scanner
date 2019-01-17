@@ -7,12 +7,12 @@ import { StyleSheet, View, Text, Image } from 'react-native'
 
 class ProductItem extends React.Component {
     render() {
-        const product = this.props.product
+        const product = this.props.product;
         return (
             <View style={styles.mainContainer}>
                 <Image
                     style={styles.image}
-                    source={{uri: 'https://www.planwallpaper.com/static/images/9-credit-1.jpg'}}
+                    source={{uri: product.image}}
                 />
                 <View style={styles.contentContainer}>
                     <View style={styles.headerContainer}>
