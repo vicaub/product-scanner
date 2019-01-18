@@ -23,11 +23,10 @@ class Allergies extends Component {
 
     componentDidMount() {
         getAllergensFromApi().then((data) => {
-            console.log(data);
             let user = UserService.findAll()[0];
-            console.log(Array.from(user.allergies));
+            let allergies = user.allergies.map((allergy) => allergy.id);
             this.setState({
-                selectedItems: Array.from(user.allergies),
+                selectedItems: allergies,
                 allergens: data,
                 isLoading: false,
             });
@@ -39,9 +38,12 @@ class Allergies extends Component {
     };
 
     handleSubmit() {
+        let allergies = this.state.selectedItems.map((item) => {
+            return this.state.allergens.find(allergen => allergen._id === item).obj;
+        });
         UserService.update({
             username: this.props.navigation.getParam('userId'),
-            allergies: this.state.selectedItems,
+            allergies,
         }, () => {
             this.props.navigation.goBack();
         });
@@ -65,8 +67,7 @@ class Allergies extends Component {
                     <View>
                         <MultiSelect 
                             items={allergens}
-                            uniqueKey="id"
-                            fixedHeight // => scroll and submit issues
+                            uniqueKey="_id"
                             autoFocusInput={false}
                             onSelectedItemsChange={this.onSelectedItemsChange}
                             selectedItems={selectedItems}
