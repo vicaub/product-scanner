@@ -14,9 +14,8 @@ class ProductScreen extends Component {
             product: undefined,
             isLoading: true,
             fromBasket: this.props.navigation.getParam('fromBasket'),
+            cartCounter: this.props.navigation.getParam('cartCounter') ?  this.props.navigation.getParam('cartCounter') : 1
         };
-        // Initialize numeric input value
-        this.cartCounter =  this.props.navigation.getParam('cartCounter') ?  this.props.navigation.getParam('cartCounter') : 1;
     }
 
     componentDidMount() {
@@ -83,7 +82,7 @@ class ProductScreen extends Component {
     }
 
     _addProductToCart() {
-        console.log(this.cartCounter);
+        console.log(this.state.cartCounter);
         // TODO: DB call to add product to today's cart
     }
 
@@ -96,7 +95,7 @@ class ProductScreen extends Component {
                         Supprimer l'article du panier
                     </Text>
                     <View style={{flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
-                        <Text style={{fontSize: 20}}>{this.cartCounter}</Text>
+                        <Text style={{fontSize: 20}}>{this.state.cartCounter}</Text>
                         <View style={styles.cartButton}>
                             <Icon.Button
                                 name="trash"
@@ -120,7 +119,11 @@ class ProductScreen extends Component {
                     </Text>
                     <View style={{flexDirection: "row", justifyContent: "center"}}>
                         <View style={[styles.cartButton, {marginTop: 12}]}>
-                            <NumericInput minValue={0} initValue={this.cartCounter} onChange={value => this.cartCounter = value}/>
+                            <NumericInput
+                                minValue={1}
+                                initValue={this.state.cartCounter}
+                                onChange={value => this.setState({cartCounter: value})}
+                            />
                         </View>
                         <View style={styles.cartButton}>
                             <Icon.Button
