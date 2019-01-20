@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 import {
     StyleSheet,
     View,
+    Text,
     ART,
+    TouchableWithoutFeedback,
 } from 'react-native';
 import Theme from '../Theme';
 
@@ -51,7 +53,7 @@ class Pie extends Component {
         this._value = this._value.bind(this);
         this._label = this._label.bind(this);
         this._color = this._color.bind(this);
-        // this._onPieItemSelected = this._onPieItemSelected.bind(this);
+        this._onPieItemSelected = this._onPieItemSelected.bind(this);
     }
 
     // methods used to tranform data into piechart:
@@ -99,7 +101,6 @@ class Pie extends Component {
                 <Surface width={this.props.width} height={this.props.height}>
                     <Group x={x} y={y}>
                         {
-                            // pieChart has all the svg paths calculated in step 2)
                             this.props.data.map( (item, index) => {
                                 return (<Shape
                                     key={'pie_shape_' + index}
@@ -111,6 +112,24 @@ class Pie extends Component {
                         }
                     </Group>
                 </Surface>
+                <View style={{position: 'absolute', top:margin, left: 2*margin + this.props.pieWidth}}>
+                    {
+                        this.props.data.map( (item, index) =>
+                        {
+                            let fontWeight = this.state.highlightedIndex == index ? 'bold' : 'normal';
+                            return (
+                                <TouchableWithoutFeedback key={index} onPress={() => this._onPieItemSelected(index)}>
+                                    <View>
+                                        <Text
+                                            style={[styles.label, {color: this._color(index), fontWeight: fontWeight}]}>
+                                            {this._label(item)}: {this._value(item)}%
+                                        </Text>
+                                    </View>
+                                </TouchableWithoutFeedback>
+                            );
+                        })
+                    }
+                </View>
             </View>
         );
     }
