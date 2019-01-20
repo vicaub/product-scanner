@@ -8,7 +8,7 @@ import OupsScreen from './Common/Oups';
 
 class HistoryScreen extends Component {
     _searchInfo(code) { //3103220025338
-        this.props.navigation.navigate("Product", {barcode: code});
+        this.props.navigation.navigate("Product", {barcode: code, fromHistory: true});
     }
 
     render() {

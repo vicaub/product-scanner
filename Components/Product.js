@@ -14,6 +14,7 @@ class ProductScreen extends Component {
             product: undefined,
             isLoading: true,
             fromBasket: this.props.navigation.getParam('fromBasket'),
+            fromHistory: this.props.navigation.getParam('fromHistory'),
             cartCounter: this.props.navigation.getParam('cartCounter') ?  this.props.navigation.getParam('cartCounter') : 1
         };
     }
@@ -68,6 +69,9 @@ class ProductScreen extends Component {
         }
     }
 
+    /**
+     * Generate JSX for allergens
+     */
     static _parseAllergens(allergens) {
         if (!allergens) {
             return (<View></View>);
@@ -86,61 +90,69 @@ class ProductScreen extends Component {
         // TODO: DB call to add product to today's cart
     }
 
+    /**
+     * Generate JSX for adding product to cart or remove it from cart
+     */
     _printBasketOptions() {
-
-        if (this.state.fromBasket === true) {
-            return (
-                <View styles={{}}>
-                    <Text style={{textAlign: "center", marginTop: 10}}>
-                        Supprimer l'article du panier
-                    </Text>
-                    <View style={{flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
-                        <Text style={{fontSize: 20}}>{this.state.cartCounter}</Text>
-                        <View style={styles.cartButton}>
-                            <Icon.Button
-                                name="trash"
-                                size={50}
-                                color="#00C378"
-                                backgroundColor="transparent"
-                                onPress={() => {
-                                    this._addProductToCart()
-                                    this.setState({fromBasket: false})
-                                }}
-                            />
+        if (!this.state.fromHistory) {
+            if (this.state.fromBasket === true) {
+                return (
+                    <View styles={{}}>
+                        <Text style={{textAlign: "center", marginTop: 10}}>
+                            Supprimer l'article du panier
+                        </Text>
+                        <View style={{flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+                            <Text style={{fontSize: 20}}>{this.state.cartCounter}</Text>
+                            <View style={styles.cartButton}>
+                                <Icon.Button
+                                    name="trash"
+                                    size={50}
+                                    color="#00C378"
+                                    backgroundColor="transparent"
+                                    underlayColor="transparent"
+                                    onPress={() => {
+                                        this._addProductToCart()
+                                        this.setState({fromBasket: false})
+                                    }}
+                                />
+                            </View>
                         </View>
                     </View>
-                </View>
-            )
-        } else {
-            return (
-                <View styles={{}}>
-                    <Text style={{textAlign: "center", marginTop: 10}}>
-                        Ajoute cet article à ton panier d'aujourd'hui <Emoji name={"wink"}/>
-                    </Text>
-                    <View style={{flexDirection: "row", justifyContent: "center"}}>
-                        <View style={[styles.cartButton, {marginTop: 12}]}>
-                            <NumericInput
-                                minValue={1}
-                                initValue={this.state.cartCounter}
-                                onChange={value => this.setState({cartCounter: value})}
-                            />
-                        </View>
-                        <View style={styles.cartButton}>
-                            <Icon.Button
-                                name="cart-arrow-down"
-                                size={50}
-                                color="#00C378"
-                                backgroundColor="transparent"
-                                underlayColor="transparent"
-                                onPress={() => {
-                                    this._addProductToCart()
-                                    this.setState({fromBasket: true})}
-                                }
-                            />
+                )
+            } else {
+                return (
+                    <View>
+                        <Text style={{textAlign: "center", marginTop: 10}}>
+                            Ajoute cet article à ton panier d'aujourd'hui <Emoji name={"wink"}/>
+                        </Text>
+                        <View style={{flexDirection: "row", justifyContent: "center"}}>
+                            <View style={[styles.cartButton, {marginTop: 12}]}>
+                                <NumericInput
+                                    minValue={1}
+                                    initValue={this.state.cartCounter}
+                                    onChange={value => this.setState({cartCounter: value})}
+                                />
+                            </View>
+                            <View style={styles.cartButton}>
+                                <Icon.Button
+                                    name="cart-arrow-down"
+                                    size={50}
+                                    color="#00C378"
+                                    backgroundColor="transparent"
+                                    underlayColor="transparent"
+                                    onPress={() => {
+                                        this._addProductToCart()
+                                        this.setState({fromBasket: true})}
+                                    }
+                                />
+                            </View>
                         </View>
                     </View>
-                </View>
-            )
+                )
+            }
+        }
+        else {
+            return;
         }
     }
 
@@ -194,7 +206,6 @@ class ProductScreen extends Component {
                         />
 
                         {this._printBasketOptions()}
-
 
                     </ScrollView>
                 )
