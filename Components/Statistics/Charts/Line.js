@@ -25,23 +25,26 @@ const d3 = {
 
 import {
     scaleBand,
-    scaleLinear
+    scaleLinear,
+    scaleTime,
 } from 'd3-scale';
 
-
-class Area extends Component {
+class Line extends Component {
 
     constructor(props) {
         super(props);
         this.state = { highlightedIndex: 0 };
     }
 
-    _createAreaChart(index) {
-        let area = d3.shape.area()
-            .x((item, index) => index * 15)
-            .y1((item) => -item.value)
-            .curve(d3.shape.curveNatural)
-            (index);
+    _createLineChart(data) {
+        let scaleTime = d3.scale.scaleTime()
+            .domain([new Date(2000, 0, 1), new Date(2000, 0, 2)])
+            .range([0, 960]);
+
+        let area = d3.shape.line()
+            .x((item) => { return scaleTime(item.date); })
+            .y((item) => { return item.value })
+            (data);
 
         return {
             path: area
@@ -60,7 +63,7 @@ class Area extends Component {
                         <Shape
                             fill={this.props.color}
                             stroke={this.props.color}
-                            d={this._createAreaChart(this.props.data).path}
+                            d={this._createLineChart(this.props.data).path}
                         />
                     </Group>
                 </Surface>
@@ -69,7 +72,7 @@ class Area extends Component {
     }
 }
 
-export default Area;
+export default Line;
 
 const styles = StyleSheet.create({
     container: {

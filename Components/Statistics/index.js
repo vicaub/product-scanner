@@ -7,8 +7,20 @@ import {
 } from 'react-native';
 import Pie from './Charts/Pie';
 import Area from './Charts/Area';
+import Line from './Charts/Line';
 import Theme from './Theme';
 import data from '../../Helpers/chartsData';
+
+
+
+let testData = [
+    {date: new Date(2007, 3, 24), value: 93.24},
+    {date: new Date(2007, 3, 25), value: 95.35},
+    {date: new Date(2007, 3, 26), value: 98.84},
+    {date: new Date(2007, 3, 27), value: 99.92},
+    {date: new Date(2007, 3, 30), value: 99.80},
+    {date: new Date(2007, 4,  1), value: 99.47},
+];
 
 
 class Statistics extends Component {
@@ -59,6 +71,11 @@ class Statistics extends Component {
                         width={width}
                         height={height}
                         data={this.state.spendingsPerYear}
+                        color={Theme.colors[this.state.activeIndex]} />
+                    <Line
+                        width={width}
+                        height={height}
+                        data={testData}
                         color={Theme.colors[this.state.activeIndex]} />
                 </View>
             </ScrollView>
