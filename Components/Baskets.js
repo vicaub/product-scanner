@@ -5,8 +5,9 @@ import baskets from '../Helper/basketData'
 import BasketItem from './BasketItem'
 
 class BasketsScreen extends Component {
-    _searchInfo(id) { //3103220025338
-        this.props.navigation.navigate("BasketDetails", {basketId: id});
+
+    _getBasketFromDB(basketId) {
+        this.props.navigation.navigate("BasketDetails", {basketId: basketId});
         // TODO: récupérer les paniers
     }
 
@@ -17,7 +18,7 @@ class BasketsScreen extends Component {
                     data={baskets}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={({item}) => (
-                        <TouchableOpacity onPress={ () => this._searchInfo(item.id)}>
+                        <TouchableOpacity onPress={ () => this._getBasketFromDB(item.id)}>
                             <BasketItem basket={item}/>
                         </TouchableOpacity>)}
                 />
