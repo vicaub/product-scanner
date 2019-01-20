@@ -46,7 +46,7 @@ class BasketItem extends React.Component {
 
 const styles = StyleSheet.create({
     mainContainer: {
-        height: 190,
+        height: 120,
         flexDirection: 'row'
     },
     contentContainer: {
@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
         margin: 5
     },
     image: {
-        width: 120,
-        height: 180,
+        width: 90,
+        height: 90,
         margin: 5,
         resizeMode: "contain",
     },
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     },
     titleText: {
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: 18,
         flex: 1,
         flexWrap: 'wrap',
         paddingRight: 5
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         color: '#666666'
     },
     descriptionContainer: {
-        flex: 7
+        flex: 3
     },
     descriptionText: {
         fontStyle: 'italic',
