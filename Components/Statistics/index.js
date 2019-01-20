@@ -10,14 +10,7 @@ import Theme from './Theme';
 import data from '../../Helpers/chartsData';
 
 
-type State = {
-    activeIndex: number,
-    spendingsPerYear: any
-}
-
 class Statistics extends Component {
-
-    state: State;
 
     constructor(props) {
         super(props);
@@ -25,15 +18,14 @@ class Statistics extends Component {
             activeIndex: 0,
             spendingsPerYear: data.spendingsPerYear,
         };
-        this._onPieItemSelected = this._onPieItemSelected.bind(this);
-        this._shuffle = this._shuffle.bind(this);
+        // this._shuffle = this._shuffle.bind(this);
     }
 
     _onPieItemSelected(newIndex){
         this.setState({
-            ...this.state,
+            // ...this.state,
             activeIndex: newIndex,
-            spendingsPerYear: this._shuffle(data.spendingsPerYear)
+            // spendingsPerYear: this._shuffle(data.spendingsPerYear)
         });
     }
 
@@ -56,7 +48,7 @@ class Statistics extends Component {
                     <Pie
                         pieWidth={150}
                         pieHeight={150}
-                        onItemSelected={this._onPieItemSelected}
+                        onItemSelected={(newIndex) => this._onPieItemSelected(newIndex)}
                         colors={Theme.colors}
                         width={width}
                         height={height}

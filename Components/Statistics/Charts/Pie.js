@@ -11,13 +11,11 @@ import Theme from '../Theme';
 const {
     Surface,
     Group,
-    Rectangle,
     Shape,
 } = ART;
 
 import * as scale from 'd3-scale';
 import * as shape from 'd3-shape';
-import * as d3Array from 'd3-array';
 
 const d3 = {
     scale,
@@ -29,39 +27,21 @@ import {
     scaleLinear
 } from 'd3-scale';
 
-type Props = {
-    height: number,
-    width: number,
-    pieWidth: number,
-    pieHeight: number,
-    colors: any,
-    // onItemSelected: any
-};
-
-type State = {
-    highlightedIndex: number,
-};
 
 class Pie extends Component {
 
-    state: State;
-
-    constructor(props: Props) {
+    constructor(props) {
         super(props);
         this.state = { highlightedIndex: 0 };
-        this._createPieChart = this._createPieChart.bind(this);
-        this._value = this._value.bind(this);
-        this._label = this._label.bind(this);
-        this._color = this._color.bind(this);
-        this._onPieItemSelected = this._onPieItemSelected.bind(this);
+        // this._createPieChart = this._createPieChart.bind(this);
+        // this._value = this._value.bind(this);
+        // this._label = this._label.bind(this);
+        // this._onPieItemSelected = this._onPieItemSelected.bind(this);
     }
 
-    // methods used to tranform data into piechart:
     _value(item) { return item.number; }
 
     _label(item) { return item.name; }
-
-    _color(index) { return Theme.colors[index]; }
 
     _createPieChart(index) {
         let arcs = d3.shape.pie()
@@ -79,15 +59,15 @@ class Pie extends Component {
             .innerRadius(30);
 
         let arcData = arcs[index];
-        let path = (this.state.highlightedIndex == index) ? hightlightedArc(arcData) : arc(arcData);
+        let path = (this.state.highlightedIndex === index) ? hightlightedArc(arcData) : arc(arcData);
         return {
             path,
-            color: this._color(index),
+            color: Theme.colors[index],
         };
     }
 
     _onPieItemSelected(index) {
-        this.setState({...this.state, highlightedIndex: index});
+        this.setState({highlightedIndex: index});
         this.props.onItemSelected(index);
     }
 
@@ -104,8 +84,8 @@ class Pie extends Component {
                             this.props.data.map( (item, index) => {
                                 return (<Shape
                                     key={'pie_shape_' + index}
-                                    fill={this._color(index)}
-                                    stroke={this._color(index)}
+                                    fill={Theme.colors[index]}
+                                    stroke={Theme.colors[index]}
                                     d={this._createPieChart(index).path}
                                 />)
                             } )
@@ -116,12 +96,12 @@ class Pie extends Component {
                     {
                         this.props.data.map( (item, index) =>
                         {
-                            let fontWeight = this.state.highlightedIndex == index ? 'bold' : 'normal';
+                            let fontWeight = this.state.highlightedIndex === index ? 'bold' : 'normal';
                             return (
                                 <TouchableWithoutFeedback key={index} onPress={() => this._onPieItemSelected(index)}>
                                     <View>
                                         <Text
-                                            style={[styles.label, {color: this._color(index), fontWeight: fontWeight}]}>
+                                            style={[styles.label, {color: Theme.colors[index], fontWeight: fontWeight}]}>
                                             {this._label(item)}: {this._value(item)}%
                                         </Text>
                                     </View>
