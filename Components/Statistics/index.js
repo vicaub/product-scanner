@@ -23,7 +23,6 @@ class Statistics extends Component {
 
     _onPieItemSelected(newIndex){
         this.setState({
-            // ...this.state,
             activeIndex: newIndex,
             // spendingsPerYear: this._shuffle(data.spendingsPerYear)
         });
