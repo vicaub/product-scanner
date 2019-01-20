@@ -19,16 +19,16 @@ const DrawerNavigator = createDrawerNavigator(
                 title: 'Recherche'
             }
         },
-        MyCarts: {
-            screen: MyBasketsStackNavigator,
-            navigationOptions: {
-                title: 'Mes paniers'
-            }
-        },
         History: {
             screen: HistoryStackNavigator,
             navigationOptions: {
                 title: 'Mes scans'
+            }
+        },
+        MyCarts: {
+            screen: MyBasketsStackNavigator,
+            navigationOptions: {
+                title: 'Mes paniers'
             }
         },
         Profile: {
