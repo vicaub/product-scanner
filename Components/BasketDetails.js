@@ -8,36 +8,51 @@ class BasketDetails extends Component {
 
     constructor(props) {
         super(props);
-        this.basketId = this._getBasketFromId(this.props.navigation.getParam('basketId'));
-        this._getBasketFromId(this.basketId);
+        this.state = {
+            basketId: this.props.navigation.getParam('basketId'),
+        };
     }
 
-
-    _searchInfo(code, cartCounter) { //3103220025338
-        this.props.navigation.navigate("Product", {barcode: code, fromBasket: true, cartCounter});
+    /**
+     * Get basket from DB and update state
+     */
+    componentDidMount() {
+        this.setState({basket: BasketDetails._getBasketFromId(this.state.basketId)});
     }
 
-    _getBasketFromId(basketId) {
+    /**
+     * return basket object from basket id in bdd
+     */
+    static _getBasketFromId(basketId) {
         for (let i = 0; i < baskets.length; i++) {
             if (baskets[i].id === basketId) {
-                this.basket = baskets[i]
+                return baskets[i];
             }
         }
     }
 
+    _navigateToProduct(code, cartCounter) {
+        this.props.navigation.navigate("Product", {barcode: code, fromBasket: true, cartCounter});
+    }
+
     render() {
-        return (
-            <View style={styles.mainContainer}>
-                <FlatList
-                    data={this.basket.products}
-                    keyExtractor={(item) => item.id.toString()}
-                    renderItem={({item}) => (
-                        <TouchableOpacity onPress={() => this._searchInfo(item.id, item.quantity)}>
-                            <ProductItem product={item}/>
-                        </TouchableOpacity>)}
-                />
-            </View>
-        );
+        if (this.state.basket) {
+            return (
+                <View style={styles.mainContainer}>
+                    <FlatList
+                        data={this.state.basket.products}
+                        keyExtractor={(item) => item.id.toString()}
+                        renderItem={({item}) => (
+                            <TouchableOpacity onPress={() => this._navigateToProduct(item.id, item.quantity)}>
+                                <ProductItem product={item}/>
+                            </TouchableOpacity>)}
+                    />
+                </View>
+            );
+        } else {
+            // TODO: if it takes some time to get basket from DB, display loading
+            return null;
+        }
     }
 }
 
