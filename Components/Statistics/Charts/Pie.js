@@ -34,14 +34,14 @@ class Pie extends Component {
         super(props);
         this.state = { highlightedIndex: 0 };
         // this._createPieChart = this._createPieChart.bind(this);
-        // this._value = this._value.bind(this);
-        // this._label = this._label.bind(this);
+        this._value = this._value.bind(this);
+        this._label = this._label.bind(this);
         // this._onPieItemSelected = this._onPieItemSelected.bind(this);
     }
 
-    _value(item) { return item.number; }
+    _value(item) { return item[this.props.valueKey]; }
 
-    _label(item) { return item.name; }
+    _label(item) { return item[this.props.labelKey]; }
 
     _createPieChart(index) {
         let arcs = d3.shape.pie()

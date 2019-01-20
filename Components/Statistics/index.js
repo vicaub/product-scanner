@@ -7,20 +7,9 @@ import {
 } from 'react-native';
 import Pie from './Charts/Pie';
 import Area from './Charts/Area';
-import Line from './Charts/Line';
 import Theme from './Theme';
 import data from '../../Helpers/chartsData';
-
-
-
-let testData = [
-    {date: new Date(2007, 3, 24), value: 93.24},
-    {date: new Date(2007, 3, 25), value: 95.35},
-    {date: new Date(2007, 3, 26), value: 98.84},
-    {date: new Date(2007, 3, 27), value: 99.92},
-    {date: new Date(2007, 3, 30), value: 99.80},
-    {date: new Date(2007, 4,  1), value: 99.47},
-];
+import {groupByCategories, groupAllByCategories} from "./Functions";
 
 
 class Statistics extends Component {
@@ -65,6 +54,8 @@ class Statistics extends Component {
                         width={width}
                         height={height}
                         data={data.spendingsLastMonth}
+                        valueKey="number"
+                        labelKey="name"
                     />
                     <Text style={styles.chartTitle}>Spending per year in {data.spendingsLastMonth[this.state.activeIndex].name}</Text>
                     <Area
@@ -72,11 +63,30 @@ class Statistics extends Component {
                         height={height}
                         data={this.state.spendingsPerYear}
                         color={Theme.colors[this.state.activeIndex]} />
-                    <Line
+                    <Text style={styles.chartTitle}>Distribution of categories for last basket</Text>
+                    <Pie
+                        pieWidth={150}
+                        pieHeight={150}
+                        // onItemSelected={(newIndex) => this._onPieItemSelected(newIndex)}
+                        colors={Theme.colors}
                         width={width}
                         height={height}
-                        data={testData}
-                        color={Theme.colors[this.state.activeIndex]} />
+                        data={groupByCategories(data.baskets[0])}
+                        valueKey="number"
+                        labelKey="category"
+                    />
+                    <Text style={styles.chartTitle}>Distribution of categories for all baskets</Text>
+                    <Pie
+                        pieWidth={150}
+                        pieHeight={150}
+                        // onItemSelected={(newIndex) => this._onPieItemSelected(newIndex)}
+                        colors={Theme.colors}
+                        width={width}
+                        height={height}
+                        data={groupAllByCategories(data.baskets)}
+                        valueKey="number"
+                        labelKey="category"
+                    />
                 </View>
             </ScrollView>
         );

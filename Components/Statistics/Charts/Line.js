@@ -23,12 +23,6 @@ const d3 = {
     axis
 };
 
-import {
-    scaleBand,
-    scaleLinear,
-    scaleTime,
-} from 'd3-scale';
-
 class Line extends Component {
 
     constructor(props) {
@@ -37,12 +31,9 @@ class Line extends Component {
     }
 
     _createLineChart(data) {
-        let scaleTime = d3.scale.scaleTime()
-            .domain([new Date(2000, 0, 1), new Date(2000, 0, 2)])
-            .range([0, 960]);
 
         let area = d3.shape.line()
-            .x((item) => { return scaleTime(item.date); })
+            .x((item, index) => { return index * 15 })
             .y((item) => { return item.value })
             (data);
 
