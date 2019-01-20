@@ -7,10 +7,17 @@ import {
 } from 'react-native';
 import Pie from './Charts/Pie';
 import Area from './Charts/Area';
+import Stack from './Charts/Stack';
 import Theme from './Theme';
 import data from '../../Helpers/chartsData';
 import {groupByCategories, groupAllByCategories} from "./Functions";
 
+let testData = [
+    {month: new Date(2015, 0, 1), apples: 3840, bananas: 1920, cherries: 960, dates: 400},
+    {month: new Date(2015, 1, 1), apples: 1600, bananas: 1440, cherries: 960, dates: 400},
+    {month: new Date(2015, 2, 1), apples:  640, bananas:  960, cherries: 640, dates: 400},
+    {month: new Date(2015, 3, 1), apples:  320, bananas:  480, cherries: 640, dates: 400}
+];
 
 class Statistics extends Component {
 
@@ -63,6 +70,15 @@ class Statistics extends Component {
                         height={height}
                         data={this.state.spendingsPerYear}
                         color={Theme.colors[this.state.activeIndex]} />
+
+                    <Text style={styles.chartTitle}>Spending per year in {data.spendingsLastMonth[this.state.activeIndex].name}</Text>
+                    <Stack
+                        width={width}
+                        height={height}
+                        data={testData}
+                        color={Theme.colors[this.state.activeIndex]}
+                    />
+
                     <Text style={styles.chartTitle}>Distribution of categories for last basket</Text>
                     <Pie
                         pieWidth={150}
