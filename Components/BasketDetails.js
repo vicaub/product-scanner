@@ -44,7 +44,7 @@ class BasketDetails extends Component {
                         keyExtractor={(item) => item.id.toString()}
                         renderItem={({item}) => (
                             <TouchableOpacity onPress={() => this._navigateToProduct(item.id, item.quantity)}>
-                                <ProductItem product={item}/>
+                                <ProductItem product={item} cartCounter={item.quantity}/>
                             </TouchableOpacity>)}
                     />
                 </View>
