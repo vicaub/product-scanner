@@ -6,6 +6,7 @@ import {
     Text,
 } from 'react-native';
 import Pie from './Charts/Pie';
+import Area from './Charts/Area';
 import Theme from './Theme';
 import data from '../../Helpers/chartsData';
 
@@ -24,7 +25,7 @@ class Statistics extends Component {
     _onPieItemSelected(newIndex){
         this.setState({
             activeIndex: newIndex,
-            // spendingsPerYear: this._shuffle(data.spendingsPerYear)
+            spendingsPerYear: this._shuffle(data.spendingsPerYear)
         });
     }
 
@@ -53,6 +54,12 @@ class Statistics extends Component {
                         height={height}
                         data={data.spendingsLastMonth}
                     />
+                    <Text style={styles.chartTitle}>Spending per year in {data.spendingsLastMonth[this.state.activeIndex].name}</Text>
+                    <Area
+                        width={width}
+                        height={height}
+                        data={this.state.spendingsPerYear}
+                        color={Theme.colors[this.state.activeIndex]} />
                 </View>
             </ScrollView>
         );
