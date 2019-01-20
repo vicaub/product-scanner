@@ -4,9 +4,16 @@ import HomeStackNavigator from "./HomeStackNavigator";
 import HistoryStackNavigator from "./HistoryStackNavigator";
 import SearchStackNavigator from "./SearchStackNavigator";
 import ProfileStackNavigator from "./ProfileStackNavigator";
+import StatsStackNavigator from "./StatsStackNavigator";
 
 const DrawerNavigator = createDrawerNavigator(
     {
+        Stats: {
+            screen: StatsStackNavigator,
+            navigationOptions: {
+                title: 'Analyse diététique',
+            }
+        },
         Home: {
             screen: HomeStackNavigator,
             navigationOptions: {
