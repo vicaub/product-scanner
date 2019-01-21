@@ -68,6 +68,7 @@ class Allergies extends Component {
                         <MultiSelect 
                             items={allergens}
                             uniqueKey="_id"
+                            hideDropdown={true}
                             autoFocusInput={false}
                             onSelectedItemsChange={this.onSelectedItemsChange}
                             selectedItems={selectedItems}
@@ -84,6 +85,9 @@ class Allergies extends Component {
                             searchInputStyle={{ color: '#CCC' }}
                             hideSubmitButton={true}
                             noResultText="Aucun résultat trouvé."
+                            styleItemsContainer={{ height: 400 }}
+                            // styleMainWrapper={{ position: "absolute", top: 30 }}
+                            textInputProps={{ autoFocus: false }}
                         />
                     </View>
                     <View style={styles.bottomView}>
@@ -115,8 +119,6 @@ const styles = StyleSheet.create({
         flex: 1
     },
     container: {
-        flex: 1,
-        justifyContent: 'center',
         padding: 20,
         backgroundColor: '#ffffff',
     },
@@ -124,14 +126,12 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         right: 0,
-        top: 100,
+        top: 80,
         bottom: 0,
         alignItems: 'center',
         justifyContent: 'center'
     },
     bottomView: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        marginBottom: 36
+        marginTop: 50,
     },
 });
