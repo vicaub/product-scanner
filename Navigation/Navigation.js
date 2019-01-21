@@ -1,9 +1,9 @@
-
-import { createDrawerNavigator, createAppContainer } from 'react-navigation';
+import {createDrawerNavigator, createAppContainer} from 'react-navigation';
 import HomeStackNavigator from "./HomeStackNavigator";
 import HistoryStackNavigator from "./HistoryStackNavigator";
 import SearchStackNavigator from "./SearchStackNavigator";
 import ProfileStackNavigator from "./ProfileStackNavigator";
+import MyBasketsStackNavigator from "./MyBasketsStackNavigator";
 
 const DrawerNavigator = createDrawerNavigator(
     {
@@ -22,7 +22,13 @@ const DrawerNavigator = createDrawerNavigator(
         History: {
             screen: HistoryStackNavigator,
             navigationOptions: {
-                title: 'Historique'
+                title: 'Mes scans'
+            }
+        },
+        MyCarts: {
+            screen: MyBasketsStackNavigator,
+            navigationOptions: {
+                title: 'Mes paniers'
             }
         },
         Profile: {

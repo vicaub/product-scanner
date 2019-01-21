@@ -53,4 +53,5 @@ Product.schema = {
 
 
 // incrémenter schemaVersion à chaque modification des tables
-export default new Realm({schema: [Allergen, User, Product], schemaVersion: 12});
+
+export default new Realm({schema: [Allergen, User, Product], schemaVersion: 14});
