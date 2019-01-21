@@ -70,7 +70,10 @@ react-native run-android
      }
    }
    ```
-   Then remove `./babelrc` and run `yarn add --dev babel-jest babel-core@^7.0.0-bridge.0 @babel/core`
+   Then remove `./babelrc` and run `npm install --save-dev babel-jest babel-core@^7.0.0-bridge.0 @babel/core`
+   
+   If you have a lot of "unknown identifier" when running tests : just run `npm install --save-dev babel-jest babel-core@^7.0.0-bridge.0 @babel/core`
+   
 
 ### iOS
 
@@ -107,3 +110,10 @@ Idea :
 - shake your phone
 - click allow JS remote debugging
 - go to your computer navigator dev tools
+
+
+## Run tests
+First install jest : `npm install -g jest`
+Run tests : `jest`
+Jest creates snapshots of the current output and later compare the output to the snapshots it has saved. 
+If you want to change the expected output (and the snapshots so that future tests won't fail), run `jest -u`
