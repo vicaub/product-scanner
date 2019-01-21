@@ -8,7 +8,7 @@ import ProductService from '../Services/ProductService';
 
 class HistoryScreen extends Component {
     _searchInfo(code) { //3103220025338
-        this.props.navigation.navigate("Product", {barcode: code, update : false});
+        this.props.navigation.navigate("Product", {barcode: code, fromHistory: true, update : false});
     }
 
     constructor(props) {
