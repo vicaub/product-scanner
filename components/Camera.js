@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import {
     StyleSheet,
     Text,
-    View
+    View,
+    TouchableOpacity
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { withNavigationFocus } from 'react-navigation';
@@ -29,14 +30,18 @@ class BarcodeScanner extends Component {
                         }}*/
                         onBarCodeRead={(barcode) => {
                             console.log(barcode);
-                            this.props.navigation.navigate("Product", {barcode: barcode.data});
+                            this.props.navigation.navigate("Product", {barcode: barcode.data, update : true} );
                         }}
                     /> 
                     : <Text>Welcome</Text>}
                 <View style={styles.toolbox}>
-                    <Text style={styles.defaultText}>
-                        Scanne un code barre pour voir ce qui se cache derrière ce produit !
-                    </Text>
+                    <TouchableOpacity style={styles.searchButton}
+                            onPress={()=>this.props.navigation.navigate("Search")}>
+                        <Text style={styles.defaultText}>
+                            Le scan ne marche pas ? Clique ici pour taper le code barre à la main.
+                        </Text>
+
+                    </TouchableOpacity>
                 </View>
             </View>
         );
@@ -66,12 +71,16 @@ const styles = StyleSheet.create({
     defaultText: {
         marginLeft: 5,
         marginRight: 5,
-        marginTop: 5
+        marginTop: 5,
+        fontSize: 15,
+        color:'#00C378',
+        textAlign: 'center'
     },
     toolbox: {
         flex: 0, 
         flexDirection: 'row', 
         justifyContent: 'center',
+        margin: 5
     }
 });
 

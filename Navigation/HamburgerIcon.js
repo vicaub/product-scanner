@@ -15,7 +15,7 @@ class HamburgerIcon extends Component {
                 <TouchableOpacity onPress={this.toggleDrawer.bind(this)} >
                     <Image
                         source={{uri : 'https://reactnativecode.com/wp-content/uploads/2018/04/hamburger_icon.png'}}
-                        style={{ width: 25, height: 25, marginLeft: 25, tintColor: 'white'}}
+                        style={{ width: 25, height: 25, marginLeft: 25, tintColor: '#A5ACAA'}}
                     />
                 </TouchableOpacity>
             </View>
