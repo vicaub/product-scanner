@@ -21,6 +21,7 @@ let ProductService = {
                 imageUrl: data.image_url,
                 ingredients: [data.ingredients],
                 allergens: data.allergens.split(","),
+
             };
             return productinfo;
         }
@@ -32,19 +33,19 @@ let ProductService = {
 
             ProductService.update(product);
 
-           //TODO delete logs
-           let products = DBConnector.objects('Product');
-           for (let p of products) {
-               console.log(`  ${p.name}`);
-               console.log(`  ${p.barCode}`);
-               console.log(`  ${p.nbScans}`);
-               console.log(`  ${p.scanDate}`);
-               console.log(`  ${p.ingredients[0]}`);
-               console.log(`  ${p.allergens[0]}`);
-               console.log(`  ${p.categories[0]}`);
-               console.log(`  ${p.categories[1]}`);
-
-         }
+        //   //TODO delete logs
+        //   let products = DBConnector.objects('Product');
+        //   for (let p of products) {
+        //       console.log(`  ${p.name}`);
+        //       console.log(`  ${p.barCode}`);
+        //       console.log(`  ${p.nbScans}`);
+        //       console.log(`  ${p.scanDate}`);
+        //       console.log(`  ${p.ingredients[0]}`);
+        //       console.log(`  ${p.allergens[0]}`);
+        //       console.log(`  ${p.categories[0]}`);
+        //       console.log(`  ${p.categories[1]}`);
+//
+        // }
             return
         }
         else {

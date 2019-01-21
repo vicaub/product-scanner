@@ -1,8 +1,14 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, Image, ActivityIndicator} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Image, ActivityIndicator, Alert} from 'react-native';
 import {getProductInfoFromApi} from '../API/OFFApi';
 import OupsScreen from './Common/Oups';
+
+import Icon from 'react-native-vector-icons/FontAwesome';
+import NumericInput from 'react-native-numeric-input';
+import Emoji from 'react-native-emoji';
+import UserService from '../Services/UserService'
 import ProductService from "../Services/ProductService";
+
 
 class ProductScreen extends Component {
 
@@ -11,7 +17,9 @@ class ProductScreen extends Component {
         this.state = {
             product: undefined,
             isLoading: true,
-        }
+        };
+        // Initialize numeric input value
+        this.cartCounter = 1;
     }
 
     componentDidMount() {
@@ -79,7 +87,11 @@ class ProductScreen extends Component {
                 </View>
             )
         }
+    }
 
+    _addProductToCart() {
+        console.log(this.cartCounter);
+        // TODO: DB call to add product to today's cart
     }
 //TODO switch request back to https
     _displayProductInfo() {
@@ -123,6 +135,35 @@ class ProductScreen extends Component {
                             // source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-e.png'}}
                         />
 
+                        <View
+                            style={{
+                                borderBottomColor: 'grey',
+                                borderBottomWidth: 1,
+                            }}
+                        />
+
+                        <View styles={{}}>
+                            <Text style={{textAlign: "center", marginTop: 10}}>
+                                Ajoute cet article à ton panier <Emoji name={"wink"}/>
+                            </Text>
+                            <View style={{flexDirection: "row", justifyContent: "center"}}>
+                                <View style={[styles.cartButton, {marginTop: 12}]}>
+                                    <NumericInput initValue={this.cartCounter} onChange={value => this.cartCounter = value} />
+                                </View>
+                                <View style={styles.cartButton}>
+                                    <Icon.Button
+                                        name="cart-arrow-down"
+                                        size={50}
+                                        color="#00C378"
+                                        backgroundColor="transparent"
+                                        onPress={() => this._addProductToCart()}
+                                    />
+                                </View>
+                            </View>
+                        </View>
+
+
+
                     </ScrollView>
                 )
             } else {
@@ -133,11 +174,36 @@ class ProductScreen extends Component {
         }
     }
 
+    _checkAllergies() {
+        const { product, isLoading} = this.state;
+        if (!isLoading) {
+            let user = UserService.findAll()[0];
+            if (user !== undefined) {
+                let allergens = [];
+                for (let allergen of product.allergens_ids) {
+                    for (let user_allergen of Array.from(user.allergies)) {
+                        if (user_allergen.id === allergen) {
+                            allergens.push(user_allergen.name);
+                        }
+                    }
+                }
+                if (allergens.length !== 0) {
+                    Alert.alert(
+                        'Attention',
+                        'Nous avons détecté des ingrédients dont vous êtes allergique dans ce produit : ' + allergens.toString()
+                    );
+                }
+            }
+        }
+    }
+
     render() {
+        console.log('render');
         return (
             <View style={styles.mainContainer}>
                 {this._displayLoading()}
                 {this._displayProductInfo()}
+                {this._checkAllergies()}
             </View>
         )
     }
@@ -161,7 +227,8 @@ const styles = StyleSheet.create({
     },
     image_nutri: {
         height: 80,
-        margin: 5,
+        marginTop: 5,
+        marginBottom: 10,
         resizeMode: "contain",
     },
     headerDescription: {
@@ -202,11 +269,14 @@ const styles = StyleSheet.create({
         margin: 5,
         marginBottom: 15
     },
-
     defaultText: {
         marginLeft: 5,
         marginRight: 5,
     },
+    cartButton: {
+        marginLeft: 15,
+        marginRight: 15,
+    }
 });
 
 export default ProductScreen;
