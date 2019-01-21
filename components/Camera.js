@@ -30,7 +30,7 @@ class BarcodeScanner extends Component {
                         }}*/
                         onBarCodeRead={(barcode) => {
                             console.log(barcode);
-                            this.props.navigation.navigate("Product", {barcode: barcode.data});
+                            this.props.navigation.navigate("Product", {barcode: barcode.data, update : true} );
                         }}
                     /> 
                     : <Text>Welcome</Text>}

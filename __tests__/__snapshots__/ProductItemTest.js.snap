@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProductItem renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+      "height": 190,
+    }
+  }
+>
+  <Image
+    source={
+      Object {
+        "uri": undefined,
+      }
+    }
+    style={
+      Object {
+        "height": 180,
+        "margin": 5,
+        "width": 120,
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "margin": 5,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 3,
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "flex": 1,
+            "flexWrap": "wrap",
+            "fontSize": 20,
+            "fontWeight": "bold",
+            "paddingRight": 5,
+          }
+        }
+      />
+      <Text
+        style={
+          Object {
+            "color": "#666666",
+            "fontSize": 20,
+            "fontWeight": "bold",
+          }
+        }
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 7,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#666666",
+            "fontStyle": "italic",
+          }
+        }
+      />
+    </View>
+  </View>
+</View>
+`;

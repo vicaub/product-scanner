@@ -2,6 +2,15 @@
 #
 .DS_Store
 
+
+# Tests
+#
+default.realm
+default.realm.lock
+default.realm.management/
+realm-object-server/
+
+
 # Xcode
 #
 build/
