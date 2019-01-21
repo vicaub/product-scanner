@@ -15,12 +15,12 @@ let ProductService = {
             const productinfo = {
                 barCode: barcode,
                 name: jsonProduct.product_name_fr,
-                categories: jsonProduct.categories.split(","),
+                categories: jsonProduct.categories !== undefined ? jsonProduct.categories.split(","): [],
                 scanDate: new Date(),
                 nbScans: 1,
                 imageUrl: jsonProduct.image_url,
                 ingredients: [jsonProduct.ingredients_text_with_allergens],
-                allergens: jsonProduct.allergens_from_ingredients.split(","),
+                allergens: jsonProduct.allergens_from_ingredients !== undefined ? jsonProduct.allergens_from_ingredients.split(","): [],
             };
             return productinfo;
         }

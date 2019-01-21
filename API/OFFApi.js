@@ -52,8 +52,11 @@ export function getAllergensFromApi() {
                     .filter((obj => (obj.id !== obj.name) && obj.products > 50))
                     .map((obj) => {
                         return {
-                            id: obj.id,
+                            obj: {
+                                id: obj.id,
+                                name: obj.name},
                             name: obj.name,
+                            _id: obj.id
                         }
                     });
             }
