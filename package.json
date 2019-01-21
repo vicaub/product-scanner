@@ -18,6 +18,8 @@
     "react-native-gesture-handler": "^1.0.10",
     "react-native-multiple-select": "github:dlphn/react-native-multiple-select",
     "react-native-numeric-input": "^1.6.5",
+    "react-native-svg": "^9.0.0",
+    "react-native-svg-charts": "^5.2.0",
     "react-native-vector-icons": "^6.1.0",
     "react-navigation": "^3.0.4",
     "realm": "^2.21.1",

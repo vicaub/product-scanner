@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import Pie from './Charts/Pie';
 import Area from './Charts/Area';
+import Bar from './Charts/Bar';
 import Stack from './Charts/Stack';
 import Theme from './Theme';
 import data from '../../Helpers/chartsData';
@@ -72,6 +73,7 @@ class Statistics extends Component {
                         color={Theme.colors[this.state.activeIndex]} />
 
                     <Text style={styles.chartTitle}>Spending per year in {data.spendingsLastMonth[this.state.activeIndex].name}</Text>
+                    <Bar />
                     <Stack
                         width={width}
                         height={height}
