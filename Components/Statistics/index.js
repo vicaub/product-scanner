@@ -15,13 +15,6 @@ import Theme from './Theme';
 import data from '../../Helpers/chartsData';
 import {groupByCategories, groupAllByCategories} from "./Functions";
 
-let testData = [
-    {month: new Date(2015, 0, 1), apples: 3840, bananas: 1920, cherries: 960, dates: 400},
-    {month: new Date(2015, 1, 1), apples: 1600, bananas: 1440, cherries: 960, dates: 400},
-    {month: new Date(2015, 2, 1), apples:  640, bananas:  960, cherries: 640, dates: 400},
-    {month: new Date(2015, 3, 1), apples:  320, bananas:  480, cherries: 640, dates: 400}
-];
-
 class Statistics extends Component {
 
     constructor(props) {
@@ -70,7 +63,8 @@ class Statistics extends Component {
                     <PieBis
                         pieWidth={200}
                         pieHeight={200}
-                        colors={Theme.colors} />
+                        colors={Theme.colors}
+                        data={groupAllByCategories(data.baskets)} />
                     <Text style={styles.chartTitle}>Spending per year in {data.spendingsLastMonth[this.state.activeIndex].name}</Text>
                     <Area
                         width={width}
@@ -86,7 +80,7 @@ class Statistics extends Component {
                     <StackedBar
                         colors={Theme.colors} />
 
-                    <Text style={styles.chartTitle}>Distribution of categories for last basket</Text>
+                    {/*<Text style={styles.chartTitle}>Distribution of categories for last basket</Text>
                     <Pie
                         pieWidth={150}
                         pieHeight={150}
@@ -109,7 +103,7 @@ class Statistics extends Component {
                         data={groupAllByCategories(data.baskets)}
                         valueKey="number"
                         labelKey="category"
-                    />
+                    />*/}
                 </View>
             </ScrollView>
         );

@@ -31,12 +31,14 @@ export function groupAllByCategories(baskets) {
 }
 
 function buildCategoriesStats(categories, total) {
-    let stats = [];
+    let keys = [];
+    let values = [];
     Object.keys(categories).forEach((category) => {
-        stats.push({
-            "category": category,
-            "number": categories[category] / total * 100
-        })
+        keys.push(category);
+        values.push(categories[category] / total * 100);
     });
-    return stats;
+    return {
+        'keys': keys,
+        'values': values
+    };
 }

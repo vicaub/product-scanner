@@ -26,7 +26,7 @@ class PieBis extends Component {
     }
 
     _onPieItemSelected(key, index) {
-        this.setState({ selectedSlice: { label: key, value: values[index] }});
+        this.setState({ selectedSlice: { label: key, value: this.props.data.values[index] }});
         // this.props.onItemSelected(index);
     }
 
@@ -34,7 +34,7 @@ class PieBis extends Component {
         const { labelWidth, selectedSlice } = this.state;
         const { label, value } = selectedSlice;
         const colors = this.props.colors;
-        const data = keys.map((key, index) => {
+        const data = this.props.data.keys.map((key, index) => {
             return {
                 key,
                 value: values[index],
@@ -67,7 +67,7 @@ class PieBis extends Component {
                 </Text>*/}
                 <View style={{position: 'absolute', top:margin, left: this.props.pieWidth}}>
                     {
-                        keys.map( (item, index) =>
+                        this.props.data.keys.map( (item, index) =>
                         {
                             let fontWeight = label === item ? 'bold' : 'normal';
                             return (
@@ -75,7 +75,7 @@ class PieBis extends Component {
                                     <View>
                                         <Text
                                             style={[styles.label, {color: Theme.colors[index], fontWeight: fontWeight}]}>
-                                            {keys[index]}: {values[index]}%
+                                            {this.props.data.keys[index]}: {this.props.data.values[index]}%
                                         </Text>
                                     </View>
                                 </TouchableWithoutFeedback>
