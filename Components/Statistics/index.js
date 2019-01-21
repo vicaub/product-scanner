@@ -9,6 +9,7 @@ import Pie from './Charts/Pie';
 import Area from './Charts/Area';
 import Bar from './Charts/Bar';
 import Line from './Charts/Line';
+import PieBis from './Charts/PieBis';
 import StackedBar from './Charts/StackedBar';
 import Theme from './Theme';
 import data from '../../Helpers/chartsData';
@@ -66,6 +67,10 @@ class Statistics extends Component {
                         valueKey="number"
                         labelKey="name"
                     />
+                    <PieBis
+                        pieWidth={200}
+                        pieHeight={200}
+                        colors={Theme.colors} />
                     <Text style={styles.chartTitle}>Spending per year in {data.spendingsLastMonth[this.state.activeIndex].name}</Text>
                     <Area
                         width={width}
