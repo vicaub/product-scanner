@@ -48,6 +48,14 @@ class Statistics extends Component {
         return (
             <ScrollView>
                 <View style={styles.container}>
+                    <View>
+                        <Text style={styles.nbStat}>
+                            <Text style={styles.bigNumber}>40</Text> scan(s)
+                        </Text>
+                        <Text style={styles.nbStat}>
+                            <Text style={styles.bigNumber}>3</Text> panier(s)
+                        </Text>
+                    </View>
                     <Text style={styles.chartTitle}>Distribution of spending this month</Text>
                     <Pie
                         pieWidth={150}
@@ -117,7 +125,7 @@ const styles = StyleSheet.create({
         backgroundColor:'whitesmoke',
         marginTop: 21,
     },
-    chartTitle : {
+    chartTitle: {
         paddingTop: 15,
         textAlign: 'center',
         paddingBottom: 5,
@@ -126,5 +134,12 @@ const styles = StyleSheet.create({
         backgroundColor:'white',
         color: 'grey',
         fontWeight:'bold',
+    },
+    nbStat: {
+        textAlign: 'center',
+        backgroundColor:'white',
+    },
+    bigNumber: {
+        fontSize: 30,
     }
 });
