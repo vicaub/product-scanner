@@ -172,19 +172,21 @@ class ProductScreen extends Component {
         const { product, isLoading} = this.state;
         if (!isLoading) {
             let user = UserService.findAll()[0];
-            let allergens = [];
-            for (let allergen of product.allergens_ids) {
-                for (let user_allergen of Array.from(user.allergies)) {
-                    if (user_allergen.id === allergen) {
-                        allergens.push(user_allergen.name);
+            if (user !== undefined) {
+                let allergens = [];
+                for (let allergen of product.allergens_ids) {
+                    for (let user_allergen of Array.from(user.allergies)) {
+                        if (user_allergen.id === allergen) {
+                            allergens.push(user_allergen.name);
+                        }
                     }
                 }
-            }
-            if (allergens.length !== 0){
-                Alert.alert(
-                    'Attention',
-                    'Nous avons détecté des ingrédients dont vous êtes allergique dans ce produit : '+ allergens.toString()
-                );
+                if (allergens.length !== 0) {
+                    Alert.alert(
+                        'Attention',
+                        'Nous avons détecté des ingrédients dont vous êtes allergique dans ce produit : ' + allergens.toString()
+                    );
+                }
             }
         }
     }
