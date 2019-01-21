@@ -68,7 +68,6 @@ class Allergies extends Component {
                         <MultiSelect 
                             items={allergens}
                             uniqueKey="_id"
-                            hideDropdown={true}
                             autoFocusInput={false}
                             onSelectedItemsChange={this.onSelectedItemsChange}
                             selectedItems={selectedItems}
@@ -83,10 +82,10 @@ class Allergies extends Component {
                             itemTextColor="#000"
                             displayKey="name"
                             searchInputStyle={{ color: '#CCC' }}
+                            hideDropdown={true}
                             hideSubmitButton={true}
                             noResultText="Aucun résultat trouvé."
                             styleItemsContainer={{ height: 400 }}
-                            // styleMainWrapper={{ position: "absolute", top: 30 }}
                             textInputProps={{ autoFocus: false }}
                         />
                     </View>
