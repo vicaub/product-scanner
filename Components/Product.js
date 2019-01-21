@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView, Image, ActivityIndicator, TextInput} from 'react-native';
-import {getProductInfoFromApi} from '../API/OFFApi';
+import {getProductInfoFromApi, parseProductInfo} from '../API/OFFApi';
 import OupsScreen from './Common/Oups';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import NumericInput from 'react-native-numeric-input';
