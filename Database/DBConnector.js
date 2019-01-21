@@ -1,5 +1,6 @@
 //import {Database} from "react-native-database";
 import Realm from 'realm';
+import basketData from "../Helper/basketData";
 
 // exemple
 // https://github.com/realm/realm-js/tree/master/examples/ReactExample/components
@@ -50,8 +51,34 @@ Product.schema = {
     },
 };
 
+class ProductBasket extends Realm.Object {
+}
+
+ProductBasket.schema = {
+    name: 'ProductBasket',
+    properties: {
+        barcode: 'string',
+        quantity: 'int',
+    },
+};
+
+
+class Basket extends Realm.Object {
+}
+
+Basket.schema = {
+    name: 'Basket',
+    primaryKey: 'dayTimestamp',
+    properties: {
+        dayTimestamp: 'int',
+        date: 'date',
+        content: {type: 'list', objectType: 'ProductBasket', default: []},
+    },
+};
+
+
 
 
 // incrémenter schemaVersion à chaque modification des tables
 
-export default new Realm({schema: [Allergen, User, Product], schemaVersion: 14});
+export default new Realm({schema: [Allergen, User, Product, ProductBasket, Basket], schemaVersion: 19});

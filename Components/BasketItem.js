@@ -7,7 +7,7 @@ class BasketItem extends React.Component {
 
     _getTotalQuantity() {
         let totalQuantity = 0;
-        this.props.basket.products.forEach((product) => {
+        this.props.basket.content.forEach((product) => {
             totalQuantity += product.quantity;
         });
         return totalQuantity
