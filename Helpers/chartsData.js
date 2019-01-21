@@ -39,6 +39,25 @@ export default {
 
     baskets: [
         {
+            id: "21/01/2019",
+            items: [
+                {
+                    productId: 1,
+                    name: 'Fraises Tagada',
+                    category: 'snacks',
+                    score: 'D',
+                    quantity: 1,
+                },
+                {
+                    productId: 1,
+                    name: 'Chocolat Encore!',
+                    category: 'boisson',
+                    score: 'A',
+                    quantity: 1,
+                },
+            ]
+        },
+        {
             id: "20/01/2019",
             items: [
                 {

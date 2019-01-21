@@ -10,7 +10,7 @@ class Line extends Component {
         return (
             <LineChart
                 style={{ height: 200 }}
-                data={ data }
+                data={ this.props.data }
                 svg={{ stroke: this.props.color }}
                 contentInset={{ top: 20, bottom: 20 }}
             >

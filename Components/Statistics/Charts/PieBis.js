@@ -27,7 +27,7 @@ class PieBis extends Component {
 
     _onPieItemSelected(key, index) {
         this.setState({ selectedSlice: { label: key, value: this.props.data.values[index] }});
-        // this.props.onItemSelected(index);
+        this.props.onItemSelected(index, key);
     }
 
     render() {
@@ -37,7 +37,7 @@ class PieBis extends Component {
         const data = this.props.data.keys.map((key, index) => {
             return {
                 key,
-                value: values[index],
+                value: this.props.data.values[index],
                 svg: { fill: colors[index] },
                 arc: { outerRadius: selectedSlice.label === key ? '100%' : '90%', padAngle: 0.03 },
                 onPress: () => this._onPieItemSelected(key, index)

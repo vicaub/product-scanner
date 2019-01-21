@@ -35,10 +35,24 @@ function buildCategoriesStats(categories, total) {
     let values = [];
     Object.keys(categories).forEach((category) => {
         keys.push(category);
-        values.push(categories[category] / total * 100);
+        values.push(Math.round(categories[category] / total * 100));
     });
     return {
         'keys': keys,
         'values': values
     };
+}
+
+export function quantityForCategory(baskets, category) {
+    let quantities = [];
+    baskets.forEach((basket) => {
+        let quantity = 0;
+        basket.items.forEach((product) => {
+            if (product.category == category) {
+                quantity += product.quantity;
+            }
+        });
+        quantities.push(quantity);
+    });
+    return quantities;
 }
