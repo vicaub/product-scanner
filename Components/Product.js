@@ -23,21 +23,22 @@ class ProductScreen extends Component {
     }
 
     componentDidMount() {
-        getProductInfoFromApi(this.props.navigation.getParam('barcode'))
+        let barcode = this.props.navigation.getParam('barcode');
+        getProductInfoFromApi(barcode)
             .then(rawJson => {
-                parseProductInfo(rawJson)
+                return parseProductInfo(rawJson, barcode)
             })
             .then(data => {
-            console.log(data);
-            this.setState({
-                product: data,
-                isLoading: false
-            });
-            if (this.props.navigation.getParam('update')) {
-                let product = ProductService.findProduct(data, this.props.navigation.getParam('barcode'));
-                ProductService.scan(product);
-            }
-        });
+                this.setState({
+                    product: data,
+                    isLoading: false
+                });
+                if (this.props.navigation.getParam('update')) {
+                    let product = ProductService.findProduct(data, this.props.navigation.getParam('barcode'));
+                    ProductService.scan(product);
+                }
+            })
+            .catch((error) => console.error(error));
     }
 
     _displayLoading() {

@@ -11,10 +11,9 @@ export function getProductInfoFromApi(barcode) {
         .catch((error) => console.error(error))
 }
 
-export function parseProductInfo(json) {
-    console.log(json);
+export function parseProductInfo(json, barcode) {
     if (json.status !== 0 && json.code && json.code.length > 0) {
-//TODO delete logs
+        //TODO delete logs
         let jsonProduct = json.product;
         //     console.log("création du produit depuis le json");
         let product = ProductService.findProduct(jsonProduct, barcode);
@@ -38,7 +37,7 @@ export function parseProductInfo(json) {
 
         };
     } else {
-        return undefined;
+        return {};
     }
 }
 
