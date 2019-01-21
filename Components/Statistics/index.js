@@ -9,6 +9,7 @@ import Pie from './Charts/Pie';
 import Area from './Charts/Area';
 import Bar from './Charts/Bar';
 import Stack from './Charts/Stack';
+import StackedBar from './Charts/StackedBar';
 import Theme from './Theme';
 import data from '../../Helpers/chartsData';
 import {groupByCategories, groupAllByCategories} from "./Functions";
@@ -74,12 +75,7 @@ class Statistics extends Component {
 
                     <Text style={styles.chartTitle}>Spending per year in {data.spendingsLastMonth[this.state.activeIndex].name}</Text>
                     <Bar />
-                    <Stack
-                        width={width}
-                        height={height}
-                        data={testData}
-                        color={Theme.colors[this.state.activeIndex]}
-                    />
+                    <StackedBar />
 
                     <Text style={styles.chartTitle}>Distribution of categories for last basket</Text>
                     <Pie
