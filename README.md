@@ -70,7 +70,7 @@ react-native run-android
      }
    }
    ```
-   Then remove `./babelrc` and run `npm install --save-dev babel-jest babel-core@^7.0.0-bridge.0 @babel/core`
+   Then remove `./babelrc` and run `yarn add --dev babel-jest babel-core@^7.0.0-bridge.0 @babel/core`
    
    If you have a lot of "unknown identifier" when running tests : just run `npm install --save-dev babel-jest babel-core@^7.0.0-bridge.0 @babel/core`
    
