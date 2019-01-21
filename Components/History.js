@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, View, FlatList, TouchableOpacity } from 'react-native';
-//import products from '../Helper/productData';
 import ProductItem from './ProductItem';
 import OupsScreen from './Common/Oups';
 import ProductService from '../Services/ProductService';

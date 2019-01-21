@@ -12,7 +12,7 @@ class ProductItem extends React.Component {
             <View style={styles.mainContainer}>
                 <Image
                     style={styles.image}
-                    source={{uri: product.image_url}}
+                    source={{uri: product.imageUrl}}
                 />
                 <View style={styles.contentContainer}>
                     <View style={styles.headerContainer}>
