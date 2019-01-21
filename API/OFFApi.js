@@ -38,6 +38,7 @@ export function parseProductInfo(json) {
     } else {
         return undefined;
     }
+
 }
 
 export function getAllergensFromApi() {
