@@ -11,7 +11,7 @@ class Line extends Component {
             <LineChart
                 style={{ height: 200 }}
                 data={ data }
-                svg={{ stroke: 'rgb(134, 65, 244)' }}
+                svg={{ stroke: this.props.color }}
                 contentInset={{ top: 20, bottom: 20 }}
             >
                 <Grid/>

@@ -74,9 +74,12 @@ class Statistics extends Component {
                         color={Theme.colors[this.state.activeIndex]} />
 
                     <Text style={styles.chartTitle}>Spending per year in {data.spendingsLastMonth[this.state.activeIndex].name}</Text>
-                    <Line />
-                    <Bar />
-                    <StackedBar />
+                    <Line
+                        color={Theme.colors[this.state.activeIndex]} />
+                    <Bar
+                        color={Theme.colors[this.state.activeIndex]} />
+                    <StackedBar
+                        colors={Theme.colors} />
 
                     <Text style={styles.chartTitle}>Distribution of categories for last basket</Text>
                     <Pie
