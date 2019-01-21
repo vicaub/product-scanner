@@ -5,19 +5,13 @@ import {
     ScrollView,
     Text,
 } from 'react-native';
-import Pie from './Charts/Pie';
-import Area from './Charts/Area';
-import Stack from './Charts/Stack';
+import Bar from './Charts/Bar';
+import Line from './Charts/Line';
+import PieBis from './Charts/Pie';
+import StackedBar from './Charts/StackedBar';
 import Theme from './Theme';
 import data from '../../Helpers/chartsData';
-import {groupByCategories, groupAllByCategories} from "./Functions";
-
-let testData = [
-    {month: new Date(2015, 0, 1), apples: 3840, bananas: 1920, cherries: 960, dates: 400},
-    {month: new Date(2015, 1, 1), apples: 1600, bananas: 1440, cherries: 960, dates: 400},
-    {month: new Date(2015, 2, 1), apples:  640, bananas:  960, cherries: 640, dates: 400},
-    {month: new Date(2015, 3, 1), apples:  320, bananas:  480, cherries: 640, dates: 400}
-];
+import {groupByCategories, groupAllByCategories, quantityForCategory} from "./Functions";
 
 class Statistics extends Component {
 
@@ -25,84 +19,47 @@ class Statistics extends Component {
         super(props);
         this.state = {
             activeIndex: 0,
-            spendingsPerYear: data.spendingsPerYear,
+            activeKey: 'snacks',
         };
-        // this._shuffle = this._shuffle.bind(this);
     }
 
-    _onPieItemSelected(newIndex){
+    _onPieItemSelected(newIndex, newKey){
         this.setState({
             activeIndex: newIndex,
-            spendingsPerYear: this._shuffle(data.spendingsPerYear)
+            activeKey: newKey,
         });
-    }
-
-    _shuffle(a) {
-        for (let i = a.length; i; i--) {
-            let j = Math.floor(Math.random() * i);
-            [a[i - 1], a[j]] = [a[j], a[i - 1]];
-        }
-        return a;
     }
 
     render() {
         const height = 200;
         const width = 500;
+        const { activeIndex, activeKey } = this.state;
 
         return (
             <ScrollView>
                 <View style={styles.container}>
-                    <Text style={styles.chartTitle}>Distribution of spending this month</Text>
-                    <Pie
-                        pieWidth={150}
-                        pieHeight={150}
-                        onItemSelected={(newIndex) => this._onPieItemSelected(newIndex)}
+                    <View>
+                        <Text style={styles.nbStat}>
+                            <Text style={styles.bigNumber}>40</Text> scan(s)
+                        </Text>
+                        <Text style={styles.nbStat}>
+                            <Text style={styles.bigNumber}>3</Text> panier(s)
+                        </Text>
+                    </View>
+                    <Text style={styles.chartTitle}>Distribution du dernier panier</Text>
+                    <PieBis
+                        pieWidth={200}
+                        pieHeight={200}
+                        onItemSelected={(newIndex, key) => this._onPieItemSelected(newIndex, key)}
                         colors={Theme.colors}
-                        width={width}
-                        height={height}
-                        data={data.spendingsLastMonth}
-                        valueKey="number"
-                        labelKey="name"
-                    />
-                    <Text style={styles.chartTitle}>Spending per year in {data.spendingsLastMonth[this.state.activeIndex].name}</Text>
-                    <Area
-                        width={width}
-                        height={height}
-                        data={this.state.spendingsPerYear}
-                        color={Theme.colors[this.state.activeIndex]} />
-
-                    <Text style={styles.chartTitle}>Spending per year in {data.spendingsLastMonth[this.state.activeIndex].name}</Text>
-                    <Stack
-                        width={width}
-                        height={height}
-                        data={testData}
-                        color={Theme.colors[this.state.activeIndex]}
-                    />
-
-                    <Text style={styles.chartTitle}>Distribution of categories for last basket</Text>
-                    <Pie
-                        pieWidth={150}
-                        pieHeight={150}
-                        // onItemSelected={(newIndex) => this._onPieItemSelected(newIndex)}
-                        colors={Theme.colors}
-                        width={width}
-                        height={height}
                         data={groupByCategories(data.baskets[0])}
-                        valueKey="number"
-                        labelKey="category"
-                    />
-                    <Text style={styles.chartTitle}>Distribution of categories for all baskets</Text>
-                    <Pie
-                        pieWidth={150}
-                        pieHeight={150}
-                        // onItemSelected={(newIndex) => this._onPieItemSelected(newIndex)}
-                        colors={Theme.colors}
-                        width={width}
-                        height={height}
-                        data={groupAllByCategories(data.baskets)}
-                        valueKey="number"
-                        labelKey="category"
-                    />
+                        selectedSliceLabel={activeKey}/>
+                    <Text style={styles.chartTitle}>Achats par panier de {activeKey}</Text>
+                    <Line
+                        color={Theme.colors[activeIndex]}
+                        data={quantityForCategory(data.baskets, activeKey)} />
+                    <StackedBar
+                        colors={Theme.colors} />
                 </View>
             </ScrollView>
         );
@@ -116,7 +73,7 @@ const styles = StyleSheet.create({
         backgroundColor:'whitesmoke',
         marginTop: 21,
     },
-    chartTitle : {
+    chartTitle: {
         paddingTop: 15,
         textAlign: 'center',
         paddingBottom: 5,
@@ -125,5 +82,12 @@ const styles = StyleSheet.create({
         backgroundColor:'white',
         color: 'grey',
         fontWeight:'bold',
+    },
+    nbStat: {
+        textAlign: 'center',
+        backgroundColor:'white',
+    },
+    bigNumber: {
+        fontSize: 30,
     }
 });

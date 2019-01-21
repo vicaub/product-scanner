@@ -31,12 +31,28 @@ export function groupAllByCategories(baskets) {
 }
 
 function buildCategoriesStats(categories, total) {
-    let stats = [];
+    let keys = [];
+    let values = [];
     Object.keys(categories).forEach((category) => {
-        stats.push({
-            "category": category,
-            "number": categories[category] / total * 100
-        })
+        keys.push(category);
+        values.push(Math.round(categories[category] / total * 100));
     });
-    return stats;
+    return {
+        'keys': keys,
+        'values': values
+    };
+}
+
+export function quantityForCategory(baskets, category) {
+    let quantities = [];
+    baskets.forEach((basket) => {
+        let quantity = 0;
+        basket.items.forEach((product) => {
+            if (product.category == category) {
+                quantity += product.quantity;
+            }
+        });
+        quantities.push(quantity);
+    });
+    return quantities;
 }
