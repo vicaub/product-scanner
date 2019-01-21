@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, Image, ActivityIndicator, TextInput} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Image, ActivityIndicator, Alert} from 'react-native';
 import {getProductInfoFromApi} from '../API/OFFApi';
 import OupsScreen from './Common/Oups';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import NumericInput from 'react-native-numeric-input';
 import Emoji from 'react-native-emoji';
+import UserService from '../Services/UserService'
+import ProductService from "../Services/ProductService";
+
 
 class ProductScreen extends Component {
 
@@ -26,6 +29,10 @@ class ProductScreen extends Component {
                 product: data,
                 isLoading: false
             });
+            if (this.props.navigation.getParam('update')) {
+                let product = ProductService.findProduct(data, this.props.navigation.getParam('barcode'));
+                ProductService.scan(product);
+            }
         });
     }
 
@@ -217,11 +224,36 @@ class ProductScreen extends Component {
         }
     }
 
+    _checkAllergies() {
+        const { product, isLoading} = this.state;
+        if (!isLoading) {
+            let user = UserService.findAll()[0];
+            if (user !== undefined) {
+                let allergens = [];
+                for (let allergen of product.allergens_ids) {
+                    for (let user_allergen of Array.from(user.allergies)) {
+                        if (user_allergen.id === allergen) {
+                            allergens.push(user_allergen.name);
+                        }
+                    }
+                }
+                if (allergens.length !== 0) {
+                    Alert.alert(
+                        'Attention',
+                        'Nous avons détecté des ingrédients dont vous êtes allergique dans ce produit : ' + allergens.toString()
+                    );
+                }
+            }
+        }
+    }
+
     render() {
+        console.log('render');
         return (
             <View style={styles.mainContainer}>
                 {this._displayLoading()}
                 {this._displayProductInfo()}
+                {this._checkAllergies()}
             </View>
         )
     }

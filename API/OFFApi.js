@@ -11,13 +11,7 @@ export function getProductInfoFromApi(barcode) {
         .then((json) => {
             console.log(json);
             if (json.status !== 0 && json.code && json.code.length > 0) {
-//TODO delete logs
                 let jsonProduct = json.product;
-           //     console.log("création du produit depuis le json");
-                let product = ProductService.findProduct(jsonProduct, barcode);
-             //   console.log("produit créé avec succès");
-                ProductService.scan(product);
-
                 return {
                     _id: json.code,
                     product_name: jsonProduct.product_name_fr,
@@ -30,7 +24,8 @@ export function getProductInfoFromApi(barcode) {
                     ingredients: jsonProduct.ingredients_text_with_allergens,
                     allergens: jsonProduct.allergens_from_ingredients,
                     nutrition_grades: jsonProduct.nutrition_grades,
-                    nova_group: jsonProduct.nova_group
+                    nova_group: jsonProduct.nova_group,
+                    allergens_ids: jsonProduct.allergens_tags
                 };
             } else {
                 return undefined;
@@ -51,8 +46,11 @@ export function getAllergensFromApi() {
                     .filter((obj => (obj.id !== obj.name) && obj.products > 50))
                     .map((obj) => {
                         return {
-                            id: obj.id,
+                            obj: {
+                                id: obj.id,
+                                name: obj.name},
                             name: obj.name,
+                            _id: obj.id
                         }
                     });
             }

@@ -13,15 +13,15 @@ class ProductItem extends React.Component {
             <View style={styles.mainContainer}>
                 <Image
                     style={styles.image}
-                    source={{uri: product.image}}
+                    source={{uri: product.imageUrl}}
                 />
                 <View style={styles.contentContainer}>
                     <View style={styles.headerContainer}>
-                        <Text style={styles.titleText}>{product.title}</Text>
+                        <Text style={styles.titleText}>{product.name}</Text>
                         <Text style={styles.voteText}>{cartCounter}</Text>
                     </View>
                     <View style={styles.descriptionContainer}>
-                        <Text style={styles.descriptionText}>{product.brand}</Text>
+                        <Text style={styles.descriptionText}>{product.barCode}</Text>
                     </View>
                 </View>
             </View>

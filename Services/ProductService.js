@@ -4,23 +4,23 @@ let productDB = DBConnector.objects('Product');
 
 let ProductService = {
     findAll: () => {
-        return Array.from(productDB.sorted('scanDate'))
+        return Array.from( (productDB.sorted('scanDate', true)))
     },
 
-    findProduct: (jsonProduct, barcode) => {
+    findProduct: (data, barcode) => {
         if (productDB.filtered("barCode = '" + barcode + "'").length){
             return Array.from(productDB.filtered("barCode = '" + barcode + "'"))[0]
         }
         else {
             const productinfo = {
-                barCode: barcode,
-                name: jsonProduct.product_name_fr,
-                categories: jsonProduct.categories.split(","),
+                barCode: data._id,
+                name: data.product_name,
+                categories: data.categories !== undefined ? data.categories.split(","): [],
                 scanDate: new Date(),
                 nbScans: 1,
-                imageUrl: jsonProduct.image_url,
-                ingredients: [jsonProduct.ingredients_text_with_allergens],
-                allergens: jsonProduct.allergens_from_ingredients.split(","),
+                imageUrl: data.image_url,
+                ingredients: [data.ingredients],
+                allergens: data.allergens !== undefined ? data.allergens.split(","): []
             };
             return productinfo;
         }
@@ -32,18 +32,7 @@ let ProductService = {
 
             ProductService.update(product);
 
-    //        //TODO delete logs
-    //        let products = DBConnector.objects('Product');
-    //        for (let p of products) {
-    //            console.log(`  ${p.name}`);
-    //            console.log(`  ${p.nbScans}`);
-    //            console.log(`  ${p.scanDate}`);
-    //            console.log(`  ${p.ingredients[0]}`);
-    //            console.log(`  ${p.allergens[0]}`);
-    //            console.log(`  ${p.categories[0]}`);
-    //            console.log(`  ${p.categories[1]}`);
-//
-  //          }
+
             return
         }
         else {
@@ -53,8 +42,6 @@ let ProductService = {
     },
 
     update : (product, callback) => {
-//TODO delete logs
-     //   console.log("begin update");
         DBConnector.write(() => {
             product.scanDate = new Date();
             product.nbScans += 1;
@@ -71,6 +58,7 @@ let ProductService = {
             DBConnector.write(() => {
                 try {
                     DBConnector.create('Product', product);
+
                 } catch (e) {
                     console.log(e);
                 }
