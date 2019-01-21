@@ -5,11 +5,9 @@ import {
     ScrollView,
     Text,
 } from 'react-native';
-import Pie from './Charts/Pie';
-import Area from './Charts/Area';
 import Bar from './Charts/Bar';
 import Line from './Charts/Line';
-import PieBis from './Charts/PieBis';
+import PieBis from './Charts/Pie';
 import StackedBar from './Charts/StackedBar';
 import Theme from './Theme';
 import data from '../../Helpers/chartsData';
@@ -54,7 +52,8 @@ class Statistics extends Component {
                         pieHeight={200}
                         onItemSelected={(newIndex, key) => this._onPieItemSelected(newIndex, key)}
                         colors={Theme.colors}
-                        data={groupByCategories(data.baskets[0])} />
+                        data={groupByCategories(data.baskets[0])}
+                        selectedSliceLabel={activeKey}/>
                     <Text style={styles.chartTitle}>Achats par panier de {activeKey}</Text>
                     <Line
                         color={Theme.colors[activeIndex]}

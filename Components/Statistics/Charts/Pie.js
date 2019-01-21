@@ -1,108 +1,63 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
-    StyleSheet,
-    View,
     Text,
-    ART,
-    TouchableWithoutFeedback,
+    View,
+    StyleSheet,
+    TouchableWithoutFeedback
 } from 'react-native';
-import Theme from '../Theme';
-
-const {
-    Surface,
-    Group,
-    Shape,
-} = ART;
-
-import * as scale from 'd3-scale';
-import * as shape from 'd3-shape';
-
-const d3 = {
-    scale,
-    shape,
-};
-
-import {
-    scaleBand,
-    scaleLinear
-} from 'd3-scale';
-
+import { PieChart } from 'react-native-svg-charts'
+import Theme from "../Theme";
 
 class Pie extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { highlightedIndex: 0 };
-        // this._createPieChart = this._createPieChart.bind(this);
-        this._value = this._value.bind(this);
-        this._label = this._label.bind(this);
-        // this._onPieItemSelected = this._onPieItemSelected.bind(this);
+        this.state = {
+            selectedSliceLabel: props.selectedSliceLabel,
+        }
     }
 
-    _value(item) { return item[this.props.valueKey]; }
-
-    _label(item) { return item[this.props.labelKey]; }
-
-    _createPieChart(index) {
-        let arcs = d3.shape.pie()
-            .value(this._value)
-            (this.props.data);
-
-        let hightlightedArc = d3.shape.arc()
-            .outerRadius(this.props.pieWidth/2 + 10)  // Radius of the pie
-            .padAngle(.05)  // Angle between sections
-            .innerRadius(30);  // Inner radius: to create a donut or pie
-
-        let arc = d3.shape.arc()
-            .outerRadius(this.props.pieWidth/2)
-            .padAngle(.05)
-            .innerRadius(30);
-
-        let arcData = arcs[index];
-        let path = (this.state.highlightedIndex === index) ? hightlightedArc(arcData) : arc(arcData);
-        return {
-            path,
-            color: Theme.colors[index],
-        };
-    }
-
-    _onPieItemSelected(index) {
-        this.setState({highlightedIndex: index});
-        this.props.onItemSelected(index);
+    _onPieItemSelected(key, index) {
+        this.setState({ selectedSliceLabel: key, });
+        this.props.onItemSelected(index, key);
     }
 
     render() {
+        const { selectedSliceLabel } = this.state;
+        const colors = this.props.colors;
+        const keys = this.props.data.keys;
+        const values = this.props.data.values;
+
+        const data = keys.map((key, index) => {
+            return {
+                key,
+                value: values[index],
+                svg: { fill: colors[index] },
+                arc: { outerRadius: selectedSliceLabel === key ? '100%' : '90%', padAngle: 0.03 },
+                onPress: () => this._onPieItemSelected(key, index)
+            }
+        });
         const margin = styles.container.margin;
-        const x = this.props.pieWidth / 2 + margin;
-        const y = this.props.pieHeight / 2 + margin;
 
         return (
-            <View width={this.props.width} height={this.props.height}>
-                <Surface width={this.props.width} height={this.props.height}>
-                    <Group x={x} y={y}>
-                        {
-                            this.props.data.map( (item, index) => {
-                                return (<Shape
-                                    key={'pie_shape_' + index}
-                                    fill={Theme.colors[index]}
-                                    stroke={Theme.colors[index]}
-                                    d={this._createPieChart(index).path}
-                                />)
-                            } )
-                        }
-                    </Group>
-                </Surface>
-                <View style={{position: 'absolute', top:margin, left: 2*margin + this.props.pieWidth}}>
+            <View>
+                <PieChart
+                    style={{ height: this.props.pieHeight, width: this.props.pieWidth }}
+                    outerRadius={'90%'}
+                    innerRadius={30}
+                    data={data}
+                />
+                <View style={{position: 'absolute', top:margin, left: this.props.pieWidth}}>
                     {
-                        this.props.data.map( (item, index) =>
+                        keys.map( (item, index) =>
                         {
-                            let fontWeight = this.state.highlightedIndex === index ? 'bold' : 'normal';
+                            let fontWeight = selectedSliceLabel === item ? 'bold' : 'normal';
                             return (
-                                <TouchableWithoutFeedback key={index} onPress={() => this._onPieItemSelected(index)}>
+                                <TouchableWithoutFeedback key={index} onPress={() => this._onPieItemSelected(item, index)}>
                                     <View>
                                         <Text
                                             style={[styles.label, {color: Theme.colors[index], fontWeight: fontWeight}]}>
-                                            {this._label(item)}: {this._value(item)}%
+                                            {keys[index]}: {values[index]}%
                                         </Text>
                                     </View>
                                 </TouchableWithoutFeedback>
@@ -111,7 +66,7 @@ class Pie extends Component {
                     }
                 </View>
             </View>
-        );
+        )
     }
 }
 
