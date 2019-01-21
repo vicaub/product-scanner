@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import NumericInput from 'react-native-numeric-input';
 import Emoji from 'react-native-emoji';
 import UserService from '../Services/UserService'
+import ProductService from "../Services/ProductService";
 
 
 class ProductScreen extends Component {
@@ -27,6 +28,10 @@ class ProductScreen extends Component {
                 product: data,
                 isLoading: false
             });
+            if (this.props.navigation.getParam('update')) {
+                let product = ProductService.findProduct(data, this.props.navigation.getParam('barcode'));
+                ProductService.scan(product);
+            }
         });
     }
 
