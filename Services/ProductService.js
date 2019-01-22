@@ -68,6 +68,10 @@ let ProductService = {
             console.log(e);
         }
 
+    },
+
+    fetchProduct : (barcode) => {
+        return Array.from(productDB.filtered("barCode = '" + barcode + "'"))[0]
     }
 
 

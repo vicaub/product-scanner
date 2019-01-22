@@ -3,6 +3,7 @@ import {StyleSheet, Platform, View, Text, FlatList, TouchableOpacity} from 'reac
 // import baskets from '../Helper/basketData'
 import ProductItem from './ProductItem'
 import BasketService from "../Services/BasketService";
+import ProductService from "../Services/ProductService";
 
 class BasketDetails extends Component {
 
@@ -44,7 +45,7 @@ class BasketDetails extends Component {
                         keyExtractor={(item) => item.barcode.toString()}
                         renderItem={({item}) => (
                             <TouchableOpacity onPress={() => this._navigateToProduct(item.barcode, item.quantity)}>
-                                <ProductItem product={item} cartCounter={item.quantity}/>
+                                <ProductItem product={ProductService.fetchProduct(item.barcode)} cartCounter={item.quantity}/>
                             </TouchableOpacity>)}
                     />
                 </View>
