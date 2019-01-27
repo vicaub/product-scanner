@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { StackedBarChart } from 'react-native-svg-charts';
 
 class StackedBar extends Component {
@@ -54,5 +55,13 @@ class StackedBar extends Component {
     }
 
 }
+
+StackedBar.propTypes = {
+    /*data: PropTypes.shape({
+        keys: PropTypes.arrayOf(PropTypes.string),
+        values: PropTypes.arrayOf(PropTypes.number),
+    }).isRequired,*/
+    colors: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default StackedBar;
