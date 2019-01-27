@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import Bar from './Charts/Bar';
 import AxesLine from './Charts/AxesLine';
-import PieBis from './Charts/Pie';
+import Pie from './Charts/Pie';
 import StackedBar from './Charts/StackedBar';
 import Theme from './Theme';
 import data from '../../Helpers/chartsData';
@@ -49,7 +49,7 @@ class Statistics extends Component {
                         </Text>
                     </View>
                     <Text style={styles.chartTitle}>Distribution du dernier panier</Text>
-                    <PieBis
+                    <Pie
                         pieWidth={200}
                         pieHeight={200}
                         onItemSelected={(newIndex, key) => this._onPieItemSelected(newIndex, key)}

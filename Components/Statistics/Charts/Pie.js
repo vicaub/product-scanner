@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
     Text,
     View,
@@ -69,6 +70,18 @@ class Pie extends Component {
         )
     }
 }
+
+Pie.propTypes = {
+    data: PropTypes.shape({
+        keys: PropTypes.arrayOf(PropTypes.string),
+        values: PropTypes.arrayOf(PropTypes.number),
+    }).isRequired,
+    colors: PropTypes.arrayOf(PropTypes.string).isRequired,
+    pieWidth: PropTypes.number.isRequired,
+    pieHeight: PropTypes.number.isRequired,
+    onItemSelected: PropTypes.func.isRequired,
+    selectedSliceLabel: PropTypes.string.isRequired,
+};
 
 export default Pie;
 

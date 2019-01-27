@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { LineChart, Grid } from 'react-native-svg-charts';
 
 class Line extends Component {
