@@ -40,14 +40,14 @@ class StackedBar extends Component {
 
         // const colors = [ '#7b4173', '#a55194', '#ce6dbd', '#de9ed6' ];
         const colors = this.props.colors;
-        const keys   = [ 'apples', 'bananas', 'cherries', 'dates' ];
+        // const keys   = [ 'apples', 'bananas', 'cherries', 'dates' ];
 
         return (
             <StackedBarChart
                 style={ { height: 200 } }
-                keys={ keys }
+                keys={ this.props.keys }
                 colors={ colors }
-                data={ data }
+                data={ this.props.data }
                 showGrid={ false }
                 contentInset={ { top: 30, bottom: 30 } }
             />

@@ -63,3 +63,41 @@ export function quantityInCategory(baskets, category) {
 export function buildDataArray(data) {
     return data.map((elt) => elt.value);
 }
+
+export function getAllCategoriesFromBaskets(baskets) {
+    /* List of all the different categories in the user's basket */
+    let categories = [];
+    baskets.forEach((basket) => {
+        basket.items.forEach((item) => {
+            categories.push(item.category);
+        });
+    });
+    return [...new Set(categories)];
+}
+
+export function categoriesByBasket(baskets) {
+    /* For each basket, compute the quantities for each category of the basket */
+    let data = [];
+    let categories = getAllCategoriesFromBaskets(baskets);
+    baskets.forEach((basket) => {
+        let basketData = {};
+        basket.items.forEach((product) => {
+            if (product.category in categories) {
+                basketData[product.category] += product.quantity;
+            } else {
+                basketData[product.category] = product.quantity;
+            }
+        });
+        categories.forEach((category) => {
+           if (!(category in basketData)) {
+               basketData[category] = 0;
+           }
+        });
+        basketData.date = basket.id;
+        data.push(basketData);
+    });
+    return {
+        data,
+        categories
+    };
+}

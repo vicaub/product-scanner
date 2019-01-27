@@ -11,7 +11,7 @@ import Pie from './Charts/Pie';
 import StackedBar from './Charts/StackedBar';
 import Theme from './Theme';
 import data from '../../Helpers/chartsData';
-import {groupByCategories, groupAllByCategories, quantityInCategory} from "./Functions";
+import {groupByCategories, groupAllByCategories, quantityInCategory, categoriesByBasket, getAllCategoriesFromBaskets} from "./Functions";
 
 class Statistics extends Component {
 
@@ -31,11 +31,14 @@ class Statistics extends Component {
     }
 
     render() {
+        console.warn(categoriesByBasket(data.baskets));
+
         const height = 200;
         const width = 500;
         const { activeIndex, activeKey } = this.state;
 
         let categoryData = quantityInCategory(data.baskets, activeKey);
+        let basketData = categoriesByBasket(data.baskets);
 
         return (
             <ScrollView>
@@ -61,6 +64,8 @@ class Statistics extends Component {
                         color={Theme.colors[activeIndex]}
                         data={categoryData} />
                     <StackedBar
+                        keys={basketData.categories}
+                        data={basketData.data}
                         colors={Theme.colors} />
                 </View>
             </ScrollView>
