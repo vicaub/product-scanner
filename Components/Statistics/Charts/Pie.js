@@ -49,6 +49,7 @@ class Pie extends Component {
                     data={data}
                 />
                 <View style={{position: 'absolute', top:margin, left: this.props.pieWidth}}>
+                    <Text>{this.props.basketId}</Text>
                     {
                         keys.map( (item, index) =>
                         {

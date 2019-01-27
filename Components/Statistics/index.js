@@ -66,12 +66,14 @@ class Statistics extends Component {
                         pieHeight={200}
                         onItemSelected={(newIndex, key) => this._onPieItemSelected(newIndex, key)}
                         colors={Theme.colors}
+                        basketId={data.baskets[data.baskets.length - 1].id}
                         data={groupByCategories(data.baskets[data.baskets.length - 1], categories)}
                         selectedSliceLabel={activeKey}/>
-                    <Text style={styles.chartTitle}>Achats par panier de {activeKey}</Text>
+                    <Text style={styles.chartTitle}>Achats de {activeKey} par panier</Text>
                     <AxesLine
                         color={Theme.colors[activeIndex]}
                         data={quantityInCategory(data.baskets, activeKey)} />
+                    <Text style={styles.chartTitle}>Distribution des catégories</Text>
                     <StackedBar
                         keys={categories}
                         data={categoriesByBasket(data.baskets, categories)}
