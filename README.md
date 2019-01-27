@@ -4,7 +4,7 @@
 
 ## Installation
 
-### Get NPM
+### Get NPM
 
 Follow the NodeJS install tutorial (npm is included) or :
 ```bash
