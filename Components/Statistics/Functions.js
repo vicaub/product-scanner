@@ -43,16 +43,23 @@ function buildCategoriesStats(categories, total) {
     };
 }
 
-export function quantityForCategory(baskets, category) {
+export function quantityInCategory(baskets, category) {
     let quantities = [];
     baskets.forEach((basket) => {
         let quantity = 0;
         basket.items.forEach((product) => {
-            if (product.category == category) {
+            if (product.category === category) {
                 quantity += product.quantity;
             }
         });
-        quantities.push(quantity);
+        quantities.push({
+            date: basket.id,
+           value: quantity,
+        });
     });
     return quantities;
+}
+
+export function buildDataArray(data) {
+    return data.map((elt) => elt.value);
 }

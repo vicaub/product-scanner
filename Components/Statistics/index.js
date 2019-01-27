@@ -6,12 +6,12 @@ import {
     Text,
 } from 'react-native';
 import Bar from './Charts/Bar';
-import Line from './Charts/Line';
+import AxesLine from './Charts/AxesLine';
 import PieBis from './Charts/Pie';
 import StackedBar from './Charts/StackedBar';
 import Theme from './Theme';
 import data from '../../Helpers/chartsData';
-import {groupByCategories, groupAllByCategories, quantityForCategory} from "./Functions";
+import {groupByCategories, groupAllByCategories, quantityInCategory} from "./Functions";
 
 class Statistics extends Component {
 
@@ -35,6 +35,8 @@ class Statistics extends Component {
         const width = 500;
         const { activeIndex, activeKey } = this.state;
 
+        let categoryData = quantityInCategory(data.baskets, activeKey);
+
         return (
             <ScrollView>
                 <View style={styles.container}>
@@ -55,9 +57,9 @@ class Statistics extends Component {
                         data={groupByCategories(data.baskets[0])}
                         selectedSliceLabel={activeKey}/>
                     <Text style={styles.chartTitle}>Achats par panier de {activeKey}</Text>
-                    <Line
+                    <AxesLine
                         color={Theme.colors[activeIndex]}
-                        data={quantityForCategory(data.baskets, activeKey)} />
+                        data={categoryData} />
                     <StackedBar
                         colors={Theme.colors} />
                 </View>

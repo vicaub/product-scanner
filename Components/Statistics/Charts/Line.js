@@ -5,14 +5,12 @@ class Line extends Component {
 
     render() {
 
-        const data = [ 50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80 ];
-
         return (
             <LineChart
-                style={{ height: 200 }}
+                style={{ flex: 1, height: 200  }}
                 data={ this.props.data }
                 svg={{ stroke: this.props.color }}
-                contentInset={{ top: 20, bottom: 20 }}
+                contentInset={ this.props.contentInset }
             >
                 <Grid/>
             </LineChart>
@@ -20,5 +18,15 @@ class Line extends Component {
     }
 
 }
+
+
+Line.propTypes = {
+    data: PropTypes.arrayOf(PropTypes.number).isRequired,
+    color: PropTypes.string.isRequired,
+    contentInset: PropTypes.shape({
+        left: PropTypes.number,
+        right: PropTypes.number,
+    }),
+};
 
 export default Line;
