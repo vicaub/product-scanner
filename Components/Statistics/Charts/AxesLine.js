@@ -20,6 +20,9 @@ class AxesLine extends Component {
         }};
         const verticalContentInset = { top: 10, bottom: 10 };
         const xAxisHeight = 30;
+
+        const nbDistinctValues = [...new Set(buildDataArray(this.props.data))].length;  // number of unique values
+
         return (
             <View style={{ height: 200, padding: 20, flexDirection: 'row' }}>
                 <YAxis
@@ -28,12 +31,14 @@ class AxesLine extends Component {
                     style={{ marginBottom: xAxisHeight }}
                     contentInset={ verticalContentInset }
                     svg={ axesSvg }
+                    numberOfTicks={ nbDistinctValues }
                 />
                 <View style={{ flex: 1, marginLeft: 10 }}>
                     <Line
                         data={ buildDataArray(this.props.data) }
                         color={ this.props.color }
-                        contentInset={verticalContentInset}
+                        contentInset={ verticalContentInset }
+                        numberOfTicks={ nbDistinctValues }
                     />
                     <XAxis
                         style={{ marginHorizontal: -15, height: xAxisHeight }}

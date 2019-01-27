@@ -12,8 +12,9 @@ class Line extends Component {
                 data={ this.props.data }
                 svg={{ stroke: this.props.color }}
                 contentInset={ this.props.contentInset }
+                numberOfTicks={ this.props.numberOfTicks }
             >
-                <Grid/>
+                <Grid />
             </LineChart>
         )
     }
@@ -24,6 +25,7 @@ class Line extends Component {
 Line.propTypes = {
     data: PropTypes.arrayOf(PropTypes.number).isRequired,
     color: PropTypes.string.isRequired,
+    numberOfTicks: PropTypes.number.isRequired,
     contentInset: PropTypes.shape({
         left: PropTypes.number,
         right: PropTypes.number,
