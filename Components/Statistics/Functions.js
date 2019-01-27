@@ -1,6 +1,7 @@
 
 
-export function groupByCategories(basket) {
+export function groupByCategories(basket, categoriesList) {
+    /* Compute quantities bought in each category for a specific basket */
     let categories = {};
     let total = 0;
     basket.items.forEach((product) => {
@@ -10,6 +11,11 @@ export function groupByCategories(basket) {
             categories[product.category] = product.quantity;
         }
         total += product.quantity;
+    });
+    categoriesList.forEach((category) => {
+        if (!(category in categories)) {
+            categories[category] = 0;
+        }
     });
     return buildCategoriesStats(categories, total)
 }
@@ -75,14 +81,13 @@ export function getAllCategoriesFromBaskets(baskets) {
     return [...new Set(categories)];
 }
 
-export function categoriesByBasket(baskets) {
+export function categoriesByBasket(baskets, categories) {
     /* For each basket, compute the quantities for each category of the basket */
     let data = [];
-    let categories = getAllCategoriesFromBaskets(baskets);
     baskets.forEach((basket) => {
         let basketData = {};
         basket.items.forEach((product) => {
-            if (product.category in categories) {
+            if (product.category in basketData) {
                 basketData[product.category] += product.quantity;
             } else {
                 basketData[product.category] = product.quantity;
@@ -96,8 +101,5 @@ export function categoriesByBasket(baskets) {
         basketData.date = basket.id;
         data.push(basketData);
     });
-    return {
-        data,
-        categories
-    };
+    return data;
 }

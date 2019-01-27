@@ -19,8 +19,21 @@ class Statistics extends Component {
         super(props);
         this.state = {
             activeIndex: 0,
-            activeKey: 'snacks',
+            activeKey: '',
+            categories: [],
         };
+    }
+
+    componentDidMount() {
+        // fetch user's baskets
+        let categories = getAllCategoriesFromBaskets(data.baskets);
+        let latestBasketData = groupByCategories(data.baskets[data.baskets.length - 1], categories);
+        categories = latestBasketData.keys;
+        this.setState({
+            categories,
+            activeIndex: 0,
+            activeKey: categories[0],
+        });
     }
 
     _onPieItemSelected(newIndex, newKey){
@@ -31,14 +44,10 @@ class Statistics extends Component {
     }
 
     render() {
-        console.warn(categoriesByBasket(data.baskets));
 
         const height = 200;
         const width = 500;
-        const { activeIndex, activeKey } = this.state;
-
-        let categoryData = quantityInCategory(data.baskets, activeKey);
-        let basketData = categoriesByBasket(data.baskets);
+        const { activeIndex, activeKey, categories } = this.state;
 
         return (
             <ScrollView>
@@ -57,15 +66,15 @@ class Statistics extends Component {
                         pieHeight={200}
                         onItemSelected={(newIndex, key) => this._onPieItemSelected(newIndex, key)}
                         colors={Theme.colors}
-                        data={groupByCategories(data.baskets[data.baskets.length - 1])}
+                        data={groupByCategories(data.baskets[data.baskets.length - 1], categories)}
                         selectedSliceLabel={activeKey}/>
                     <Text style={styles.chartTitle}>Achats par panier de {activeKey}</Text>
                     <AxesLine
                         color={Theme.colors[activeIndex]}
-                        data={categoryData} />
+                        data={quantityInCategory(data.baskets, activeKey)} />
                     <StackedBar
-                        keys={basketData.categories}
-                        data={basketData.data}
+                        keys={categories}
+                        data={categoriesByBasket(data.baskets, categories)}
                         colors={Theme.colors} />
                 </View>
             </ScrollView>

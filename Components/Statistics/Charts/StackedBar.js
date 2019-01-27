@@ -57,10 +57,7 @@ class StackedBar extends Component {
 }
 
 StackedBar.propTypes = {
-    /*data: PropTypes.shape({
-        keys: PropTypes.arrayOf(PropTypes.string),
-        values: PropTypes.arrayOf(PropTypes.number),
-    }).isRequired,*/
+    data: PropTypes.arrayOf(PropTypes.object).isRequired,
     colors: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
