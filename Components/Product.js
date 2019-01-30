@@ -233,7 +233,7 @@ class ProductScreen extends Component {
         const { product, isLoading} = this.state;
         if (!isLoading) {
             let user = UserService.findAll()[0];
-            if (user !== undefined) {
+            if (user !== undefined && product.allergens_ids) {
                 let allergens = [];
                 for (let allergen of product.allergens_ids) {
                     for (let user_allergen of Array.from(user.allergies)) {
