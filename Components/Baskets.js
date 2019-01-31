@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, Platform, View, Text, FlatList, TouchableOpacity } from 'react-native';
-// import baskets from '../Helper/basketData'
+import getTotalQuantityInBasket from '../Helper/basketHelper'
 import BasketItem from './BasketItem'
 import BasketService from '../Services/BasketService';
 import OupsScreen from "./Common/Oups";
@@ -18,7 +18,7 @@ class BasketsScreen extends Component {
             'willFocus',
             () => {
                 this.setState({
-                    baskets : BasketService.findAll(),
+                    baskets : this._removeEmptyBaskets(BasketService.findAll()),
                 })
             }
         );
@@ -29,7 +29,18 @@ class BasketsScreen extends Component {
     }
 
     _navigateToBasket(basket) {
-        this.props.navigation.navigate("BasketDetails", {basketObject: basket});
+        this.props.navigation.navigate("BasketDetails", {basketId: basket.dayTimestamp});
+    }
+
+    _removeEmptyBaskets(baskets) {
+        for (let i = 0; i<baskets.length; i++) {
+            // TODO: not working...
+            if (getTotalQuantityInBasket(baskets[i]) <= 0) {
+                console.log("deleting basket");
+                delete baskets[i]
+            }
+        }
+        return baskets
     }
 
     render() {
