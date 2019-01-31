@@ -16,7 +16,8 @@ const DrawerNavigator = createDrawerNavigator(
         Search: {
             screen: SearchStackNavigator,
             navigationOptions: {
-                title: 'Recherche'
+                // title: 'Recherche',
+                drawerLabel: () => null
             }
         },
         History: {
