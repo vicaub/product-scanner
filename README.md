@@ -1,8 +1,10 @@
 # Product Scanner
 
+> Scan products in the supermarket and get to truly know your basket
+
 ## Installation
 
-### Get NPM
+### Get NPM
 
 Follow the NodeJS install tutorial (npm is included) or :
 ```bash
@@ -61,6 +63,7 @@ react-native run-android
 
 - "`Cannot add task 'wrapper' as a task with that name already exists.`" : rename the task 'wrapper' to 'wrapper2' for example at the end of `build.gradle`
 
+
 ### iOS
 
 [React Native - Running On Device](https://facebook.github.io/react-native/docs/running-on-device.html)
@@ -92,7 +95,17 @@ Additional things you need to do:
 
 https://facebook.github.io/react-native/docs/debugging
 
-Idea :
 - shake your phone
 - click allow JS remote debugging
 - go to your computer navigator dev tools
+
+
+## Run tests
+
+First install jest : `npm install -g jest`
+
+Run tests : `jest`
+
+Jest creates snapshots of the current output and later compares the output to the snapshots it has saved. 
+
+If you want to change the expected output (and the snapshots so that future tests won't fail), run `jest -u`.

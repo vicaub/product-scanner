@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView, Image, ActivityIndicator, Alert} from 'react-native';
-import {getProductInfoFromApi} from '../API/OFFApi';
+import {getProductInfoFromApi, parseProductInfo} from '../API/OFFApi';
 import OupsScreen from './Common/Oups';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import NumericInput from 'react-native-numeric-input';
@@ -25,17 +25,21 @@ class ProductScreen extends Component {
     componentDidMount() {
         const barcode =  this.props.navigation.getParam('barcode');
         this.setState({quantityInBasket: BasketService.findQuantity(barcode)});
-        getProductInfoFromApi(barcode).then(data => {
-            console.log(data);
-            this.setState({
-                product: data,
-                isLoading: false
-            });
-            if (this.props.navigation.getParam('update')) {
-                let product = ProductService.findProduct(data, barcode);
-                ProductService.scan(product);
-            }
-        });
+        getProductInfoFromApi(barcode)
+            .then(rawJson => {
+                return parseProductInfo(rawJson, barcode)
+            })
+            .then(data => {
+                this.setState({
+                    product: data,
+                    isLoading: false
+                });
+                if (this.props.navigation.getParam('update')) {
+                    let product = ProductService.findProduct(data, this.props.navigation.getParam('barcode'));
+                    ProductService.scan(product);
+                }
+            })
+            .catch((error) => console.error(error));
     }
 
     _displayLoading() {
