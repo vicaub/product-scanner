@@ -258,7 +258,6 @@ class ProductScreen extends Component {
     }
 
     render() {
-        console.log('render');
         return (
             <View style={styles.mainContainer}>
                 {this._displayLoading()}

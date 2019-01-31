@@ -60,12 +60,12 @@ let ProductService = {
                     DBConnector.create('Product', product);
 
                 } catch (e) {
-                    console.log(e);
+                    console.error(e);
                 }
 
             })
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
 
     },

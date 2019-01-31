@@ -21,7 +21,6 @@ class BasketItem extends React.Component {
             month: 'long',
             day: 'numeric'
         });
-        console.log(dateString);
         return (
             <View style={styles.mainContainer}>
                 <Image

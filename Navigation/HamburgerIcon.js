@@ -5,7 +5,6 @@ import { View, TouchableOpacity, Image } from 'react-native';
 class HamburgerIcon extends Component {
 
     toggleDrawer = () => {
-        console.log(this.props.navigationProps);
         this.props.navigationProps.toggleDrawer();
     };
 

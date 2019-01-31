@@ -3,7 +3,5 @@ export default function getTotalQuantityInBasket(basket) {
     basket.content.forEach((product) => {
         totalQuantity += product.quantity;
     });
-    console.log(basket.content);
-    console.log(totalQuantity);
     return totalQuantity
 }

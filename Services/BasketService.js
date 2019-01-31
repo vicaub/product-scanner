@@ -28,10 +28,8 @@ let BasketService = {
     findBasketByTimestamp : (dayTimeStamp) => {
         const dbresult = basketDB.filtered("dayTimestamp = '" + dayTimeStamp + "'");
         if (dbresult.length) {
-            console.log("found basket in db");
             return Array.from(dbresult)[0]
         } else {
-            console.log("create new basket");
             const basketInfo = {
                 dayTimestamp: todayTimeStamp(),
                 date: new Date(),
@@ -42,13 +40,13 @@ let BasketService = {
                     try {
                         DBConnector.create('Basket', basketInfo);
                     } catch (e) {
-                        console.log(e);
+                        console.error(e);
                     }
 
                 });
                 return basketInfo;
             } catch (e) {
-                console.log(e);
+                console.error(e);
             }
         }
     },
@@ -89,11 +87,11 @@ let BasketService = {
                 try {
                     DBConnector.create('Basket', basket, true);
                 } catch (e) {
-                    console.log(e);
+                    console.error(e);
                 }
 
             } catch (e) {
-                console.log(e);
+                console.error(e);
             }
         })
     },
@@ -112,11 +110,11 @@ let BasketService = {
                 try {
                     DBConnector.create('Basket', basket, true);
                 } catch (e) {
-                    console.log(e);
+                    console.error(e);
                 }
 
             } catch (e) {
-                console.log(e);
+                console.error(e);
             }
         })
     }
