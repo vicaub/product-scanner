@@ -36,8 +36,7 @@ class BasketsScreen extends Component {
         for (let i = 0; i<baskets.length; i++) {
             // TODO: not working...
             if (getTotalQuantityInBasket(baskets[i]) <= 0) {
-                console.log("deleting basket");
-                delete baskets[i]
+                baskets.splice(i, 1);
             }
         }
         return baskets
