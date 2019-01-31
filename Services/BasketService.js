@@ -22,7 +22,11 @@ let BasketService = {
      * Return it
      */
     findTodaysBasket: () => {
-        const dbresult = basketDB.filtered("dayTimestamp = '" + todayTimeStamp() + "'");
+        return BasketService.findBasketByTimestamp(todayTimeStamp());
+    },
+
+    findBasketByTimestamp : (dayTimeStamp) => {
+        const dbresult = basketDB.filtered("dayTimestamp = '" + dayTimeStamp + "'");
         if (dbresult.length) {
             console.log("found basket in db");
             return Array.from(dbresult)[0]
@@ -116,53 +120,6 @@ let BasketService = {
             }
         })
     }
+};
 
-
-    //
-    //
-    // scan : (product) => {
-    //     if (productDB.filtered("barCode = '" + product.barCode + "'").length) {
-    //
-    //         ProductService.update(product);
-    //
-    //
-    //         return
-    //     }
-    //     else {
-    //         ProductService.add(product);
-    //     }
-    //
-    // },
-    //
-    // update : (product, callback) => {
-    //     DBConnector.write(() => {
-    //         product.scanDate = new Date();
-    //         product.nbScans += 1;
-    //         DBConnector.create('Product', product, true);
-    //
-    //     })
-    //
-    //
-    // },
-    //
-    // add : (product) => {
-    //
-    //     try {
-    //         DBConnector.write(() => {
-    //             try {
-    //                 DBConnector.create('Product', product);
-    //
-    //             } catch (e) {
-    //                 console.log(e);
-    //             }
-    //
-    //         })
-    //     } catch (e) {
-    //         console.log(e);
-    //     }
-    //
-    // }
-
-
-}
 export default BasketService;

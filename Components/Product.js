@@ -17,9 +17,7 @@ class ProductScreen extends Component {
         this.state = {
             product: undefined,
             isLoading: true,
-            // fromBasket: this.props.navigation.getParam('fromBasket'),
             fromHistory: this.props.navigation.getParam('fromHistory'),
-            // cartCounter: this.props.navigation.getParam('cartCounter') ?  this.props.navigation.getParam('cartCounter') : 1
             cartCounter: 1
         };
     }
@@ -104,6 +102,7 @@ class ProductScreen extends Component {
     _removeProductFromCart() {
         this.setState({quantityInBasket: 0});
         BasketService.deleteProduct(this.state.product._id);
+        // this.props.navigation.goBack();
     }
 
     /**
