@@ -173,7 +173,7 @@ class ProductScreen extends Component {
         const {product, isLoading} = this.state;
         const B = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>;
         if (!isLoading) {
-            if (product !== undefined && !isLoading) {
+            if (product && Object.keys(product).length > 0 && !isLoading) {
                 return (
                     <ScrollView style={styles.scrollview_container}>
                         <View style={styles.headerContainer}>
