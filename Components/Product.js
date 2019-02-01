@@ -178,7 +178,7 @@ class ProductScreen extends Component {
         const {product, isLoading} = this.state;
         const B = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>;
         if (!isLoading) {
-            if (product !== undefined && !isLoading) {
+            if (product && Object.keys(product).length > 0 && !isLoading) {
                 return (
                     <ScrollView style={styles.scrollview_container}>
                         <View style={styles.headerContainer}>
@@ -238,7 +238,7 @@ class ProductScreen extends Component {
         const { product, isLoading} = this.state;
         if (!isLoading) {
             let user = UserService.findAll()[0];
-            if (user !== undefined) {
+            if (user !== undefined && product.allergens_ids) {
                 let allergens = [];
                 for (let allergen of product.allergens_ids) {
                     for (let user_allergen of Array.from(user.allergies)) {
