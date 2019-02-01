@@ -14,8 +14,8 @@ export function getProductInfoFromApi(barcode) {
 export function parseProductInfo(json, barcode) {
     if (json.status !== 0 && json.code && json.code.length > 0) {
         let jsonProduct = json.product;
-        let product = ProductService.findProduct(jsonProduct, barcode);
-        ProductService.scan(product);
+        // let product = ProductService.findProduct(jsonProduct, barcode);
+        // ProductService.scan(product);
 
         return {
             _id: json.code,
