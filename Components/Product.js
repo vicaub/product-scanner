@@ -34,7 +34,7 @@ class ProductScreen extends Component {
                     product: data,
                     isLoading: false
                 });
-                if (this.props.navigation.getParam('update')) {
+                if (this.props.navigation.getParam('update') && Object.keys(this.state.product).length > 0) {
                     let product = ProductService.findProduct(data, this.props.navigation.getParam('barcode'));
                     ProductService.scan(product);
                 }
