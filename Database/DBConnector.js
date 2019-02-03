@@ -1,6 +1,4 @@
-//import {Database} from "react-native-database";
 import Realm from 'realm';
-import basketData from "../Helper/basketData";
 
 // exemple
 // https://github.com/realm/realm-js/tree/master/examples/ReactExample/components
