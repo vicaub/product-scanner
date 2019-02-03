@@ -14,12 +14,12 @@ let UserService = {
                 try {
                     DBConnector.create('User', user);
                 } catch(e) {
-                    console.log(e);
+                    console.error(e);
                 }
                 callback();
             });
         } catch(e) {
-            console.log(e);
+            console.error(e);
         }
     },
 

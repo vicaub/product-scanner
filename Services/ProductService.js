@@ -60,14 +60,18 @@ let ProductService = {
                     DBConnector.create('Product', product);
 
                 } catch (e) {
-                    console.log(e);
+                    console.error(e);
                 }
 
             })
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
 
+    },
+
+    fetchProduct : (barcode) => {
+        return Array.from(productDB.filtered("barCode = '" + barcode + "'"))[0]
     }
 
 

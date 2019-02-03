@@ -43,7 +43,6 @@ class Profile extends Component {
 
     fetchUserInfo() {
         let userList = UserService.findAll();
-        console.log(userList);
         if (userList.length > 0) {
             let user = userList[0];
             this.setState({

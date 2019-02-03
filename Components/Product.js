@@ -7,6 +7,7 @@ import NumericInput from 'react-native-numeric-input';
 import Emoji from 'react-native-emoji';
 import UserService from '../Services/UserService'
 import ProductService from "../Services/ProductService";
+import BasketService from "../Services/BasketService";
 
 
 class ProductScreen extends Component {
@@ -16,14 +17,14 @@ class ProductScreen extends Component {
         this.state = {
             product: undefined,
             isLoading: true,
-            fromBasket: this.props.navigation.getParam('fromBasket'),
             fromHistory: this.props.navigation.getParam('fromHistory'),
-            cartCounter: this.props.navigation.getParam('cartCounter') ?  this.props.navigation.getParam('cartCounter') : 1
+            cartCounter: 1
         };
     }
 
     componentDidMount() {
-        let barcode = this.props.navigation.getParam('barcode');
+        const barcode =  this.props.navigation.getParam('barcode');
+        this.setState({quantityInBasket: BasketService.findQuantity(barcode)});
         getProductInfoFromApi(barcode)
             .then(rawJson => {
                 return parseProductInfo(rawJson, barcode)
@@ -33,7 +34,7 @@ class ProductScreen extends Component {
                     product: data,
                     isLoading: false
                 });
-                if (this.props.navigation.getParam('update')) {
+                if (this.props.navigation.getParam('update') && Object.keys(this.state.product).length > 0) {
                     let product = ProductService.findProduct(data, this.props.navigation.getParam('barcode'));
                     ProductService.scan(product);
                 }
@@ -98,8 +99,14 @@ class ProductScreen extends Component {
     }
 
     _addProductToCart() {
-        console.log(this.state.cartCounter);
-        // TODO: DB call to add product to today's cart
+        BasketService.addProductToBasket(this.state.product._id, this.state.cartCounter);
+        this.setState({quantityInBasket: this.state.cartCounter});
+    }
+
+    _removeProductFromCart() {
+        this.setState({quantityInBasket: 0});
+        BasketService.deleteProduct(this.state.product._id);
+        // this.props.navigation.goBack();
     }
 
     /**
@@ -107,14 +114,14 @@ class ProductScreen extends Component {
      */
     _printBasketOptions() {
         if (!this.state.fromHistory) {
-            if (this.state.fromBasket === true) {
+            if (this.state.quantityInBasket > 0) {
                 return (
                     <View styles={{}}>
                         <Text style={{textAlign: "center", marginTop: 10}}>
                             Supprimer l'article du panier
                         </Text>
                         <View style={{flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
-                            <Text style={{fontSize: 20}}>{this.state.cartCounter}</Text>
+                            <Text style={{fontSize: 20}}>{this.state.quantityInBasket}</Text>
                             <View style={styles.cartButton}>
                                 <Icon.Button
                                     name="trash"
@@ -123,8 +130,8 @@ class ProductScreen extends Component {
                                     backgroundColor="transparent"
                                     underlayColor="transparent"
                                     onPress={() => {
-                                        this._addProductToCart()
-                                        this.setState({fromBasket: false})
+                                        this._removeProductFromCart();
+                                        // this.setState({fromBasket: false});
                                     }}
                                 />
                             </View>
@@ -152,9 +159,7 @@ class ProductScreen extends Component {
                                     color="#00C378"
                                     backgroundColor="transparent"
                                     underlayColor="transparent"
-                                    onPress={() => {
-                                        this._addProductToCart()
-                                        this.setState({fromBasket: true})}
+                                    onPress={() => {this._addProductToCart();}
                                     }
                                 />
                             </View>
@@ -253,7 +258,6 @@ class ProductScreen extends Component {
     }
 
     render() {
-        console.log('render');
         return (
             <View style={styles.mainContainer}>
                 {this._displayLoading()}

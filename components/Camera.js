@@ -25,11 +25,9 @@ class BarcodeScanner extends Component {
                         permissionDialogMessage={'We need your permission to use your camera phone'}
                         //barCodeTypes={[RNCamera.Constants.BarCodeType.ean13]}
                         /*onGoogleVisionBarcodesDetected={({ barcodes }) => {
-                            console.log(barcodes);
                             this.props.navigation.navigate("Product", {barcode: barcodes[0].data});
                         }}*/
                         onBarCodeRead={(barcode) => {
-                            console.log(barcode);
                             this.props.navigation.navigate("Product", {barcode: barcode.data, update : true} );
                         }}
                     /> 
