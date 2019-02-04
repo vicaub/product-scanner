@@ -11,7 +11,17 @@ import Pie from './Charts/Pie';
 import StackedBar from './Charts/StackedBar';
 import Theme from './Theme';
 import data from '../../Helpers/chartsData';
+import ProductService from '../../Services/ProductService';
+import BasketService from '../../Services/BasketService';
 import {groupByCategories, groupAllByCategories, quantityInCategory, categoriesByBasket, getAllCategoriesFromBaskets} from "./Functions";
+
+function getNumberOfScans(scans) {
+    let sum = 0;
+    scans.forEach((scan) => {
+        sum += scan.nbScans;
+    });
+    return sum;
+}
 
 class Statistics extends Component {
 
@@ -21,15 +31,22 @@ class Statistics extends Component {
             activeIndex: 0,
             activeKey: '',
             categories: [],
+            nbScans: 0,
+            nbBaskets: 0,
         };
     }
 
     componentDidMount() {
+        let nbScans = getNumberOfScans(ProductService.findAll());
         // fetch user's baskets
+        let baskets = BasketService.findAll();
+        console.warn(baskets);
         let categories = getAllCategoriesFromBaskets(data.baskets);
         let latestBasketData = groupByCategories(data.baskets[data.baskets.length - 1], categories);
         categories = latestBasketData.keys;
         this.setState({
+            nbScans,
+            nbBaskets: baskets.length,
             categories,
             activeIndex: 0,
             activeKey: categories[0],
@@ -47,17 +64,17 @@ class Statistics extends Component {
 
         const height = 200;
         const width = 500;
-        const { activeIndex, activeKey, categories } = this.state;
+        const { activeIndex, activeKey, categories, nbScans, nbBaskets } = this.state;
 
         return (
             <ScrollView>
                 <View style={styles.container}>
                     <View>
                         <Text style={styles.nbStat}>
-                            <Text style={styles.bigNumber}>40</Text> scan(s)
+                            <Text style={styles.bigNumber}>{nbScans}</Text> scan(s)
                         </Text>
                         <Text style={styles.nbStat}>
-                            <Text style={styles.bigNumber}>3</Text> panier(s)
+                            <Text style={styles.bigNumber}>{nbBaskets}</Text> panier(s)
                         </Text>
                     </View>
                     <Text style={styles.chartTitle}>Distribution du dernier panier</Text>
