@@ -141,3 +141,33 @@ export function scoresByBasket(baskets) {
     });
     return data;
 }
+
+export function averageScore(baskets) {
+    /* Compute average nutrition grade */
+    let basketData = {
+        'a': 0,
+        'b': 0,
+        'c': 0,
+        'd': 0,
+        'e': 0,
+    };
+    let total = 0;
+    baskets.forEach((basket) => {
+        Array.from(basket.content).forEach((product) => {
+            if (product.score.length > 0) {
+                basketData[product.score] += product.quantity;
+                total += product.quantity;
+            }
+        });
+    });
+    let result = 0;
+    Object.keys(basketData).forEach((grade, index) => {
+        result += (index + 1) * basketData[grade]
+    });
+    if (total > 0) {
+        let index = Math.round(result/total) - 1;
+        return [Object.keys(basketData)[index].toUpperCase(), index];
+    } else {
+        return ['indéterminé', 5];
+    }
+}

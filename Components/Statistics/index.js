@@ -13,7 +13,7 @@ import Pie from './Charts/Pie';
 import Theme from './Theme';
 import ProductService from '../../Services/ProductService';
 import BasketService from '../../Services/BasketService';
-import {groupByCategories, quantityInCategory, categoriesByBasket, getAllCategoriesFromBaskets, scoresByBasket} from "./Functions";
+import {groupByCategories, quantityInCategory, categoriesByBasket, getAllCategoriesFromBaskets, scoresByBasket, averageScore} from "./Functions";
 
 function getNumberOfScans(scans) {
     let sum = 0;
@@ -76,6 +76,7 @@ class Statistics extends Component {
 
     _displayStats() {
         const { baskets, categories, activeIndex, activeKey, nbScans, nbBaskets, isLoading } = this.state;
+        let avgScore = averageScore(baskets);
 
         if (!isLoading) {
             return (
@@ -87,6 +88,9 @@ class Statistics extends Component {
                         <Text style={styles.nbStat}>
                             <Text style={styles.bigNumber}>{nbBaskets}</Text> panier(s)
                         </Text>
+                        <Text style={styles.nbStat}>
+                            Score moyen : <Text style={[styles.bigNumber, {color: Theme.scoresColors[avgScore[1]]}]}>{avgScore[0]}</Text>
+                        </Text>
                     </View>
                     <Text style={styles.chartTitle}>Distribution du dernier panier</Text>
                     <Pie
@@ -97,6 +101,7 @@ class Statistics extends Component {
                         basketId={baskets[0].dayTimestamp}
                         data={groupByCategories(baskets[0], categories)}
                         selectedSliceLabel={activeKey}/>
+                    <Text style={styles.helper}>Psst... Sélectionnez une catégorie pour voir son évolution dans vos paniers !</Text>
                     <Text style={styles.chartTitle}>Achats de{activeKey} par panier</Text>
                     <AxesLine
                         color={Theme.colors[activeIndex]}
@@ -162,5 +167,12 @@ const styles = StyleSheet.create({
     },
     bigNumber: {
         fontSize: 30,
+    },
+    helper: {
+        fontSize: 10,
+        marginBottom: 5,
+        color: 'grey',
+        textAlign: 'center',
+        fontStyle: 'italic',
     }
 });

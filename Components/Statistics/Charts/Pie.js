@@ -65,7 +65,6 @@ class Pie extends Component {
                             );
                         })
                     }
-                    <Text style={styles.helper}>Psst... Sélectionnez une catégorie pour voir son évolution dans vos paniers !</Text>
                 </View>
             </View>
         )
@@ -88,7 +87,7 @@ export default Pie;
 
 const styles = StyleSheet.create({
     container: {
-        margin: 20,
+        margin: 15,
     },
     caption: {
         marginTop: 10,
@@ -99,12 +98,5 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginLeft: 5,
         fontWeight: 'normal',
-    },
-    helper: {
-        marginTop: 20,
-        fontSize: 10,
-        color: 'grey',
-        textAlign: 'center',
-        fontStyle: 'italic',
     }
 });
