@@ -94,7 +94,8 @@ export function getAllCategoriesFromBaskets(baskets) {
 export function categoriesByBasket(baskets, categories) {
     /* For each basket, compute the quantities for each category of the basket */
     let data = [];
-    baskets.forEach((basket) => {
+    let orderedBaskets = baskets.slice().reverse();
+    orderedBaskets.forEach((basket) => {
         let basketData = {};
         Array.from(basket.content).forEach((product) => {
             let productCategory = getCategory(product);
