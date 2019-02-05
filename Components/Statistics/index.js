@@ -5,6 +5,7 @@ import {
     ScrollView,
     Text,
     ActivityIndicator,
+    Image,
 } from 'react-native';
 import AxesLine from './Charts/AxesLine';
 import AxesStackedBar from './Charts/AxesStackedBar';
@@ -12,7 +13,7 @@ import Pie from './Charts/Pie';
 import Theme from './Theme';
 import ProductService from '../../Services/ProductService';
 import BasketService from '../../Services/BasketService';
-import {groupByCategories, quantityInCategory, categoriesByBasket, getAllCategoriesFromBaskets} from "./Functions";
+import {groupByCategories, quantityInCategory, categoriesByBasket, getAllCategoriesFromBaskets, scoresByBasket} from "./Functions";
 
 function getNumberOfScans(scans) {
     let sum = 0;
@@ -105,6 +106,15 @@ class Statistics extends Component {
                         keys={categories}
                         data={categoriesByBasket(baskets, categories)}
                         colors={Theme.colors} />
+                    <Text style={styles.chartTitle}>Distribution des scores nutritionnels</Text>
+                    <AxesStackedBar
+                        keys={['a', 'b', 'c', 'd', 'e', 'unspecified']}
+                        data={scoresByBasket(baskets)}
+                        colors={Theme.scoresColors} />
+                    <Image
+                        style={{width: '60%', height: 120, marginRight: 'auto', marginLeft: 'auto'}}
+                        source={require('../../assets/images/nutriscores.png')}
+                    />
                 </View>
             );
         }

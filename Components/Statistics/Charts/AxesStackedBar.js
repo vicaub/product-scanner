@@ -15,6 +15,7 @@ class AxesStackedBar extends Component {
             fontWeight: 'bold',
         };
         const xAxisHeight = 20;
+        console.warn(this.props.data);
 
         return (
             <View style={{ height: 250, padding: 10, flexDirection: 'row' }}>

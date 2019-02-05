@@ -115,3 +115,29 @@ export function categoriesByBasket(baskets, categories) {
     });
     return data;
 }
+
+export function scoresByBasket(baskets) {
+    /* For each basket, compute the quantities for each nutrition grade */
+    let data = [];
+    let orderedBaskets = baskets.slice().reverse();
+    orderedBaskets.forEach((basket) => {
+        let basketData = {
+            'date': basket.dayTimestamp,
+            'a': 0,
+            'b': 0,
+            'c': 0,
+            'd': 0,
+            'e': 0,
+            'unspecified': 0,
+        };
+        Array.from(basket.content).forEach((product) => {
+            if (product.score.length > 0) {
+                basketData[product.score] += product.quantity;
+            } else {
+                basketData.unspecified += product.quantity;
+            }
+        });
+        data.push(basketData);
+    });
+    return data;
+}
