@@ -40,30 +40,27 @@ class Pie extends Component {
                 onPress: () => this._onPieItemSelected(key, index)
             }
         });
-        const margin = styles.container.margin;
 
         return (
             <View>
+                <Text style={styles.caption}>{moment(this.props.basketId).locale('fr').format('L')}</Text>
                 <PieChart
-                    style={{ height: this.props.pieHeight, width: this.props.pieWidth }}
+                    style={{ height: this.props.pieHeight, width: this.props.pieWidth, marginLeft: 'auto', marginRight: 'auto' }}
                     outerRadius={'90%'}
                     innerRadius={30}
                     data={data}
                 />
-                <View style={{position: 'absolute', top:margin, left: this.props.pieWidth}}>
-                    <Text>{moment(this.props.basketId).locale('fr').format('L')}</Text>
+                <View style={styles.container}>
                     {
                         keys.map( (item, index) =>
                         {
                             let fontWeight = selectedSliceLabel === item ? 'bold' : 'normal';
                             return (
                                 <TouchableWithoutFeedback key={index} onPress={() => this._onPieItemSelected(item, index)}>
-                                    <View>
-                                        <Text
-                                            style={[styles.label, {color: Theme.colors[index], fontWeight: fontWeight}]}>
-                                            {keys[index]}: {values[index]}%
-                                        </Text>
-                                    </View>
+                                    <Text
+                                        style={[styles.label, {color: Theme.colors[index], fontWeight: fontWeight}]}>
+                                        {keys[index]}: {values[index]}%
+                                    </Text>
                                 </TouchableWithoutFeedback>
                             );
                         })
@@ -92,10 +89,14 @@ const styles = StyleSheet.create({
     container: {
         margin: 20,
     },
+    caption: {
+        marginTop: 10,
+        textAlign: 'center',
+    },
     label: {
         fontSize: 15,
-        marginTop: 5,
+        marginTop: 10,
+        marginLeft: 5,
         fontWeight: 'normal',
-
     }
 });

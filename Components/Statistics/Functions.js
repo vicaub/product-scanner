@@ -60,7 +60,8 @@ function buildCategoriesStats(categories, total) {
 
 export function quantityInCategory(baskets, category) {
     let quantities = [];
-    baskets.reverse().forEach((basket) => {
+    let orderedBaskets = baskets.slice().reverse();
+    orderedBaskets.forEach((basket) => {
         let quantity = 0;
         Array.from(basket.content).forEach((product) => {
             if (getCategory(product) === category) {
