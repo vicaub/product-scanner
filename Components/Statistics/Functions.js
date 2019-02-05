@@ -1,14 +1,22 @@
 
+function getCategory(product) {
+    if (product.categories.length > 0 && product.categories[0].length > 0) {
+        return product.categories[product.categories.length - 1];
+    } else {
+        return ' Autre';
+    }
+}
 
 export function groupByCategories(basket, categoriesList) {
     /* Compute quantities bought in each category for a specific basket */
     let categories = {};
     let total = 0;
-    basket.items.forEach((product) => {
-        if (product.category in categories) {
-            categories[product.category] += product.quantity;
+    Array.from(basket.content).forEach((product) => {
+        let productCategory = getCategory(product);
+        if (productCategory in categories) {
+            categories[productCategory] += product.quantity;
         } else {
-            categories[product.category] = product.quantity;
+            categories[productCategory] = product.quantity;
         }
         total += product.quantity;
     });
@@ -24,11 +32,12 @@ export function groupAllByCategories(baskets) {
     let categories = {};
     let total = 0;
     baskets.forEach((basket) => {
-        basket.items.forEach((product) => {
-            if (product.category in categories) {
-                categories[product.category] += product.quantity;
+        Array.from(basket.content).forEach((product) => {
+            let productCategory = getCategory(product);
+            if (productCategory in categories) {
+                categories[productCategory] += product.quantity;
             } else {
-                categories[product.category] = product.quantity;
+                categories[productCategory] = product.quantity;
             }
             total += product.quantity;
         });
@@ -51,15 +60,15 @@ function buildCategoriesStats(categories, total) {
 
 export function quantityInCategory(baskets, category) {
     let quantities = [];
-    baskets.forEach((basket) => {
+    baskets.reverse().forEach((basket) => {
         let quantity = 0;
-        basket.items.forEach((product) => {
-            if (product.category === category) {
+        Array.from(basket.content).forEach((product) => {
+            if (getCategory(product) === category) {
                 quantity += product.quantity;
             }
         });
         quantities.push({
-            date: basket.id,
+            date: basket.dayTimestamp,
            value: quantity,
         });
     });
@@ -74,8 +83,8 @@ export function getAllCategoriesFromBaskets(baskets) {
     /* List of all the different categories in the user's basket */
     let categories = [];
     baskets.forEach((basket) => {
-        basket.items.forEach((item) => {
-            categories.push(item.category);
+        Array.from(basket.content).forEach((item) => {
+            categories.push(getCategory(item));
         });
     });
     return [...new Set(categories)];
@@ -86,11 +95,12 @@ export function categoriesByBasket(baskets, categories) {
     let data = [];
     baskets.forEach((basket) => {
         let basketData = {};
-        basket.items.forEach((product) => {
-            if (product.category in basketData) {
-                basketData[product.category] += product.quantity;
+        Array.from(basket.content).forEach((product) => {
+            let productCategory = getCategory(product);
+            if (productCategory in basketData) {
+                basketData[productCategory] += product.quantity;
             } else {
-                basketData[product.category] = product.quantity;
+                basketData[productCategory] = product.quantity;
             }
         });
         categories.forEach((category) => {
@@ -98,7 +108,7 @@ export function categoriesByBasket(baskets, categories) {
                basketData[category] = 0;
            }
         });
-        basketData.date = basket.id;
+        basketData.date = basket.dayTimestamp;
         data.push(basketData);
     });
     return data;

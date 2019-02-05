@@ -4,16 +4,15 @@ import {
     View,
     ScrollView,
     Text,
+    ActivityIndicator,
 } from 'react-native';
-import Bar from './Charts/Bar';
 import AxesLine from './Charts/AxesLine';
+import AxesStackedBar from './Charts/AxesStackedBar';
 import Pie from './Charts/Pie';
-import StackedBar from './Charts/StackedBar';
 import Theme from './Theme';
-import data from '../../Helpers/chartsData';
 import ProductService from '../../Services/ProductService';
 import BasketService from '../../Services/BasketService';
-import {groupByCategories, groupAllByCategories, quantityInCategory, categoriesByBasket, getAllCategoriesFromBaskets} from "./Functions";
+import {groupByCategories, quantityInCategory, categoriesByBasket, getAllCategoriesFromBaskets} from "./Functions";
 
 function getNumberOfScans(scans) {
     let sum = 0;
@@ -33,6 +32,8 @@ class Statistics extends Component {
             categories: [],
             nbScans: 0,
             nbBaskets: 0,
+            baskets: [],
+            isLoading: true,
         };
     }
 
@@ -41,16 +42,28 @@ class Statistics extends Component {
         // fetch user's baskets
         let baskets = BasketService.findAll();
         console.warn(baskets);
-        let categories = getAllCategoriesFromBaskets(data.baskets);
-        let latestBasketData = groupByCategories(data.baskets[data.baskets.length - 1], categories);
+        let categories = getAllCategoriesFromBaskets(baskets);
+        let latestBasketData = groupByCategories(baskets[0], categories);
         categories = latestBasketData.keys;
         this.setState({
+            baskets,
             nbScans,
             nbBaskets: baskets.length,
             categories,
             activeIndex: 0,
             activeKey: categories[0],
+            isLoading: false,
         });
+    }
+
+    _displayLoading() {
+        if (this.state.isLoading) {
+            return (
+                <View style={styles.loadingContainer}>
+                    <ActivityIndicator size='large'/>
+                </View>
+            )
+        }
     }
 
     _onPieItemSelected(newIndex, newKey){
@@ -60,14 +73,11 @@ class Statistics extends Component {
         });
     }
 
-    render() {
+    _displayStats() {
+        const { baskets, categories, activeIndex, activeKey, nbScans, nbBaskets, isLoading } = this.state;
 
-        const height = 200;
-        const width = 500;
-        const { activeIndex, activeKey, categories, nbScans, nbBaskets } = this.state;
-
-        return (
-            <ScrollView>
+        if (!isLoading) {
+            return (
                 <View style={styles.container}>
                     <View>
                         <Text style={styles.nbStat}>
@@ -83,19 +93,28 @@ class Statistics extends Component {
                         pieHeight={200}
                         onItemSelected={(newIndex, key) => this._onPieItemSelected(newIndex, key)}
                         colors={Theme.colors}
-                        basketId={data.baskets[data.baskets.length - 1].id}
-                        data={groupByCategories(data.baskets[data.baskets.length - 1], categories)}
+                        basketId={baskets[0].dayTimestamp}
+                        data={groupByCategories(baskets[0], categories)}
                         selectedSliceLabel={activeKey}/>
-                    <Text style={styles.chartTitle}>Achats de {activeKey} par panier</Text>
+                    <Text style={styles.chartTitle}>Achats de{activeKey} par panier</Text>
                     <AxesLine
                         color={Theme.colors[activeIndex]}
-                        data={quantityInCategory(data.baskets, activeKey)} />
+                        data={quantityInCategory(baskets, activeKey)} />
                     <Text style={styles.chartTitle}>Distribution des catégories</Text>
-                    <StackedBar
+                    <AxesStackedBar
                         keys={categories}
-                        data={categoriesByBasket(data.baskets, categories)}
+                        data={categoriesByBasket(baskets, categories)}
                         colors={Theme.colors} />
                 </View>
+            );
+        }
+    }
+
+    render() {
+        return (
+            <ScrollView>
+                {this._displayLoading()}
+                {this._displayStats()}
             </ScrollView>
         );
     }
@@ -107,6 +126,15 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor:'whitesmoke',
         marginTop: 21,
+    },
+    loadingContainer: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 100,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     chartTitle: {
         paddingTop: 15,

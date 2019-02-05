@@ -3,57 +3,57 @@ export default {
 
     baskets: [
         {
-            id: "07/01/2019",
-            items: [
+            date: "07/01/2019",
+            content: [
                 {
                     productId: 1,
                     name: 'Compotes de pommes',
-                    category: 'fruits',
+                    categories: ['fruits'],
                     score: 'B',
                     quantity: 1,
                 },
                 {
                     productId: 1,
                     name: 'Chocolat Encore!',
-                    category: 'snacks',
+                    categories: [],
                     score: 'E',
                     quantity: 1,
                 },
             ]
         },
         {
-            id: "20/01/2019",
-            items: [
+            date: "20/01/2019",
+            content: [
                 {
                     productId: 1,
                     name: 'Fraises Tagada',
-                    category: 'snacks',
+                    categories: ['snacks'],
                     score: 'D',
                     quantity: 2,
                 },
                 {
                     productId: 1,
                     name: 'Chocolat Encore!',
-                    category: 'snacks',
+                    categories: ['snacks'],
                     score: 'E',
                     quantity: 1,
                 },
             ]
         },
         {
-            id: "21/01/2019",
-            items: [
+            date: "21/01/2019",
+            content: [
                 {
                     productId: 1,
                     name: 'Fraises Tagada',
-                    category: 'snacks',
+                    categories: ['snacks'],
                     score: 'D',
                     quantity: 1,
                 },
                 {
                     productId: 1,
                     name: 'Chocolat Encore!',
-                    category: 'boisson',
+                    categories: ['boisson'],
                     score: 'A',
                     quantity: 1,
                 },

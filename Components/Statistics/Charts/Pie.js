@@ -7,7 +7,9 @@ import {
     TouchableWithoutFeedback
 } from 'react-native';
 import { PieChart } from 'react-native-svg-charts'
-import Theme from "../Theme";
+import Theme from '../Theme';
+import moment from 'moment';
+import 'moment/locale/fr';
 
 class Pie extends Component {
 
@@ -49,7 +51,7 @@ class Pie extends Component {
                     data={data}
                 />
                 <View style={{position: 'absolute', top:margin, left: this.props.pieWidth}}>
-                    <Text>{this.props.basketId}</Text>
+                    <Text>{moment(this.props.basketId).locale('fr').format('L')}</Text>
                     {
                         keys.map( (item, index) =>
                         {
