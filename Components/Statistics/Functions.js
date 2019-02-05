@@ -171,3 +171,11 @@ export function averageScore(baskets) {
         return ['indéterminé', 5];
     }
 }
+
+export function getNumberOfScans(scans) {
+    let sum = 0;
+    scans.forEach((scan) => {
+        sum += scan.nbScans;
+    });
+    return sum;
+}

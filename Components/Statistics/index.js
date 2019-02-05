@@ -13,15 +13,16 @@ import Pie from './Charts/Pie';
 import Theme from './Theme';
 import ProductService from '../../Services/ProductService';
 import BasketService from '../../Services/BasketService';
-import {groupByCategories, quantityInCategory, categoriesByBasket, getAllCategoriesFromBaskets, scoresByBasket, averageScore} from "./Functions";
+import {
+    groupByCategories,
+    quantityInCategory,
+    categoriesByBasket,
+    getAllCategoriesFromBaskets,
+    scoresByBasket,
+    averageScore,
+    getNumberOfScans,
+} from "./Functions";
 
-function getNumberOfScans(scans) {
-    let sum = 0;
-    scans.forEach((scan) => {
-        sum += scan.nbScans;
-    });
-    return sum;
-}
 
 class Statistics extends Component {
 
@@ -40,9 +41,7 @@ class Statistics extends Component {
 
     componentDidMount() {
         let nbScans = getNumberOfScans(ProductService.findAll());
-        // fetch user's baskets
         let baskets = BasketService.findAll();
-        console.warn(baskets);
         let categories = getAllCategoriesFromBaskets(baskets);
         let latestBasketData = groupByCategories(baskets[0], categories);
         categories = latestBasketData.keys;
@@ -81,6 +80,7 @@ class Statistics extends Component {
         if (!isLoading) {
             return (
                 <View style={styles.container}>
+                    {/* Statistics */}
                     <View>
                         <Text style={styles.nbStat}>
                             <Text style={styles.bigNumber}>{nbScans}</Text> scan(s)
@@ -92,6 +92,8 @@ class Statistics extends Component {
                             Score moyen : <Text style={[styles.bigNumber, {color: Theme.scoresColors[avgScore[1]]}]}>{avgScore[0]}</Text>
                         </Text>
                     </View>
+
+                    {/* Pie Chart */}
                     <Text style={styles.chartTitle}>Distribution du dernier panier</Text>
                     <Pie
                         pieWidth={200}
@@ -102,15 +104,22 @@ class Statistics extends Component {
                         data={groupByCategories(baskets[0], categories)}
                         selectedSliceLabel={activeKey}/>
                     <Text style={styles.helper}>Psst... Sélectionnez une catégorie pour voir son évolution dans vos paniers !</Text>
+
+                    {/* Line Chart */}
                     <Text style={styles.chartTitle}>Achats de{activeKey} par panier</Text>
                     <AxesLine
                         color={Theme.colors[activeIndex]}
                         data={quantityInCategory(baskets, activeKey)} />
+
+                    {/* Stacked Bar Chart - Categories */}
                     <Text style={styles.chartTitle}>Distribution des catégories</Text>
                     <AxesStackedBar
-                        keys={categories}
                         data={categoriesByBasket(baskets, categories)}
-                        colors={Theme.colors} />
+                        keys={categories}
+                        colors={Theme.colors}
+                    />
+
+                    {/* Stacked Bar Chart - Nutrition Grade */}
                     <Text style={styles.chartTitle}>Distribution des scores nutritionnels</Text>
                     <AxesStackedBar
                         keys={['a', 'b', 'c', 'd', 'e', 'unspecified']}
