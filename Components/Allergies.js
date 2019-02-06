@@ -9,6 +9,7 @@ import MultiSelect from 'react-native-multiple-select';
 import { getAllergensFromApi } from '../API/OFFApi';
 import ActionButton from './Common/ActionButton';
 import UserService from "../Services/UserService";
+import OupsScreen from "./Common/Oups";
 
 class Allergies extends Component {
 
@@ -18,6 +19,7 @@ class Allergies extends Component {
             selectedItems: [],
             allergens: [],
             isLoading: true,
+            isConnected: true,
         };
     }
 
@@ -30,7 +32,10 @@ class Allergies extends Component {
                 allergens: data,
                 isLoading: false,
             });
-        });
+        })
+            .catch((error) =>
+                this.setState({isConnected:false, isLoading: false})
+            );;
     }
 
     onSelectedItemsChange = selectedItems => {
@@ -60,8 +65,8 @@ class Allergies extends Component {
     }
 
     _displayAllergies() {
-        const { selectedItems, allergens, isLoading } = this.state;
-        if (!isLoading) {
+        const { selectedItems, allergens, isLoading, isConnected } = this.state;
+        if (!isLoading & isConnected) {
             return (
                 <View style={styles.container}>
                     <View>
@@ -97,6 +102,10 @@ class Allergies extends Component {
                         />
                     </View>
                 </View>
+            );
+        } else if (!isLoading && !isConnected) {
+            return (
+                <OupsScreen message="Tu n'as pas de connexion internet"/>
             );
         }
     }
