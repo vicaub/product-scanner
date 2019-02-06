@@ -120,7 +120,7 @@ class ProductScreen extends Component {
         if (!this.state.fromHistory) {
             if (this.state.quantityInBasket > 0) {
                 return (
-                    <View styles={{}}>
+                    <View styles={styles.borderTop}>
                         <Text style={{textAlign: "center", marginTop: 10}}>
                             Supprimer l'article du panier
                         </Text>
@@ -144,7 +144,7 @@ class ProductScreen extends Component {
                 )
             } else {
                 return (
-                    <View>
+                    <View style={styles.borderTop}>
                         <Text style={{textAlign: "center", marginTop: 10}}>
                             Ajoute cet article à ton panier d'aujourd'hui <Emoji name={"wink"}/>
                         </Text>
@@ -177,12 +177,13 @@ class ProductScreen extends Component {
         }
     }
 
-//TODO switch request back to https
+    //TODO switch request back to https
     _displayProductInfo() {
+
         const {product, isLoading, isConnected} = this.state;
-        const B = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>;
+
         if (!isLoading) {
-            if (product && Object.keys(product).length > 0 && !isLoading) {
+            if (product && Object.keys(product).length > 0) {
                 return (
                     <ScrollView style={styles.scrollview_container}>
                         <View style={styles.headerContainer}>
@@ -219,13 +220,6 @@ class ProductScreen extends Component {
                             // source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-e.png'}}
                         />
 
-                        <View
-                            style={{
-                                borderBottomColor: 'grey',
-                                borderBottomWidth: 1,
-                            }}
-                        />
-
                         {this._printBasketOptions()}
 
                     </ScrollView>
@@ -236,7 +230,7 @@ class ProductScreen extends Component {
                 );
             } else {
                 return (
-                    <OupsScreen message="Tu n'as pas de connexion internet"/>
+                    <OupsScreen message="Pas de connexion internet..."/>
                 );
             }
         }
@@ -335,7 +329,11 @@ const styles = StyleSheet.create({
     cartButton: {
         marginLeft: 15,
         marginRight: 15,
-    }
+    },
+    borderTop: {
+        borderTopColor: '#d8d8d8',
+        borderTopWidth: 1,
+    },
 });
 
 export default ProductScreen;
