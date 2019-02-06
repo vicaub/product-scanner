@@ -40,6 +40,15 @@ class Statistics extends Component {
     }
 
     componentDidMount() {
+        this.willFocus = this.props.navigation.addListener(
+            'willFocus',
+            () => {
+                this._fetchData();
+            }
+        );
+    }
+
+    _fetchData() {
         let nbScans = getNumberOfScans(ProductService.findAll());
         let baskets = BasketService.findAll();
         let categories = getAllCategoriesFromBaskets(baskets);
@@ -54,6 +63,10 @@ class Statistics extends Component {
             activeKey: categories[0],
             isLoading: false,
         });
+    }
+
+    componentWillUnmount() {
+        this.willFocus.remove();
     }
 
     _displayLoading() {
