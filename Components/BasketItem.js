@@ -17,13 +17,8 @@ class BasketItem extends React.Component {
 
     render() {
         const basket = this.props.basket;
-        // const dateString = basket.date.toLocaleDateString("fr-FR", {
-        //     weekday: 'long',
-        //     year: 'numeric',
-        //     month: 'long',
-        //     day: 'numeric'
-        // });
-        const dateString = moment(basket.date).format("dddd Do MMMM YYYY")
+        // const dateString = moment(basket.date).format("dddd Do MMMM YYYY")
+        const dateString = moment(basket.date).format("DD/MM/YYYY");
         return (
             <View style={styles.mainContainer}>
                 <Image
