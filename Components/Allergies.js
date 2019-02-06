@@ -67,7 +67,16 @@ class Allergies extends Component {
         if (!isLoading & isConnected) {
             return (
                 <View style={styles.container}>
+
                     <View>
+                        <ActionButton
+                            title="Sauvegarder"
+                            color="#FFDC32"
+                            onPress={() => this.handleSubmit()}
+                        />
+                    </View>
+
+                    <View style={styles.select}>
                         <MultiSelect 
                             items={allergens}
                             uniqueKey="_id"
@@ -90,13 +99,6 @@ class Allergies extends Component {
                             noResultText="Aucun résultat trouvé."
                             styleItemsContainer={{ height: 400 }}
                             textInputProps={{ autoFocus: false }}
-                        />
-                    </View>
-                    <View style={styles.bottomView}>
-                        <ActionButton 
-                            title="Sauvegarder"
-                            color="#FFDC32"
-                            onPress={() => this.handleSubmit()}
                         />
                     </View>
                 </View>
@@ -128,7 +130,7 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: '#ffffff',
     },
-    bottomView: {
-        marginTop: 50,
-    },
+    select: {
+        marginTop: 20,
+    }
 });
