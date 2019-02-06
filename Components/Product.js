@@ -20,14 +20,14 @@ class ProductScreen extends Component {
             isLoading: true,
             fromHistory: this.props.navigation.getParam('fromHistory'),
             cartCounter: 1,
-            isConnected:true,
+            isConnected: true,
             fromBasket: this.props.navigation.getParam('fromBasket'),
             hasCheckedAllergies: false,
         };
     }
 
     componentDidMount() {
-        const barcode =  this.props.navigation.getParam('barcode');
+        const barcode = this.props.navigation.getParam('barcode');
         this.setState({quantityInBasket: BasketService.findQuantity(barcode)});
         getProductInfoFromApi(barcode)
             .then(rawJson => {
@@ -65,8 +65,6 @@ class ProductScreen extends Component {
             return (<Text style={styles.defaultText}>Non renseigné</Text>)
         } else {
             const splitedIngredients = ingredientsWithAllergens.split(/<span class=\"allergen\">|<\/span>/);
-
-            const allergens = splitedIngredients.filter((value, index) => index % 2 === 1);
 
             return (
                 <Text style={styles.defaultText}>
@@ -177,7 +175,6 @@ class ProductScreen extends Component {
         }
     }
 
-    //TODO switch request back to https
     _displayProductInfo() {
 
         const {product, isLoading, isConnected} = this.state;
@@ -185,10 +182,10 @@ class ProductScreen extends Component {
         if (!isLoading) {
             if (product && Object.keys(product).length > 0) {
                 return (
-                    <ScrollView style={styles.scrollview_container}>
+                    <ScrollView style={styles.scrollviewContainer}>
                         <View style={styles.headerContainer}>
                             <Image
-                                style={styles.image_product}
+                                style={styles.imageProduct}
                                 source={product.image_url ? {uri: product.image_url} : require('../assets/images/No-images-placeholder.png')}
                             />
                             <View style={styles.headerDescription}>
@@ -215,9 +212,8 @@ class ProductScreen extends Component {
                         {ProductScreen._parseAllergens(product.allergens)}
 
                         <Image
-                            style={styles.image_nutri}
+                            style={styles.imageNutri}
                             source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-' + product.nutrition_grades + '.png'}}
-                            // source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-e.png'}}
                         />
 
                         {this._printBasketOptions()}
@@ -271,23 +267,25 @@ class ProductScreen extends Component {
     }
 }
 
+export default ProductScreen;
+
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1
     },
-    scrollview_container: {
+    scrollviewContainer: {
         flex: 1,
         flexDirection: "column"
     },
     headerContainer: {
         flexDirection: "row",
     },
-    image_product: {
+    imageProduct: {
         flex: 1,
         margin: 5,
         resizeMode: 'contain',
     },
-    image_nutri: {
+    imageNutri: {
         height: 80,
         marginTop: 5,
         marginBottom: 10,
@@ -335,5 +333,3 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
     },
 });
-
-export default ProductScreen;
