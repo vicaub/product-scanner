@@ -11,10 +11,11 @@ export function deleteDB() {
     });
 }
 
-export function fillDB() {
+function dateTimeStamp(date) {
+    return Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+}
 
-    let basket = DBConnector.objects('Basket');
-    let product = DBConnector.objects('Product');
+export function fillDB() {
 
     let date = new Date();
 
@@ -108,8 +109,8 @@ export function fillDB() {
 
     DBConnector.write(() => {
         DBConnector.create('Basket', {
-            dayTimestamp: date.getTime(),
-            date: date.toISOString(),
+            dayTimestamp: dateTimeStamp(date),
+            date: date,
             content: [
                 {
                     barcode: '3596710413829',
@@ -128,8 +129,8 @@ export function fillDB() {
 
         date.setDate(date.getDate() + 5);
         DBConnector.create('Basket', {
-            dayTimestamp: date.getTime(),
-            date: date.toISOString(),
+            dayTimestamp: dateTimeStamp(date),
+            date: date,
             content: [
                 {
                     barcode: '3228881025258',
@@ -154,8 +155,8 @@ export function fillDB() {
 
         date.setDate(date.getDate() + 3);
         DBConnector.create('Basket', {
-            dayTimestamp: date.getTime(),
-            date: date.toISOString(),
+            dayTimestamp: dateTimeStamp(date),
+            date: date,
             content: [
                 {
                     barcode: '5410673730954',
@@ -174,8 +175,8 @@ export function fillDB() {
 
         date.setDate(date.getDate() + 5);
         DBConnector.create('Basket', {
-            dayTimestamp: date.getTime(),
-            date: date.toISOString(),
+            dayTimestamp: dateTimeStamp(date),
+            date: date,
             content: [
                 {
                     barcode: '3103220025208',

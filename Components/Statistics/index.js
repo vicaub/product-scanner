@@ -55,7 +55,6 @@ class Statistics extends Component {
         let categories = baskets.length > 0 ? getAllCategoriesFromBaskets(baskets) : [];
         let latestBasketData = baskets.length > 0 ? groupByCategories(baskets[0], categories) : [];
         if (baskets.length > 0) categories = latestBasketData.keys;
-        console.warn(baskets);
         this.setState({
             baskets,
             nbScans,
