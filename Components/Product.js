@@ -18,6 +18,7 @@ class ProductScreen extends Component {
             product: undefined,
             isLoading: true,
             fromHistory: this.props.navigation.getParam('fromHistory'),
+            fromBasket: this.props.navigation.getParam('fromBasket'),
             cartCounter: 1,
             hasCheckedAllergies: false,
         };
@@ -236,8 +237,8 @@ class ProductScreen extends Component {
     }
 
     _checkAllergies() {
-        const { product, isLoading, hasCheckedAllergies} = this.state;
-        if (!isLoading && !hasCheckedAllergies) {
+        const { product, isLoading, fromHistory, fromBasket, hasCheckedAllergies} = this.state;
+        if (!isLoading && !hasCheckedAllergies && !fromHistory && !fromBasket) {
             this.state.hasCheckedAllergies = true;
             let user = UserService.findAll()[0];
             if (user !== undefined && product.allergens_ids) {
