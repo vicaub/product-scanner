@@ -19,7 +19,7 @@ let ProductService = {
                 scanDate: new Date(),
                 nbScans: 1,
                 imageUrl: data.image_url,
-                ingredients: [data.ingredients],
+                ingredients: data.ingredients ? [data.ingredients] : [],
                 allergens: data.allergens !== undefined ? data.allergens.split(","): []
             };
             return productinfo;
