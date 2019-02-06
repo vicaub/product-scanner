@@ -29,7 +29,7 @@ class BasketsScreen extends Component {
     }
 
     _navigateToBasket(basket) {
-        this.props.navigation.navigate("BasketDetails", {basketId: basket.dayTimestamp});
+        this.props.navigation.navigate("BasketDetails", {basketId: basket.dayTimestamp, fromBasket: true});
     }
 
     _removeEmptyBaskets(baskets) {
