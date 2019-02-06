@@ -8,7 +8,7 @@ export function getProductInfoFromApi(barcode) {
     const url = apiUrl + '/api/v0/product/' + barcode + '.json';
     return fetch(url)
         .then((response) => response.json())
-        .catch((error) => console.error(error))
+        .catch() //network fail is handled in call in Product.js
 }
 
 export function parseProductInfo(json, barcode) {
@@ -59,5 +59,5 @@ export function getAllergensFromApi() {
             }
             return allergens;
         })
-        .catch((error) => console.error(error))
+        .catch() //network fail is handled in call in Allergies.js
 }

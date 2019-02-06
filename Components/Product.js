@@ -18,8 +18,9 @@ class ProductScreen extends Component {
             product: undefined,
             isLoading: true,
             fromHistory: this.props.navigation.getParam('fromHistory'),
-            fromBasket: this.props.navigation.getParam('fromBasket'),
             cartCounter: 1,
+            isConnected:true,
+            fromBasket: this.props.navigation.getParam('fromBasket'),
             hasCheckedAllergies: false,
         };
     }
@@ -41,7 +42,9 @@ class ProductScreen extends Component {
                     ProductService.scan(product);
                 }
             })
-            .catch((error) => console.error(error));
+            .catch((error) =>
+                this.setState({isConnected:false, isLoading: false})
+            );
     }
 
     _displayLoading() {
@@ -177,7 +180,7 @@ class ProductScreen extends Component {
 
 //TODO switch request back to https
     _displayProductInfo() {
-        const {product, isLoading} = this.state;
+        const {product, isLoading, isConnected} = this.state;
         const B = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>;
         if (!isLoading) {
             if (product && Object.keys(product).length > 0 && !isLoading) {
@@ -228,9 +231,13 @@ class ProductScreen extends Component {
 
                     </ScrollView>
                 )
-            } else {
+            } else if (isConnected){
                 return (
                     <OupsScreen message="Nous n'avons pas trouvé les informations de ce produit :/"/>
+                );
+            } else {
+                return (
+                    <OupsScreen message="Tu n'as pas de connexion internet"/>
                 );
             }
         }
@@ -238,7 +245,7 @@ class ProductScreen extends Component {
 
     _checkAllergies() {
         const { product, isLoading, fromHistory, fromBasket, hasCheckedAllergies} = this.state;
-        if (!isLoading && !hasCheckedAllergies && !fromHistory && !fromBasket) {
+        if (!isLoading && product && Object.keys(product).length > 0 && !hasCheckedAllergies && !fromHistory && !fromBasket) {
             this.state.hasCheckedAllergies = true;
             let user = UserService.findAll()[0];
             if (user !== undefined && product.allergens_ids) {
