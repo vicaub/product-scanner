@@ -3,6 +3,8 @@
 import React from 'react'
 import {StyleSheet, View, Text, Image} from 'react-native'
 import moment from 'moment';
+import PropTypes from "prop-types";
+
 moment.locale("fr");
 
 class BasketItem extends React.Component {
@@ -40,6 +42,15 @@ class BasketItem extends React.Component {
         )
     }
 }
+
+BasketItem.propTypes = {
+    basket: PropTypes.shape({
+        date: PropTypes.object.isRequired,
+        content: PropTypes.objectOf(PropTypes.shape({
+            quantity: PropTypes.number.isRequired,
+        })),
+    }).isRequired,
+};
 
 const styles = StyleSheet.create({
     mainContainer: {
