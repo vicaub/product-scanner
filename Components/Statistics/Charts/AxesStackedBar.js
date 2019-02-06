@@ -24,12 +24,12 @@ class AxesStackedBar extends Component {
                         data={ this.props.data }
                         colors={ this.props.colors } />
                     <XAxis
-                        style={{ marginHorizontal: 50, height: xAxisHeight }}
+                        style={{ height: xAxisHeight }}
                         data={ this.props.data }
                         svg={ xAxisSvg }
                         formatLabel={value => moment(this.props.data[value].date).locale('fr').format('L')}
                         xAccessor={ ({ item, index }) => index }
-                        contentInset={{ left: 30, right: 30 }}
+                        contentInset={{ left: 25, right: 25 }}
                     />
                 </View>
             </View>
