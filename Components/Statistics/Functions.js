@@ -1,4 +1,7 @@
 
+const nbBasketsAnalysed = 6;
+
+
 function getCategory(product) {
     if (product.categories.length > 0 && product.categories[0].length > 0) {
         return product.categories[product.categories.length - 1];
@@ -60,7 +63,7 @@ function buildCategoriesStats(categories, total) {
 
 export function quantityInCategory(baskets, category) {
     let quantities = [];
-    let orderedBaskets = baskets.slice().reverse();
+    let orderedBaskets = baskets.slice(0, nbBasketsAnalysed).reverse();
     orderedBaskets.forEach((basket) => {
         let quantity = 0;
         Array.from(basket.content).forEach((product) => {
@@ -94,7 +97,7 @@ export function getAllCategoriesFromBaskets(baskets) {
 export function categoriesByBasket(baskets, categories) {
     /* For each basket, compute the quantities for each category of the basket */
     let data = [];
-    let orderedBaskets = baskets.slice().reverse();
+    let orderedBaskets = baskets.slice(0, nbBasketsAnalysed).reverse();
     orderedBaskets.forEach((basket) => {
         let basketData = {};
         Array.from(basket.content).forEach((product) => {
@@ -119,7 +122,7 @@ export function categoriesByBasket(baskets, categories) {
 export function scoresByBasket(baskets) {
     /* For each basket, compute the quantities for each nutrition grade */
     let data = [];
-    let orderedBaskets = baskets.slice().reverse();
+    let orderedBaskets = baskets.slice(0, nbBasketsAnalysed).reverse();
     orderedBaskets.forEach((basket) => {
         let basketData = {
             'date': basket.dayTimestamp,
