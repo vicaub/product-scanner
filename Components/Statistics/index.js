@@ -13,6 +13,7 @@ import Pie from './Charts/Pie';
 import Theme from './Theme';
 import ProductService from '../../Services/ProductService';
 import BasketService from '../../Services/BasketService';
+import OupsScreen from '../Common/Oups';
 import {
     groupByCategories,
     quantityInCategory,
@@ -51,16 +52,16 @@ class Statistics extends Component {
     _fetchData() {
         let nbScans = getNumberOfScans(ProductService.findAll());
         let baskets = BasketService.findAll();
-        let categories = getAllCategoriesFromBaskets(baskets);
-        let latestBasketData = groupByCategories(baskets[0], categories);
-        categories = latestBasketData.keys;
+        let categories = baskets.length > 0 ? getAllCategoriesFromBaskets(baskets) : [];
+        let latestBasketData = baskets.length > 0 ? groupByCategories(baskets[0], categories) : [];
+        if (baskets.length > 0) categories = latestBasketData.keys;
         this.setState({
             baskets,
             nbScans,
             nbBaskets: baskets.length,
             categories,
             activeIndex: 0,
-            activeKey: categories[0],
+            activeKey: categories.length > 0 ? categories[0] : 0,
             isLoading: false,
         });
     }
@@ -91,59 +92,67 @@ class Statistics extends Component {
         let avgScore = averageScore(baskets);
 
         if (!isLoading) {
-            return (
-                <View style={styles.container}>
-                    {/* Statistics */}
-                    <View>
-                        <Text style={styles.nbStat}>
-                            <Text style={styles.bigNumber}>{nbScans}</Text> scan(s)
-                        </Text>
-                        <Text style={styles.nbStat}>
-                            <Text style={styles.bigNumber}>{nbBaskets}</Text> panier(s)
-                        </Text>
-                        <Text style={styles.nbStat}>
-                            Score moyen : <Text style={[styles.bigNumber, {color: Theme.scoresColors[avgScore[1]]}]}>{avgScore[0]}</Text>
-                        </Text>
+            if (baskets.length > 0) {
+                return (
+                    <View style={styles.container}>
+                        {/* Statistics */}
+                        <View>
+                            <Text style={styles.nbStat}>
+                                <Text style={styles.bigNumber}>{nbScans}</Text> scan(s)
+                            </Text>
+                            <Text style={styles.nbStat}>
+                                <Text style={styles.bigNumber}>{nbBaskets}</Text> panier(s)
+                            </Text>
+                            <Text style={styles.nbStat}>
+                                Score moyen : <Text style={[styles.bigNumber, {color: Theme.scoresColors[avgScore[1]]}]}>{avgScore[0]}</Text>
+                            </Text>
+                        </View>
+
+                        {/* Pie Chart */}
+                        <Text style={styles.chartTitle}>Distribution du dernier panier</Text>
+                        <Pie
+                            pieWidth={200}
+                            pieHeight={200}
+                            onItemSelected={(newIndex, key) => this._onPieItemSelected(newIndex, key)}
+                            colors={Theme.colors}
+                            basketId={baskets[0].dayTimestamp}
+                            data={groupByCategories(baskets[0], categories)}
+                            selectedSliceLabel={activeKey}/>
+                        <Text style={styles.helper}>Psst... Sélectionnez une catégorie pour voir son évolution dans vos paniers !</Text>
+
+                        {/* Line Chart */}
+                        <Text style={styles.chartTitle}>Achats de{activeKey} par panier</Text>
+                        <AxesLine
+                            color={Theme.colors[activeIndex]}
+                            data={quantityInCategory(baskets, activeKey)} />
+
+                        {/* Stacked Bar Chart - Categories */}
+                        <Text style={styles.chartTitle}>Distribution des catégories</Text>
+                        <AxesStackedBar
+                            data={categoriesByBasket(baskets, categories)}
+                            keys={categories}
+                            colors={Theme.colors}
+                        />
+
+                        {/* Stacked Bar Chart - Nutrition Grade */}
+                        <Text style={styles.chartTitle}>Distribution des scores nutritionnels</Text>
+                        <AxesStackedBar
+                            keys={['a', 'b', 'c', 'd', 'e', 'unspecified']}
+                            data={scoresByBasket(baskets)}
+                            colors={Theme.scoresColors} />
+                        <Image
+                            style={{width: '60%', height: 120, marginRight: 'auto', marginLeft: 'auto'}}
+                            source={require('../../assets/images/nutriscores.png')}
+                        />
                     </View>
-
-                    {/* Pie Chart */}
-                    <Text style={styles.chartTitle}>Distribution du dernier panier</Text>
-                    <Pie
-                        pieWidth={200}
-                        pieHeight={200}
-                        onItemSelected={(newIndex, key) => this._onPieItemSelected(newIndex, key)}
-                        colors={Theme.colors}
-                        basketId={baskets[0].dayTimestamp}
-                        data={groupByCategories(baskets[0], categories)}
-                        selectedSliceLabel={activeKey}/>
-                    <Text style={styles.helper}>Psst... Sélectionnez une catégorie pour voir son évolution dans vos paniers !</Text>
-
-                    {/* Line Chart */}
-                    <Text style={styles.chartTitle}>Achats de{activeKey} par panier</Text>
-                    <AxesLine
-                        color={Theme.colors[activeIndex]}
-                        data={quantityInCategory(baskets, activeKey)} />
-
-                    {/* Stacked Bar Chart - Categories */}
-                    <Text style={styles.chartTitle}>Distribution des catégories</Text>
-                    <AxesStackedBar
-                        data={categoriesByBasket(baskets, categories)}
-                        keys={categories}
-                        colors={Theme.colors}
-                    />
-
-                    {/* Stacked Bar Chart - Nutrition Grade */}
-                    <Text style={styles.chartTitle}>Distribution des scores nutritionnels</Text>
-                    <AxesStackedBar
-                        keys={['a', 'b', 'c', 'd', 'e', 'unspecified']}
-                        data={scoresByBasket(baskets)}
-                        colors={Theme.scoresColors} />
-                    <Image
-                        style={{width: '60%', height: 120, marginRight: 'auto', marginLeft: 'auto'}}
-                        source={require('../../assets/images/nutriscores.png')}
-                    />
-                </View>
-            );
+                );
+            } else {
+                return (
+                    <View style={styles.oupsContainer}>
+                        <OupsScreen message="Vous n'avez pas encore de panier... Créez-en un pour obtenir votre analyse diététique !"/>
+                    </View>
+                );
+            }
         }
     }
 
@@ -163,6 +172,9 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor:'whitesmoke',
         marginTop: 21,
+    },
+    oupsContainer: {
+        marginTop: 150,
     },
     loadingContainer: {
         position: 'absolute',
