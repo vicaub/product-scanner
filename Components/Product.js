@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, Image, ActivityIndicator, Alert} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Image, Alert} from 'react-native';
 import {getProductInfoFromApi, parseProductInfo} from '../API/OFFApi';
 import OupsScreen from './Common/Oups';
+import Loader from './Common/Loader';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import NumericInput from 'react-native-numeric-input';
 import Emoji from 'react-native-emoji';
 import UserService from '../Services/UserService'
-import ProductService from "../Services/ProductService";
-import BasketService from "../Services/BasketService";
+import ProductService from '../Services/ProductService';
+import BasketService from '../Services/BasketService';
 
 
 class ProductScreen extends Component {
@@ -50,10 +51,8 @@ class ProductScreen extends Component {
     _displayLoading() {
         if (this.state.isLoading) {
             return (
-                <View style={styles.loadingContainer}>
-                    <ActivityIndicator size='large'/>
-                </View>
-            )
+                <Loader />
+            );
         }
     }
 
@@ -302,15 +301,6 @@ const styles = StyleSheet.create({
     },
     headerDescription: {
         flex: 1,
-    },
-    loadingContainer: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 100,
-        bottom: 0,
-        alignItems: 'center',
-        justifyContent: 'center'
     },
     productNameText: {
         fontWeight: 'bold',
