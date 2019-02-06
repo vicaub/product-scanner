@@ -1,9 +1,6 @@
-// Components/FilmItem.js
-
-// Components/FilmItem.js
-
 import React from 'react'
 import { StyleSheet, View, Text, Image } from 'react-native'
+import PropTypes from "prop-types";
 
 class ProductItem extends React.Component {
     render() {
@@ -28,6 +25,15 @@ class ProductItem extends React.Component {
         )
     }
 }
+
+ProductItem.propTypes = {
+    product: PropTypes.shape({
+        imageUrl: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        barCode: PropTypes.string.isRequired,
+    }).isRequired,
+    cartCounter: PropTypes.number,
+};
 
 const styles = StyleSheet.create({
     mainContainer: {

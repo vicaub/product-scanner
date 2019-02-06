@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { BarChart, Grid } from 'react-native-svg-charts'
+import PropTypes from "prop-types";
 
 class Bar extends Component {
 
@@ -21,5 +22,9 @@ class Bar extends Component {
     }
 
 }
+
+Bar.propTypes = {
+    color: PropTypes.string.isRequired,
+};
 
 export default Bar;
