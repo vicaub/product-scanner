@@ -1,17 +1,20 @@
 
 import DBConnector from "./DBConnector";
 
-export function fillBasketDB() {
-
+export function deleteDB() {
     let basket = DBConnector.objects('Basket');
     let product = DBConnector.objects('Product');
 
-    if (basket.length > 0) {
-        DBConnector.write(() => {
-            DBConnector.delete(basket);
-            DBConnector.delete(product);
-        });
-    }
+    DBConnector.write(() => {
+        DBConnector.delete(basket);
+        DBConnector.delete(product);
+    });
+}
+
+export function fillDB() {
+
+    let basket = DBConnector.objects('Basket');
+    let product = DBConnector.objects('Product');
 
     let date = new Date();
 

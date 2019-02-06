@@ -8,14 +8,15 @@
 
 import React, { Component } from 'react';
 import Navigator from './Navigation/Navigation';
-import { fillBasketDB } from './Database/prefillDB';
+import { fillDB, deleteDB } from './Database/prefillDB';
 
 
 export default class App extends Component {
 
     componentDidMount() {
         // uncomment the following line to prefill basket and product database
-        // fillBasketDB();
+        // fillDB();
+        // deleteDB();
     }
 
     render() {
