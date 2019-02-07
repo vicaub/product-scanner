@@ -23,6 +23,7 @@ import {
     averageScore,
     getNumberOfScans,
 } from "./Functions";
+import getTotalQuantityInBasket from "../../Helper/basketHelper";
 
 
 class Statistics extends Component {
@@ -52,6 +53,7 @@ class Statistics extends Component {
     _fetchData() {
         let nbScans = getNumberOfScans(ProductService.findAll());
         let baskets = BasketService.findAll();
+        baskets = baskets.filter(getTotalQuantityInBasket);
         let categories = baskets.length > 0 ? getAllCategoriesFromBaskets(baskets) : [];
         let latestBasketData = baskets.length > 0 ? groupByCategories(baskets[0], categories) : [];
         if (baskets.length > 0) categories = latestBasketData.keys;
