@@ -57,6 +57,8 @@ ProductBasket.schema = {
     properties: {
         barcode: 'string',
         quantity: 'int',
+        categories: {type : 'list', objectType: 'string', default: []},
+        score: 'string',
     },
 };
 
@@ -79,4 +81,4 @@ Basket.schema = {
 
 // incrémenter schemaVersion à chaque modification des tables
 
-export default new Realm({schema: [Allergen, User, Product, ProductBasket, Basket], schemaVersion: 19});
+export default new Realm({schema: [Allergen, User, Product, ProductBasket, Basket], schemaVersion: 20});

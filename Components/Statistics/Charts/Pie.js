@@ -7,7 +7,9 @@ import {
     TouchableWithoutFeedback
 } from 'react-native';
 import { PieChart } from 'react-native-svg-charts'
-import Theme from "../Theme";
+import Theme from '../Theme';
+import moment from 'moment';
+import 'moment/locale/fr';
 
 class Pie extends Component {
 
@@ -38,30 +40,27 @@ class Pie extends Component {
                 onPress: () => this._onPieItemSelected(key, index)
             }
         });
-        const margin = styles.container.margin;
 
         return (
             <View>
+                <Text style={styles.caption}>{moment(this.props.basketId).locale('fr').format('L')}</Text>
                 <PieChart
-                    style={{ height: this.props.pieHeight, width: this.props.pieWidth }}
+                    style={{ height: this.props.pieHeight, width: this.props.pieWidth, marginLeft: 'auto', marginRight: 'auto' }}
                     outerRadius={'90%'}
                     innerRadius={30}
                     data={data}
                 />
-                <View style={{position: 'absolute', top:margin, left: this.props.pieWidth}}>
-                    <Text>{this.props.basketId}</Text>
+                <View style={styles.container}>
                     {
                         keys.map( (item, index) =>
                         {
                             let fontWeight = selectedSliceLabel === item ? 'bold' : 'normal';
                             return (
                                 <TouchableWithoutFeedback key={index} onPress={() => this._onPieItemSelected(item, index)}>
-                                    <View>
-                                        <Text
-                                            style={[styles.label, {color: Theme.colors[index], fontWeight: fontWeight}]}>
-                                            {keys[index]}: {values[index]}%
-                                        </Text>
-                                    </View>
+                                    <Text
+                                        style={[styles.label, {color: Theme.colors[index], fontWeight: fontWeight}]}>
+                                        {keys[index]}: {values[index]}%
+                                    </Text>
                                 </TouchableWithoutFeedback>
                             );
                         })
@@ -88,12 +87,16 @@ export default Pie;
 
 const styles = StyleSheet.create({
     container: {
-        margin: 20,
+        margin: 15,
+    },
+    caption: {
+        marginTop: 10,
+        textAlign: 'center',
     },
     label: {
         fontSize: 15,
-        marginTop: 5,
+        marginTop: 10,
+        marginLeft: 5,
         fontWeight: 'normal',
-
     }
 });

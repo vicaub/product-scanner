@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import { View } from 'react-native';
 import { XAxis, YAxis } from 'react-native-svg-charts';
 import Line from './Line';
-import { buildDataArray } from "../Functions";
+import { buildDataArray } from '../Functions';
+import moment from 'moment';
+import 'moment/locale/fr';
 
 class AxesLine extends Component {
 
@@ -44,7 +46,7 @@ class AxesLine extends Component {
                         style={{ marginHorizontal: -15, height: xAxisHeight }}
                         data={ this.props.data }
                         svg={ xAxisSvg }
-                        formatLabel={value => this.props.data[value].date}
+                        formatLabel={value => moment(this.props.data[value].date).locale('fr').format('L')}
                         xAccessor={ ({ item, index }) => index }
                         contentInset={{ left: 15, right: 30 }}
                     />

@@ -104,7 +104,7 @@ class ProductScreen extends Component {
     }
 
     _addProductToCart() {
-        BasketService.addProductToBasket(this.state.product._id, this.state.cartCounter);
+        BasketService.addProductToBasket(this.state.product, this.state.cartCounter);
         this.setState({quantityInBasket: this.state.cartCounter});
     }
 
