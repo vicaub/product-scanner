@@ -74,7 +74,20 @@ exports[`ProductItem renders correctly 1`] = `
             "fontStyle": "italic",
           }
         }
-      />
+      >
+        Pas de catégorie renseignée
+      </Text>
+      <Text
+        style={
+          Object {
+            "color": "#666666",
+            "fontStyle": "italic",
+          }
+        }
+      >
+        Scanné : 
+         fois
+      </Text>
     </View>
   </View>
 </View>
