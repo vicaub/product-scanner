@@ -32,6 +32,8 @@ ProductItem.propTypes = {
         imageUrl: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         barCode: PropTypes.string.isRequired,
+        categories: PropTypes.objectOf(PropTypes.string).isRequired,
+        nbScans: PropTypes.number.isRequired,
     }).isRequired,
     cartCounter: PropTypes.number,
 };
