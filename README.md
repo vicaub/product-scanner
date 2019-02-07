@@ -119,7 +119,6 @@ Additional things you need to do:
   
 - Authorize applications from your Apple developer account on your iPhone (Settings/General/Manage profiles and device)
 
-
 ## Remote Debugging
 
 https://facebook.github.io/react-native/docs/debugging
@@ -138,3 +137,14 @@ Run tests : `jest`
 Jest creates snapshots of the current output and later compares the output to the snapshots it has saved. 
 
 If you want to change the expected output (and the snapshots so that future tests won't fail), run `jest -u`.
+
+
+## Build application
+
+### Android
+
+Make sure to remove all default.realm.* folders and files. Then:
+
+```
+cd android && ./gradlew assembleRelease
+```
