@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, Image, ActivityIndicator, Alert} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Image, Alert} from 'react-native';
 import {getProductInfoFromApi, parseProductInfo} from '../API/OFFApi';
 import OupsScreen from './Common/Oups';
+import Loader from './Common/Loader';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import NumericInput from 'react-native-numeric-input';
 import Emoji from 'react-native-emoji';
 import UserService from '../Services/UserService'
-import ProductService from "../Services/ProductService";
-import BasketService from "../Services/BasketService";
+import ProductService from '../Services/ProductService';
+import BasketService from '../Services/BasketService';
 
 
 class ProductScreen extends Component {
@@ -19,14 +20,14 @@ class ProductScreen extends Component {
             isLoading: true,
             fromHistory: this.props.navigation.getParam('fromHistory'),
             cartCounter: 1,
-            isConnected:true,
+            isConnected: true,
             fromBasket: this.props.navigation.getParam('fromBasket'),
             hasCheckedAllergies: false,
         };
     }
 
     componentDidMount() {
-        const barcode =  this.props.navigation.getParam('barcode');
+        const barcode = this.props.navigation.getParam('barcode');
         this.setState({quantityInBasket: BasketService.findQuantity(barcode)});
         getProductInfoFromApi(barcode)
             .then(rawJson => {
@@ -50,10 +51,8 @@ class ProductScreen extends Component {
     _displayLoading() {
         if (this.state.isLoading) {
             return (
-                <View style={styles.loadingContainer}>
-                    <ActivityIndicator size='large'/>
-                </View>
-            )
+                <Loader />
+            );
         }
     }
 
@@ -66,8 +65,6 @@ class ProductScreen extends Component {
             return (<Text style={styles.defaultText}>Non renseigné</Text>)
         } else {
             const splitedIngredients = ingredientsWithAllergens.split(/<span class=\"allergen\">|<\/span>/);
-
-            const allergens = splitedIngredients.filter((value, index) => index % 2 === 1);
 
             return (
                 <Text style={styles.defaultText}>
@@ -121,7 +118,7 @@ class ProductScreen extends Component {
         if (!this.state.fromHistory) {
             if (this.state.quantityInBasket > 0) {
                 return (
-                    <View styles={{}}>
+                    <View style={styles.borderTop}>
                         <Text style={{textAlign: "center", marginTop: 10}}>
                             Supprimer l'article du panier
                         </Text>
@@ -145,7 +142,7 @@ class ProductScreen extends Component {
                 )
             } else {
                 return (
-                    <View>
+                    <View style={styles.borderTop}>
                         <Text style={{textAlign: "center", marginTop: 10}}>
                             Ajoute cet article à ton panier d'aujourd'hui <Emoji name={"wink"}/>
                         </Text>
@@ -178,17 +175,17 @@ class ProductScreen extends Component {
         }
     }
 
-//TODO switch request back to https
     _displayProductInfo() {
+
         const {product, isLoading, isConnected} = this.state;
-        const B = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>;
+
         if (!isLoading) {
-            if (product && Object.keys(product).length > 0 && !isLoading) {
+            if (product && Object.keys(product).length > 0) {
                 return (
-                    <ScrollView style={styles.scrollview_container}>
+                    <ScrollView style={styles.scrollviewContainer}>
                         <View style={styles.headerContainer}>
                             <Image
-                                style={styles.image_product}
+                                style={styles.imageProduct}
                                 source={product.image_url ? {uri: product.image_url} : require('../assets/images/No-images-placeholder.png')}
                             />
                             <View style={styles.headerDescription}>
@@ -215,16 +212,8 @@ class ProductScreen extends Component {
                         {ProductScreen._parseAllergens(product.allergens)}
 
                         <Image
-                            style={styles.image_nutri}
+                            style={styles.imageNutri}
                             source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-' + product.nutrition_grades + '.png'}}
-                            // source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-e.png'}}
-                        />
-
-                        <View
-                            style={{
-                                borderBottomColor: 'grey',
-                                borderBottomWidth: 1,
-                            }}
                         />
 
                         {this._printBasketOptions()}
@@ -237,7 +226,7 @@ class ProductScreen extends Component {
                 );
             } else {
                 return (
-                    <OupsScreen message="Tu n'as pas de connexion internet"/>
+                    <OupsScreen message="Pas de connexion internet..."/>
                 );
             }
         }
@@ -278,23 +267,25 @@ class ProductScreen extends Component {
     }
 }
 
+export default ProductScreen;
+
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1
     },
-    scrollview_container: {
+    scrollviewContainer: {
         flex: 1,
         flexDirection: "column"
     },
     headerContainer: {
         flexDirection: "row",
     },
-    image_product: {
+    imageProduct: {
         flex: 1,
         margin: 5,
         resizeMode: 'contain',
     },
-    image_nutri: {
+    imageNutri: {
         height: 80,
         marginTop: 5,
         marginBottom: 10,
@@ -302,15 +293,6 @@ const styles = StyleSheet.create({
     },
     headerDescription: {
         flex: 1,
-    },
-    loadingContainer: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 100,
-        bottom: 0,
-        alignItems: 'center',
-        justifyContent: 'center'
     },
     productNameText: {
         fontWeight: 'bold',
@@ -345,7 +327,9 @@ const styles = StyleSheet.create({
     cartButton: {
         marginLeft: 15,
         marginRight: 15,
-    }
+    },
+    borderTop: {
+        borderTopColor: '#d8d8d8',
+        borderTopWidth: 1,
+    },
 });
-
-export default ProductScreen;

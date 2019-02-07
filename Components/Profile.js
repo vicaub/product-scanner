@@ -5,12 +5,12 @@ import {
     Text,
     View,
     ScrollView,
-    ActivityIndicator,
     TouchableOpacity,
 } from 'react-native';
 import moment from 'moment';
 import 'moment/locale/fr';
 import ActionButton from './Common/ActionButton';
+import Loader from './Common/Loader';
 import UserService from '../Services/UserService';
 
 class Profile extends Component {
@@ -64,10 +64,8 @@ class Profile extends Component {
     _displayLoading() {
         if (this.state.isLoading) {
             return (
-                <View style={styles.loadingContainer}>
-                    <ActivityIndicator size='large' />
-                </View>
-            )
+                <Loader />
+            );
         }
     }
 
