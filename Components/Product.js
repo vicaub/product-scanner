@@ -118,7 +118,7 @@ class ProductScreen extends Component {
         if (!this.state.fromHistory) {
             if (this.state.quantityInBasket > 0) {
                 return (
-                    <View styles={styles.borderTop}>
+                    <View style={styles.borderTop}>
                         <Text style={{textAlign: "center", marginTop: 10}}>
                             Supprimer l'article du panier
                         </Text>
