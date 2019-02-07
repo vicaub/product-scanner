@@ -8,6 +8,7 @@ import Emoji from 'react-native-emoji';
 import UserService from '../Services/UserService'
 import ProductService from "../Services/ProductService";
 import BasketService from "../Services/BasketService";
+import {todayTimeStamp} from "../Helper/basketHelper";
 
 
 class ProductScreen extends Component {
@@ -17,17 +18,19 @@ class ProductScreen extends Component {
         this.state = {
             product: undefined,
             isLoading: true,
+            isConnected: true,
             fromHistory: this.props.navigation.getParam('fromHistory'),
-            cartCounter: 1,
-            isConnected:true,
-            fromBasket: this.props.navigation.getParam('fromBasket'),
+            basketTimestamp: this.props.navigation.getParam('basketTimestamp') ? this.props.navigation.getParam('basketTimestamp') : todayTimeStamp(),
+            // basketTimestamp: this.props.navigation.getParam('basketTimestamp'),
             hasCheckedAllergies: false,
+            quantityInBasket: 0,
+            cartCounter: 1,
         };
     }
 
     componentDidMount() {
-        const barcode =  this.props.navigation.getParam('barcode');
-        this.setState({quantityInBasket: BasketService.findQuantity(barcode)});
+        const barcode = this.props.navigation.getParam('barcode');
+        this.setState({quantityInBasket: BasketService.findProductQuantityInBasket(this.state.basketTimestamp, barcode)});
         getProductInfoFromApi(barcode)
             .then(rawJson => {
                 return parseProductInfo(rawJson, barcode)
@@ -43,7 +46,7 @@ class ProductScreen extends Component {
                 }
             })
             .catch((error) =>
-                this.setState({isConnected:false, isLoading: false})
+                this.setState({isConnected: false, isLoading: false})
             );
     }
 
@@ -104,14 +107,14 @@ class ProductScreen extends Component {
     }
 
     _addProductToCart() {
-        BasketService.addProductToBasket(this.state.product._id, this.state.cartCounter);
+        BasketService.addProductToBasket(this.state.basketTimestamp, this.state.product._id, this.state.cartCounter);
         this.setState({quantityInBasket: this.state.cartCounter});
     }
 
     _removeProductFromCart() {
-        this.setState({quantityInBasket: 0});
-        BasketService.deleteProduct(this.state.product._id);
-        // this.props.navigation.goBack();
+        BasketService.deleteProductFromBasket(this.state.basketTimestamp, this.state.product._id);
+        // const oldQuantityInBasket = this.state.quantity;
+        this.setState({quantityInBasket: 0, cartCounter: this.state.quantityInBasket});
     }
 
     /**
@@ -136,7 +139,6 @@ class ProductScreen extends Component {
                                     underlayColor="transparent"
                                     onPress={() => {
                                         this._removeProductFromCart();
-                                        // this.setState({fromBasket: false});
                                     }}
                                 />
                             </View>
@@ -164,7 +166,9 @@ class ProductScreen extends Component {
                                     color="#00C378"
                                     backgroundColor="transparent"
                                     underlayColor="transparent"
-                                    onPress={() => {this._addProductToCart();}
+                                    onPress={() => {
+                                        this._addProductToCart();
+                                    }
                                     }
                                 />
                             </View>
@@ -172,8 +176,7 @@ class ProductScreen extends Component {
                     </View>
                 )
             }
-        }
-        else {
+        } else {
             return;
         }
     }
@@ -231,7 +234,7 @@ class ProductScreen extends Component {
 
                     </ScrollView>
                 )
-            } else if (isConnected){
+            } else if (isConnected) {
                 return (
                     <OupsScreen message="Nous n'avons pas trouvé les informations de ce produit :/"/>
                 );
@@ -244,8 +247,8 @@ class ProductScreen extends Component {
     }
 
     _checkAllergies() {
-        const { product, isLoading, fromHistory, fromBasket, hasCheckedAllergies} = this.state;
-        if (!isLoading && product && Object.keys(product).length > 0 && !hasCheckedAllergies && !fromHistory && !fromBasket) {
+        const {product, isLoading, fromHistory, basketTimestamp, hasCheckedAllergies} = this.state;
+        if (!isLoading && product && Object.keys(product).length > 0 && !hasCheckedAllergies && !fromHistory && !basketTimestamp) {
             this.state.hasCheckedAllergies = true;
             let user = UserService.findAll()[0];
             if (user !== undefined && product.allergens_ids) {
