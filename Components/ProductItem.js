@@ -18,7 +18,8 @@ class ProductItem extends React.Component {
                         <Text style={styles.voteText}>{cartCounter}</Text>
                     </View>
                     <View style={styles.descriptionContainer}>
-                        <Text style={styles.descriptionText}>{product.barCode}</Text>
+                        <Text style={styles.descriptionText}>{product.categories[0]}</Text>
+                        <Text style={styles.descriptionText}>Scanné : {product.nbScans} fois</Text>
                     </View>
                 </View>
             </View>
