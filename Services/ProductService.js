@@ -1,4 +1,6 @@
 import DBConnector from '../Database/DBConnector';
+// Service to fetch, add, update the products in the Database
+
 
 let productDB = DBConnector.objects('Product');
 
@@ -19,14 +21,14 @@ let ProductService = {
                 scanDate: new Date(),
                 nbScans: 1,
                 imageUrl: data.image_url,
-                ingredients: [data.ingredients],
+                ingredients: data.ingredients ? [data.ingredients] : [],
                 allergens: data.allergens !== undefined ? data.allergens.split(","): []
             };
             return productinfo;
         }
     },
 
-
+//With a barcode, the product is either updated in the database or added if not registered yet
     scan : (product) => {
         if (productDB.filtered("barCode = '" + product.barCode + "'").length) {
 
@@ -60,14 +62,18 @@ let ProductService = {
                     DBConnector.create('Product', product);
 
                 } catch (e) {
-                    console.log(e);
+                    console.error(e);
                 }
 
             })
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
 
+    },
+// Retrieve a specific product in the database from the barcode (Used from the basket screen)
+    fetchProduct : (barcode) => {
+        return Array.from(productDB.filtered("barCode = '" + barcode + "'"))[0]
     }
 
 

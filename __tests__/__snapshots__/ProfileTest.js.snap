@@ -3,7 +3,19 @@
 exports[`Profile renders correctly 1`] = `
 <RCTScrollView>
   <View>
-    <View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "bottom": 0,
+          "justifyContent": "center",
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    >
       <ActivityIndicator
         animating={true}
         color="#999999"

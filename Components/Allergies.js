@@ -3,12 +3,13 @@ import React, { Component } from 'react';
 import {
     StyleSheet,
     View,
-    ActivityIndicator
 } from 'react-native';
 import MultiSelect from 'react-native-multiple-select';
 import { getAllergensFromApi } from '../API/OFFApi';
 import ActionButton from './Common/ActionButton';
-import UserService from "../Services/UserService";
+import UserService from '../Services/UserService';
+import OupsScreen from './Common/Oups';
+import Loader from './Common/Loader';
 
 class Allergies extends Component {
 
@@ -18,6 +19,7 @@ class Allergies extends Component {
             selectedItems: [],
             allergens: [],
             isLoading: true,
+            isConnected: true,
         };
     }
 
@@ -30,7 +32,10 @@ class Allergies extends Component {
                 allergens: data,
                 isLoading: false,
             });
-        });
+        })
+            .catch((error) =>
+                this.setState({isConnected:false, isLoading: false})
+            );;
     }
 
     onSelectedItemsChange = selectedItems => {
@@ -52,19 +57,26 @@ class Allergies extends Component {
     _displayLoading() {
         if (this.state.isLoading) {
             return (
-                <View style={styles.loadingContainer}>
-                    <ActivityIndicator size='large' />
-                </View>
-            )
+                <Loader />
+            );
         }
     }
 
     _displayAllergies() {
-        const { selectedItems, allergens, isLoading } = this.state;
-        if (!isLoading) {
+        const { selectedItems, allergens, isLoading, isConnected } = this.state;
+        if (!isLoading & isConnected) {
             return (
                 <View style={styles.container}>
+
                     <View>
+                        <ActionButton
+                            title="Sauvegarder"
+                            color="#FFDC32"
+                            onPress={() => this.handleSubmit()}
+                        />
+                    </View>
+
+                    <View style={styles.select}>
                         <MultiSelect 
                             items={allergens}
                             uniqueKey="_id"
@@ -89,14 +101,11 @@ class Allergies extends Component {
                             textInputProps={{ autoFocus: false }}
                         />
                     </View>
-                    <View style={styles.bottomView}>
-                        <ActionButton 
-                            title="Sauvegarder"
-                            color="#FFDC32"
-                            onPress={() => this.handleSubmit()}
-                        />
-                    </View>
                 </View>
+            );
+        } else if (!isLoading && !isConnected) {
+            return (
+                <OupsScreen message="Tu n'as pas de connexion internet"/>
             );
         }
     }
@@ -121,16 +130,7 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: '#ffffff',
     },
-    loadingContainer: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 80,
-        bottom: 0,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    bottomView: {
-        marginTop: 50,
-    },
+    select: {
+        marginTop: 20,
+    }
 });

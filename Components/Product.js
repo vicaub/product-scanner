@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, Image, ActivityIndicator, Alert} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Image, Alert} from 'react-native';
 import {getProductInfoFromApi, parseProductInfo} from '../API/OFFApi';
 import OupsScreen from './Common/Oups';
+import Loader from './Common/Loader';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import NumericInput from 'react-native-numeric-input';
 import Emoji from 'react-native-emoji';
 import UserService from '../Services/UserService'
 import ProductService from "../Services/ProductService";
+import BasketService from "../Services/BasketService";
+import {todayTimeStamp} from "../Helper/basketHelper";
+
 
 
 class ProductScreen extends Component {
@@ -16,14 +20,18 @@ class ProductScreen extends Component {
         this.state = {
             product: undefined,
             isLoading: true,
-            fromBasket: this.props.navigation.getParam('fromBasket'),
+            isConnected: true,
             fromHistory: this.props.navigation.getParam('fromHistory'),
-            cartCounter: this.props.navigation.getParam('cartCounter') ?  this.props.navigation.getParam('cartCounter') : 1
+            basketTimestamp: this.props.navigation.getParam('basketTimestamp') ? this.props.navigation.getParam('basketTimestamp') : todayTimeStamp(),
+            hasCheckedAllergies: false,
+            quantityInBasket: 0,
+            cartCounter: 1,
         };
     }
 
     componentDidMount() {
-        let barcode = this.props.navigation.getParam('barcode');
+        const barcode = this.props.navigation.getParam('barcode');
+        this.setState({quantityInBasket: BasketService.findProductQuantityInBasket(this.state.basketTimestamp, barcode)});
         getProductInfoFromApi(barcode)
             .then(rawJson => {
                 return parseProductInfo(rawJson, barcode)
@@ -33,21 +41,21 @@ class ProductScreen extends Component {
                     product: data,
                     isLoading: false
                 });
-                if (this.props.navigation.getParam('update')) {
+                if (this.props.navigation.getParam('update') && Object.keys(this.state.product).length > 0) {
                     let product = ProductService.findProduct(data, this.props.navigation.getParam('barcode'));
                     ProductService.scan(product);
                 }
             })
-            .catch((error) => console.error(error));
+            .catch((error) =>
+                this.setState({isConnected: false, isLoading: false})
+            );
     }
 
     _displayLoading() {
         if (this.state.isLoading) {
             return (
-                <View style={styles.loadingContainer}>
-                    <ActivityIndicator size='large'/>
-                </View>
-            )
+                <Loader />
+            );
         }
     }
 
@@ -60,8 +68,6 @@ class ProductScreen extends Component {
             return (<Text style={styles.defaultText}>Non renseigné</Text>)
         } else {
             const splitedIngredients = ingredientsWithAllergens.split(/<span class=\"allergen\">|<\/span>/);
-
-            const allergens = splitedIngredients.filter((value, index) => index % 2 === 1);
 
             return (
                 <Text style={styles.defaultText}>
@@ -98,8 +104,14 @@ class ProductScreen extends Component {
     }
 
     _addProductToCart() {
-        console.log(this.state.cartCounter);
-        // TODO: DB call to add product to today's cart
+        BasketService.addProductToBasket(this.state.basketTimestamp, this.state.product, this.state.cartCounter);
+        this.setState({quantityInBasket: this.state.cartCounter});
+    }
+
+    _removeProductFromCart() {
+        BasketService.deleteProductFromBasket(this.state.basketTimestamp, this.state.product._id);
+        // const oldQuantityInBasket = this.state.quantity;
+        this.setState({quantityInBasket: 0, cartCounter: this.state.quantityInBasket});
     }
 
     /**
@@ -107,14 +119,14 @@ class ProductScreen extends Component {
      */
     _printBasketOptions() {
         if (!this.state.fromHistory) {
-            if (this.state.fromBasket === true) {
+            if (this.state.quantityInBasket > 0) {
                 return (
-                    <View styles={{}}>
+                    <View style={styles.borderTop}>
                         <Text style={{textAlign: "center", marginTop: 10}}>
                             Supprimer l'article du panier
                         </Text>
                         <View style={{flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
-                            <Text style={{fontSize: 20}}>{this.state.cartCounter}</Text>
+                            <Text style={{fontSize: 20}}>{this.state.quantityInBasket}</Text>
                             <View style={styles.cartButton}>
                                 <Icon.Button
                                     name="trash"
@@ -123,8 +135,7 @@ class ProductScreen extends Component {
                                     backgroundColor="transparent"
                                     underlayColor="transparent"
                                     onPress={() => {
-                                        this._addProductToCart()
-                                        this.setState({fromBasket: false})
+                                        this._removeProductFromCart();
                                     }}
                                 />
                             </View>
@@ -133,7 +144,7 @@ class ProductScreen extends Component {
                 )
             } else {
                 return (
-                    <View>
+                    <View style={styles.borderTop}>
                         <Text style={{textAlign: "center", marginTop: 10}}>
                             Ajoute cet article à ton panier d'aujourd'hui <Emoji name={"wink"}/>
                         </Text>
@@ -153,8 +164,8 @@ class ProductScreen extends Component {
                                     backgroundColor="transparent"
                                     underlayColor="transparent"
                                     onPress={() => {
-                                        this._addProductToCart()
-                                        this.setState({fromBasket: true})}
+                                        this._addProductToCart();
+                                    }
                                     }
                                 />
                             </View>
@@ -162,23 +173,22 @@ class ProductScreen extends Component {
                     </View>
                 )
             }
-        }
-        else {
+        } else {
             return;
         }
     }
 
-//TODO switch request back to https
     _displayProductInfo() {
-        const {product, isLoading} = this.state;
-        const B = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>;
+
+        const {product, isLoading, isConnected} = this.state;
+
         if (!isLoading) {
-            if (product !== undefined && !isLoading) {
+            if (product && Object.keys(product).length > 0) {
                 return (
-                    <ScrollView style={styles.scrollview_container}>
+                    <ScrollView style={styles.scrollviewContainer}>
                         <View style={styles.headerContainer}>
                             <Image
-                                style={styles.image_product}
+                                style={styles.imageProduct}
                                 source={product.image_url ? {uri: product.image_url} : require('../assets/images/No-images-placeholder.png')}
                             />
                             <View style={styles.headerDescription}>
@@ -205,35 +215,32 @@ class ProductScreen extends Component {
                         {ProductScreen._parseAllergens(product.allergens)}
 
                         <Image
-                            style={styles.image_nutri}
+                            style={styles.imageNutri}
                             source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-' + product.nutrition_grades + '.png'}}
-                            // source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-e.png'}}
-                        />
-
-                        <View
-                            style={{
-                                borderBottomColor: 'grey',
-                                borderBottomWidth: 1,
-                            }}
                         />
 
                         {this._printBasketOptions()}
 
                     </ScrollView>
                 )
-            } else {
+            } else if (isConnected) {
                 return (
                     <OupsScreen message="Nous n'avons pas trouvé les informations de ce produit :/"/>
+                );
+            } else {
+                return (
+                    <OupsScreen message="Pas de connexion internet..."/>
                 );
             }
         }
     }
 
     _checkAllergies() {
-        const { product, isLoading} = this.state;
-        if (!isLoading) {
+        const {product, isLoading, fromHistory, basketTimestamp, hasCheckedAllergies} = this.state;
+        if (!isLoading && product && Object.keys(product).length > 0 && !hasCheckedAllergies && !fromHistory && !basketTimestamp) {
+            this.state.hasCheckedAllergies = true;
             let user = UserService.findAll()[0];
-            if (user !== undefined) {
+            if (user !== undefined && product.allergens_ids) {
                 let allergens = [];
                 for (let allergen of product.allergens_ids) {
                     for (let user_allergen of Array.from(user.allergies)) {
@@ -253,7 +260,6 @@ class ProductScreen extends Component {
     }
 
     render() {
-        console.log('render');
         return (
             <View style={styles.mainContainer}>
                 {this._displayLoading()}
@@ -264,23 +270,25 @@ class ProductScreen extends Component {
     }
 }
 
+export default ProductScreen;
+
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1
     },
-    scrollview_container: {
+    scrollviewContainer: {
         flex: 1,
         flexDirection: "column"
     },
     headerContainer: {
         flexDirection: "row",
     },
-    image_product: {
+    imageProduct: {
         flex: 1,
         margin: 5,
         resizeMode: 'contain',
     },
-    image_nutri: {
+    imageNutri: {
         height: 80,
         marginTop: 5,
         marginBottom: 10,
@@ -288,15 +296,6 @@ const styles = StyleSheet.create({
     },
     headerDescription: {
         flex: 1,
-    },
-    loadingContainer: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 100,
-        bottom: 0,
-        alignItems: 'center',
-        justifyContent: 'center'
     },
     productNameText: {
         fontWeight: 'bold',
@@ -331,7 +330,9 @@ const styles = StyleSheet.create({
     cartButton: {
         marginLeft: 15,
         marginRight: 15,
-    }
+    },
+    borderTop: {
+        borderTopColor: '#d8d8d8',
+        borderTopWidth: 1,
+    },
 });
-
-export default ProductScreen;

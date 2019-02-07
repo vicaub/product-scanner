@@ -2,12 +2,16 @@
 
 import React from 'react'
 import {StyleSheet, View, Text, Image} from 'react-native'
+import moment from 'moment';
+import PropTypes from "prop-types";
+
+moment.locale("fr");
 
 class BasketItem extends React.Component {
 
     _getTotalQuantity() {
         let totalQuantity = 0;
-        this.props.basket.products.forEach((product) => {
+        this.props.basket.content.forEach((product) => {
             totalQuantity += product.quantity;
         });
         return totalQuantity
@@ -15,13 +19,8 @@ class BasketItem extends React.Component {
 
     render() {
         const basket = this.props.basket;
-        const dateString = basket.date.toLocaleDateString("fr-FR", {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-        console.log(dateString);
+        // const dateString = moment(basket.date).format("dddd Do MMMM YYYY")
+        const dateString = moment(basket.date).format("DD/MM/YYYY");
         return (
             <View style={styles.mainContainer}>
                 <Image
@@ -43,6 +42,15 @@ class BasketItem extends React.Component {
         )
     }
 }
+
+BasketItem.propTypes = {
+    basket: PropTypes.shape({
+        date: PropTypes.object.isRequired,
+        content: PropTypes.objectOf(PropTypes.shape({
+            quantity: PropTypes.number.isRequired,
+        })),
+    }).isRequired,
+};
 
 const styles = StyleSheet.create({
     mainContainer: {

@@ -3,6 +3,8 @@ import HomeStackNavigator from "./HomeStackNavigator";
 import HistoryStackNavigator from "./HistoryStackNavigator";
 import SearchStackNavigator from "./SearchStackNavigator";
 import ProfileStackNavigator from "./ProfileStackNavigator";
+
+import StatsStackNavigator from "./StatsStackNavigator";
 import MyBasketsStackNavigator from "./MyBasketsStackNavigator";
 
 const DrawerNavigator = createDrawerNavigator(
@@ -29,6 +31,12 @@ const DrawerNavigator = createDrawerNavigator(
             screen: MyBasketsStackNavigator,
             navigationOptions: {
                 title: 'Mes paniers'
+            }
+        },
+        Stats: {
+            screen: StatsStackNavigator,
+            navigationOptions: {
+                title: 'Analyse diététique',
             }
         },
         Profile: {

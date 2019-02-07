@@ -36,7 +36,6 @@ class HistoryScreen extends Component {
     }
 
     render() {
-        console.log( `call render`);
         if (this.state.products && this.state.products.length > 0) {
             return (
                 <View style={styles.mainContainer}>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+import PropTypes from "prop-types";
 
 class OupsScreen extends Component {
 
@@ -14,6 +15,10 @@ class OupsScreen extends Component {
 }
 
 export default OupsScreen;
+
+OupsScreen.propTypes = {
+    message: PropTypes.string.isRequired
+};
 
 const styles = StyleSheet.create({
     header: {

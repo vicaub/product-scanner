@@ -4,12 +4,14 @@ import {
     StyleSheet,
     Text,
     View,
-    TouchableOpacity
+    TouchableOpacity,
+    ActivityIndicator,
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { withNavigationFocus } from 'react-navigation';
 
 class BarcodeScanner extends Component {
+
     render() {
         return (
             <View style={styles.container}>
@@ -18,22 +20,23 @@ class BarcodeScanner extends Component {
                         ref={ref => {
                             this.camera = ref;
                         }}
-                        style = {styles.preview}
+                        style={styles.preview}
                         type={RNCamera.Constants.Type.back}
                         flashMode={RNCamera.Constants.FlashMode.on}
                         permissionDialogTitle={'Permission to use camera'}
                         permissionDialogMessage={'We need your permission to use your camera phone'}
                         //barCodeTypes={[RNCamera.Constants.BarCodeType.ean13]}
                         /*onGoogleVisionBarcodesDetected={({ barcodes }) => {
-                            console.log(barcodes);
                             this.props.navigation.navigate("Product", {barcode: barcodes[0].data});
                         }}*/
                         onBarCodeRead={(barcode) => {
-                            console.log(barcode);
                             this.props.navigation.navigate("Product", {barcode: barcode.data, update : true} );
                         }}
                     /> 
-                    : <Text>Welcome</Text>}
+                    : <View style={styles.loadingContainer}>
+                        <ActivityIndicator size='large'/>
+                        </View>
+                }
                 <View style={styles.toolbox}>
                     <TouchableOpacity style={styles.searchButton}
                             onPress={()=>this.props.navigation.navigate("Search")}>
@@ -48,11 +51,17 @@ class BarcodeScanner extends Component {
     }
 }
 
+export default withNavigationFocus(BarcodeScanner);
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
         backgroundColor: 'white'
+    },
+    loadingContainer: {
+        marginTop: 250,
+        marginBottom: 250,
     },
     preview: {
         flex: 1,
@@ -83,6 +92,4 @@ const styles = StyleSheet.create({
         margin: 5
     }
 });
-
-export default withNavigationFocus(BarcodeScanner);
 

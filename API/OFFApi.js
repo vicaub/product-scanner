@@ -8,17 +8,14 @@ export function getProductInfoFromApi(barcode) {
     const url = apiUrl + '/api/v0/product/' + barcode + '.json';
     return fetch(url)
         .then((response) => response.json())
-        .catch((error) => console.error(error))
+        .catch() //network fail is handled in call in Product.js
 }
 
 export function parseProductInfo(json, barcode) {
     if (json.status !== 0 && json.code && json.code.length > 0) {
-        //TODO delete logs
         let jsonProduct = json.product;
-        //     console.log("création du produit depuis le json");
-        let product = ProductService.findProduct(jsonProduct, barcode);
-        //   console.log("produit créé avec succès");
-        ProductService.scan(product);
+        // let product = ProductService.findProduct(jsonProduct, barcode);
+        // ProductService.scan(product);
 
         return {
             _id: json.code,
@@ -46,7 +43,6 @@ export function getAllergensFromApi() {
     return fetch(url)
         .then((response) => response.json())
         .then((json) => {
-            // console.log(json);
             let allergens = [];
             if (json.tags) {
                 allergens = json.tags
@@ -63,5 +59,5 @@ export function getAllergensFromApi() {
             }
             return allergens;
         })
-        .catch((error) => console.error(error))
+        .catch() //network fail is handled in call in Allergies.js
 }

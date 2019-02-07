@@ -1,8 +1,9 @@
-//import {Database} from "react-native-database";
 import Realm from 'realm';
 
 // exemple
 // https://github.com/realm/realm-js/tree/master/examples/ReactExample/components
+
+//Realm database : Allergens, User, Products and Baskets
 
 
 class Allergen extends Realm.Object {
@@ -40,18 +41,46 @@ Product.schema = {
     primaryKey: 'barCode',
     properties: {
         barCode: 'string',
-        name: 'string',
+        name: 'string?',
         categories: {type : 'list', objectType: 'string', default: []},
         scanDate: 'date',
         nbScans: 'int',
-        imageUrl: 'string',
+        imageUrl: 'string?',
         ingredients: {type: 'list', objectType: 'string', default: []},
         allergens: {type: 'list', objectType: 'string', default: []}
     },
 };
 
+class ProductBasket extends Realm.Object {
+}
+
+ProductBasket.schema = {
+    name: 'ProductBasket',
+    properties: {
+        barcode: 'string',
+        quantity: 'int',
+        categories: {type : 'list', objectType: 'string', default: []},
+        score: 'string',
+    },
+};
+
+
+class Basket extends Realm.Object {
+}
+
+Basket.schema = {
+    name: 'Basket',
+    primaryKey: 'dayTimestamp',
+    properties: {
+        dayTimestamp: 'int',
+        date: 'date',
+        content: {type: 'list', objectType: 'ProductBasket', default: []},
+    },
+};
+
+
 
 
 // incrémenter schemaVersion à chaque modification des tables
 
-export default new Realm({schema: [Allergen, User, Product], schemaVersion: 14});
+export default new Realm({schema: [Allergen, User, Product, ProductBasket, Basket], schemaVersion: 20});
