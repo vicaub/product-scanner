@@ -4,14 +4,27 @@ import {
     View,
     ScrollView,
     Text,
+    ActivityIndicator,
+    Image,
 } from 'react-native';
-import Bar from './Charts/Bar';
 import AxesLine from './Charts/AxesLine';
+import AxesStackedBar from './Charts/AxesStackedBar';
 import Pie from './Charts/Pie';
-import StackedBar from './Charts/StackedBar';
 import Theme from './Theme';
-import data from '../../Helpers/chartsData';
-import {groupByCategories, groupAllByCategories, quantityInCategory, categoriesByBasket, getAllCategoriesFromBaskets} from "./Functions";
+import ProductService from '../../Services/ProductService';
+import BasketService from '../../Services/BasketService';
+import OupsScreen from '../Common/Oups';
+import {
+    groupByCategories,
+    quantityInCategory,
+    categoriesByBasket,
+    getAllCategoriesFromBaskets,
+    scoresByBasket,
+    averageScore,
+    getNumberOfScans,
+} from "./Functions";
+import getTotalQuantityInBasket from "../../Helper/basketHelper";
+
 
 class Statistics extends Component {
 
@@ -21,19 +34,52 @@ class Statistics extends Component {
             activeIndex: 0,
             activeKey: '',
             categories: [],
+            nbScans: 0,
+            nbBaskets: 0,
+            baskets: [],
+            isLoading: true,
         };
     }
 
     componentDidMount() {
-        // fetch user's baskets
-        let categories = getAllCategoriesFromBaskets(data.baskets);
-        let latestBasketData = groupByCategories(data.baskets[data.baskets.length - 1], categories);
-        categories = latestBasketData.keys;
+        this.willFocus = this.props.navigation.addListener(
+            'willFocus',
+            () => {
+                this._fetchData();
+            }
+        );
+    }
+
+    _fetchData() {
+        let nbScans = getNumberOfScans(ProductService.findAll());
+        let baskets = BasketService.findAll();
+        baskets = baskets.filter(getTotalQuantityInBasket);
+        let categories = baskets.length > 0 ? getAllCategoriesFromBaskets(baskets) : [];
+        let latestBasketData = baskets.length > 0 ? groupByCategories(baskets[0], categories) : [];
+        if (baskets.length > 0) categories = latestBasketData.keys;
         this.setState({
+            baskets,
+            nbScans,
+            nbBaskets: baskets.length,
             categories,
             activeIndex: 0,
-            activeKey: categories[0],
+            activeKey: categories.length > 0 ? categories[0] : 0,
+            isLoading: false,
         });
+    }
+
+    componentWillUnmount() {
+        this.willFocus.remove();
+    }
+
+    _displayLoading() {
+        if (this.state.isLoading) {
+            return (
+                <View style={styles.loadingContainer}>
+                    <ActivityIndicator size='large'/>
+                </View>
+            )
+        }
     }
 
     _onPieItemSelected(newIndex, newKey){
@@ -43,42 +89,80 @@ class Statistics extends Component {
         });
     }
 
+    _displayStats() {
+        const { baskets, categories, activeIndex, activeKey, nbScans, nbBaskets, isLoading } = this.state;
+        let avgScore = averageScore(baskets);
+
+        if (!isLoading) {
+            if (baskets.length > 0) {
+                return (
+                    <View style={styles.container}>
+                        {/* Statistics */}
+                        <View>
+                            <Text style={styles.nbStat}>
+                                <Text style={styles.bigNumber}>{nbScans}</Text> scan(s)
+                            </Text>
+                            <Text style={styles.nbStat}>
+                                <Text style={styles.bigNumber}>{nbBaskets}</Text> panier(s)
+                            </Text>
+                            <Text style={styles.nbStat}>
+                                Score moyen : <Text style={[styles.bigNumber, {color: Theme.scoresColors[avgScore[1]]}]}>{avgScore[0]}</Text>
+                            </Text>
+                        </View>
+
+                        {/* Pie Chart */}
+                        <Text style={styles.chartTitle}>Distribution du dernier panier</Text>
+                        <Pie
+                            pieWidth={200}
+                            pieHeight={200}
+                            onItemSelected={(newIndex, key) => this._onPieItemSelected(newIndex, key)}
+                            colors={Theme.colors}
+                            basketId={baskets[0].dayTimestamp}
+                            data={groupByCategories(baskets[0], categories)}
+                            selectedSliceLabel={activeKey}/>
+                        <Text style={styles.helper}>Psst... Sélectionnez une catégorie pour voir son évolution dans vos paniers !</Text>
+
+                        {/* Line Chart */}
+                        <Text style={styles.chartTitle}>Achats de{activeKey} par panier</Text>
+                        <AxesLine
+                            color={Theme.colors[activeIndex]}
+                            data={quantityInCategory(baskets, activeKey)} />
+
+                        {/* Stacked Bar Chart - Categories */}
+                        <Text style={styles.chartTitle}>Distribution des catégories</Text>
+                        <AxesStackedBar
+                            data={categoriesByBasket(baskets, categories)}
+                            keys={categories}
+                            colors={Theme.colors}
+                        />
+
+                        {/* Stacked Bar Chart - Nutrition Grade */}
+                        <Text style={styles.chartTitle}>Distribution des scores nutritionnels</Text>
+                        <AxesStackedBar
+                            keys={['a', 'b', 'c', 'd', 'e', 'unspecified']}
+                            data={scoresByBasket(baskets)}
+                            colors={Theme.scoresColors} />
+                        <Image
+                            style={{width: '60%', height: 120, marginRight: 'auto', marginLeft: 'auto'}}
+                            source={require('../../assets/images/nutriscores.png')}
+                        />
+                    </View>
+                );
+            } else {
+                return (
+                    <View style={styles.oupsContainer}>
+                        <OupsScreen message="Vous n'avez pas encore de panier... Créez-en un pour obtenir votre analyse diététique !"/>
+                    </View>
+                );
+            }
+        }
+    }
+
     render() {
-
-        const height = 200;
-        const width = 500;
-        const { activeIndex, activeKey, categories } = this.state;
-
         return (
             <ScrollView>
-                <View style={styles.container}>
-                    <View>
-                        <Text style={styles.nbStat}>
-                            <Text style={styles.bigNumber}>40</Text> scan(s)
-                        </Text>
-                        <Text style={styles.nbStat}>
-                            <Text style={styles.bigNumber}>3</Text> panier(s)
-                        </Text>
-                    </View>
-                    <Text style={styles.chartTitle}>Distribution du dernier panier</Text>
-                    <Pie
-                        pieWidth={200}
-                        pieHeight={200}
-                        onItemSelected={(newIndex, key) => this._onPieItemSelected(newIndex, key)}
-                        colors={Theme.colors}
-                        basketId={data.baskets[data.baskets.length - 1].id}
-                        data={groupByCategories(data.baskets[data.baskets.length - 1], categories)}
-                        selectedSliceLabel={activeKey}/>
-                    <Text style={styles.chartTitle}>Achats de {activeKey} par panier</Text>
-                    <AxesLine
-                        color={Theme.colors[activeIndex]}
-                        data={quantityInCategory(data.baskets, activeKey)} />
-                    <Text style={styles.chartTitle}>Distribution des catégories</Text>
-                    <StackedBar
-                        keys={categories}
-                        data={categoriesByBasket(data.baskets, categories)}
-                        colors={Theme.colors} />
-                </View>
+                {this._displayLoading()}
+                {this._displayStats()}
             </ScrollView>
         );
     }
@@ -90,6 +174,18 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor:'whitesmoke',
         marginTop: 21,
+    },
+    oupsContainer: {
+        marginTop: 150,
+    },
+    loadingContainer: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 100,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     chartTitle: {
         paddingTop: 15,
@@ -107,5 +203,12 @@ const styles = StyleSheet.create({
     },
     bigNumber: {
         fontSize: 30,
+    },
+    helper: {
+        fontSize: 10,
+        marginBottom: 5,
+        color: 'grey',
+        textAlign: 'center',
+        fontStyle: 'italic',
     }
 });

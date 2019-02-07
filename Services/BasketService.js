@@ -65,25 +65,28 @@ let BasketService = {
     /**
      * Add a product to a specific basket
      */
-    addProductToBasket: (basketTimestamp, barcode, quantity) => {
+    addProductToBasket: (basketTimestamp, product, quantity) => {
         // Check if basket exists
         const basket = BasketService.findBasketByTimestamp(basketTimestamp);
 
         DBConnector.write(() => {
-            // Check if product in basket
+            // Check if product in basket ---- TODO: can we update the quantity of a product without deleting it?
             let found = false;
             for (let i = 0; i < basket.content.length; i++) {
-                if (basket.content[i].barcode === barcode) {
+                if (basket.content[i].barcode === product._id) {
                     found = true;
                     basket.content[i].quantity = quantity;
                     break;
                 }
             }
             if (!found) {
-                basket.content.unshift({
-                    barcode,
+                let savedProduct = {
+                    barcode: product._id,
+                    categories: product.categories !== undefined ? product.categories.split(",") : [],
+                    score: product.nutrition_grades !== undefined ? product.nutrition_grades : '',
                     quantity,
-                });
+                };
+                basket.content.unshift(savedProduct);
             }
             try {
                 DBConnector.create('Basket', basket, true);

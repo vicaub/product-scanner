@@ -3,6 +3,8 @@ import Realm from 'realm';
 // exemple
 // https://github.com/realm/realm-js/tree/master/examples/ReactExample/components
 
+//Realm database : Allergens, User, Products and Baskets
+
 
 class Allergen extends Realm.Object {
 }
@@ -57,6 +59,8 @@ ProductBasket.schema = {
     properties: {
         barcode: 'string',
         quantity: 'int',
+        categories: {type : 'list', objectType: 'string', default: []},
+        score: 'string',
     },
 };
 
@@ -79,4 +83,4 @@ Basket.schema = {
 
 // incrémenter schemaVersion à chaque modification des tables
 
-export default new Realm({schema: [Allergen, User, Product, ProductBasket, Basket], schemaVersion: 19});
+export default new Realm({schema: [Allergen, User, Product, ProductBasket, Basket], schemaVersion: 20});

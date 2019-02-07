@@ -3,13 +3,13 @@ import React, { Component } from 'react';
 import {
     StyleSheet,
     View,
-    ActivityIndicator
 } from 'react-native';
 import MultiSelect from 'react-native-multiple-select';
 import { getAllergensFromApi } from '../API/OFFApi';
 import ActionButton from './Common/ActionButton';
-import UserService from "../Services/UserService";
-import OupsScreen from "./Common/Oups";
+import UserService from '../Services/UserService';
+import OupsScreen from './Common/Oups';
+import Loader from './Common/Loader';
 
 class Allergies extends Component {
 
@@ -57,10 +57,8 @@ class Allergies extends Component {
     _displayLoading() {
         if (this.state.isLoading) {
             return (
-                <View style={styles.loadingContainer}>
-                    <ActivityIndicator size='large' />
-                </View>
-            )
+                <Loader />
+            );
         }
     }
 
@@ -131,15 +129,6 @@ const styles = StyleSheet.create({
     container: {
         padding: 20,
         backgroundColor: '#ffffff',
-    },
-    loadingContainer: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 80,
-        bottom: 0,
-        alignItems: 'center',
-        justifyContent: 'center'
     },
     select: {
         marginTop: 20,
