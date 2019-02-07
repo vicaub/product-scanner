@@ -18,7 +18,7 @@ class ProductItem extends React.Component {
                         <Text style={styles.voteText}>{cartCounter}</Text>
                     </View>
                     <View style={styles.descriptionContainer}>
-                        <Text style={styles.descriptionText}>{product.categories[0].trim()}</Text>
+                        <Text style={styles.descriptionText}>{product.categories !== undefined && product.categories.length > 0 ? product.categories[0].trim() : 'Pas de catégorie renseignée'}</Text>
                         <Text style={styles.descriptionText}>Scanné : {product.nbScans} fois</Text>
                     </View>
                 </View>
