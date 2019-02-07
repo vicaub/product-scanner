@@ -19,7 +19,11 @@ class ProductItem extends React.Component {
                     </View>
                     <View style={styles.descriptionContainer}>
                         <Text style={styles.descriptionText}>{product.categories !== undefined && product.categories.length > 0 ? product.categories[product.categories.length - 1].trim() : 'Pas de catégorie renseignée'}</Text>
-                        <Text style={styles.descriptionText}>Scanné : {product.nbScans} fois</Text>
+                        {
+                            cartCounter === undefined  // history view
+                                ? <Text style={styles.descriptionText}>Scanné : {product.nbScans} fois</Text>
+                                : null
+                        }
                     </View>
                 </View>
             </View>
