@@ -1,12 +1,7 @@
 import DBConnector from '../Database/DBConnector';
+import {todayTimeStamp} from "../Helper/basketHelper";
 
 let basketDB = DBConnector.objects('Basket');
-
-function todayTimeStamp() {
-    const todayDate = new Date();
-    const todayTimstamp = Date.UTC(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate());
-    return todayTimstamp
-}
 
 let BasketService = {
 
@@ -25,7 +20,8 @@ let BasketService = {
         return BasketService.findBasketByTimestamp(todayTimeStamp());
     },
 
-    findBasketByTimestamp : (dayTimeStamp) => {
+
+    findBasketByTimestamp: (dayTimeStamp) => {
         const dbresult = basketDB.filtered("dayTimestamp = '" + dayTimeStamp + "'");
         if (dbresult.length) {
             return Array.from(dbresult)[0]
@@ -52,8 +48,11 @@ let BasketService = {
     },
 
 
-    findQuantity: (barcode) => {
-        const basket = BasketService.findTodaysBasket();
+    /**
+     * Returns quantity of a product in basket. 0 if no product in basket
+     */
+    findProductQuantityInBasket: (basketTimestamp, barcode) => {
+        const basket = BasketService.findBasketByTimestamp(basketTimestamp);
         for (let i = 0; i < basket.content.length; i++) {
             if (basket.content[i].barcode === barcode) {
                 return basket.content[i].quantity;
@@ -62,9 +61,13 @@ let BasketService = {
         return 0;
     },
 
-    addProductToBasket: (barcode, quantity) => {
+
+    /**
+     * Add a product to a specific basket
+     */
+    addProductToBasket: (basketTimestamp, barcode, quantity) => {
         // Check if basket exists
-        const basket = BasketService.findTodaysBasket();
+        const basket = BasketService.findBasketByTimestamp(basketTimestamp);
 
         DBConnector.write(() => {
             // Check if product in basket
@@ -77,27 +80,26 @@ let BasketService = {
                 }
             }
             if (!found) {
-                basket.content.push({
+                basket.content.unshift({
                     barcode,
                     quantity,
                 });
             }
             try {
-
-                try {
-                    DBConnector.create('Basket', basket, true);
-                } catch (e) {
-                    console.error(e);
-                }
-
+                DBConnector.create('Basket', basket, true);
             } catch (e) {
                 console.error(e);
             }
         })
     },
 
-    deleteProduct: (barcode) => {
-        const basket = BasketService.findTodaysBasket();
+
+    /**
+     * Remove a product from a specific basket
+     */
+    deleteProductFromBasket: (basketTimestamp, barcode) => {
+        const basket = BasketService.findBasketByTimestamp(basketTimestamp);
+
         DBConnector.write(() => {
             for (let i = 0; i < basket.content.length; i++) {
                 if (basket.content[i].barcode === barcode) {
@@ -106,13 +108,7 @@ let BasketService = {
                 }
             }
             try {
-
-                try {
-                    DBConnector.create('Basket', basket, true);
-                } catch (e) {
-                    console.error(e);
-                }
-
+                DBConnector.create('Basket', basket, true);
             } catch (e) {
                 console.error(e);
             }
