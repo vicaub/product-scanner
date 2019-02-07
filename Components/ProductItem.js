@@ -18,7 +18,8 @@ class ProductItem extends React.Component {
                         <Text style={styles.voteText}>{cartCounter}</Text>
                     </View>
                     <View style={styles.descriptionContainer}>
-                        <Text style={styles.descriptionText}>{product.barCode}</Text>
+                        <Text style={styles.descriptionText}>{product.categories[0].trim()}</Text>
+                        <Text style={styles.descriptionText}>Scanné : {product.nbScans} fois</Text>
                     </View>
                 </View>
             </View>
@@ -31,6 +32,8 @@ ProductItem.propTypes = {
         imageUrl: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         barCode: PropTypes.string.isRequired,
+        categories: PropTypes.objectOf(PropTypes.string).isRequired,
+        nbScans: PropTypes.number.isRequired,
     }).isRequired,
     cartCounter: PropTypes.number,
 };

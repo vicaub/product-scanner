@@ -3,6 +3,8 @@ import Realm from 'realm';
 // exemple
 // https://github.com/realm/realm-js/tree/master/examples/ReactExample/components
 
+//Realm database : Allergens, User, Products and Baskets
+
 
 class Allergen extends Realm.Object {
 }
