@@ -4,6 +4,22 @@
 
 > Scan products in the supermarket and get to truly know your basket
 
+<p align="center">
+<img src="./Screenshots/Scan.png" alt="Home Screen" width="200"  style="border: 1px solid grey"/>
+<img src="./Screenshots/Product.png" alt="Product" width="200" style="border: 1px solid grey"/>
+<img src="./Screenshots/Alert.png" alt="Alert" width="200" style="border: 1px solid grey"/>
+</p>
+
+<p align="center">
+<img src="./Screenshots/Baskets.png" alt="Baskets" width="200" style="border: 1px solid grey"/>
+<img src="./Screenshots/Statistics.png" alt="Statistics" width="200" style="border: 1px solid grey"/>
+<img src="./Screenshots/Allergies.png" alt="Allergies" width="200" style="border: 1px solid grey"/>
+</p>
+
+## Features
+
+- Scan products 
+
 ## Installation
 
 ### Get NPM
