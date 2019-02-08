@@ -1,7 +1,7 @@
 import React from 'react';
 
 import renderer from 'react-test-renderer';
-import sample from '../Helpers/sample'
+import sample from '../Helper/sample'
 import {parseProductInfo} from '../API/OFFApi';
 
 

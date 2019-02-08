@@ -1,6 +1,24 @@
-# Product Scanner
+# Product Scanner : NutriThink
+
+<p align="center"><img src="./assets/images/logo.png" alt="Home Screen" width="50"/></p>
 
 > Scan products in the supermarket and get to truly know your basket
+
+<p align="center">
+<img src="./Screenshots/Scan.png" alt="Home Screen" width="200"  style="border: 1px solid grey"/>
+<img src="./Screenshots/Product.png" alt="Product" width="200" style="border: 1px solid grey"/>
+<img src="./Screenshots/Alert.png" alt="Alert" width="200" style="border: 1px solid grey"/>
+</p>
+
+<p align="center">
+<img src="./Screenshots/Baskets.png" alt="Baskets" width="200" style="border: 1px solid grey"/>
+<img src="./Screenshots/Statistics.png" alt="Statistics" width="200" style="border: 1px solid grey"/>
+<img src="./Screenshots/Allergies.png" alt="Allergies" width="200" style="border: 1px solid grey"/>
+</p>
+
+## Features
+
+- Scan products 
 
 ## Installation
 
@@ -119,14 +137,6 @@ Additional things you need to do:
   
 - Authorize applications from your Apple developer account on your iPhone (Settings/General/Manage profiles and device)
 
-## Remote Debugging
-
-https://facebook.github.io/react-native/docs/debugging
-
-- shake your phone
-- click allow JS remote debugging
-- go to your computer navigator dev tools
-
 
 ## Run tests
 
@@ -148,3 +158,10 @@ Make sure to remove all default.realm.* folders and files. Then:
 ```
 cd android && ./gradlew assembleRelease
 ```
+
+## Credits
+
+We are using the [Open Food Fact API](https://world.openfoodfacts.org/).
+
+<div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>.</div>
+

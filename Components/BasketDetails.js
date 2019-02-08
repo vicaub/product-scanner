@@ -30,7 +30,8 @@ class BasketDetails extends Component {
     }
 
     _navigateToProduct(code, cartCounter) {
-        this.props.navigation.navigate("Product", {barcode: code, fromBasket: true, cartCounter});
+        // this.props.navigation.navigate("Product", {barcode: code, fromBasket: true, cartCounter});
+        this.props.navigation.navigate("Product", {barcode: code, basketTimestamp: this.state.basketId});
     }
 
     render() {
