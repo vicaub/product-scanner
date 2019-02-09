@@ -156,9 +156,10 @@ Running `react-native run-android` already generate a debug APK file located at 
 
 In order to build a release APK file:
 - Create a release key: `keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000` and move it under the `android/app` folder.
+- Run `cp android/gradle.properties.template android/gradle.properties`.
 - Replace the `*****` your release key passwords in the `android/gradle.properties` file.
-- Make sure to remove all default.realm.* folders and files
-- Make sure to quit the React Native packager (launched by `react-native run-android)`
+- Make sure to remove all default.realm.* folders and files.
+- Make sure to quit the React Native packager (launched by `react-native run-android)`).
 
 Finally you can run the following command to start building the release APK file
 
