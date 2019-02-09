@@ -93,12 +93,15 @@ Connect your device to your computer.
 You will need Android Studio (for Android SDK).
 You then need to enable USB Debugging on your Android device.
 
+#### Debug version
 Make it run for android: 
 ```bash
 react-native run-android
 ```
 
-#### Errors you may encounter
+It will generate a debug APK file in `android/app/build/output/apk/debug/app-debug.apk`.
+
+##### Errors you may encounter
 
 - Error when upgrading; "`process.stdin.setRawMode is not a function`" : this error seems to occur when trying to `react-native upgrade` in a MINGW64 terminal. Use a different terminal instead.
 
@@ -110,6 +113,24 @@ react-native run-android
 
 - "`Cannot add task 'wrapper' as a task with that name already exists.`" : rename the task 'wrapper' to 'wrapper2' for example at the end of `build.gradle`
 
+
+#### Release version
+
+In order to build a release APK file:
+
+- Create a release key: `keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000` and move it under the `android/app` folder.
+- Run `cp android/gradle.properties.template android/gradle.properties`.
+- Replace the `*****` your release key passwords in the `android/gradle.properties` file.
+- Make sure to remove all default.realm.* folders and files.
+- Make sure to quit the React Native packager (launched by `react-native run-android)`).
+
+Finally you can run the following command to start building the release APK file
+
+```
+react-native run-android --variant=release
+```
+
+The generated APK file will be located at  `android/app/build/output/apk/release/app-release.apk`
 
 ### iOS
 
@@ -147,27 +168,6 @@ Run tests : `jest`
 Jest creates snapshots of the current output and later compares the output to the snapshots it has saved. 
 
 If you want to change the expected output (and the snapshots so that future tests won't fail), run `jest -u`.
-
-
-## Build application
-
-### Android
-Running `react-native run-android` already generate a debug APK file located at `android/app/build/output/apk/debug/app-debug.apk`
-
-In order to build a release APK file:
-- Create a release key: `keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000` and move it under the `android/app` folder.
-- Run `cp android/gradle.properties.template android/gradle.properties`.
-- Replace the `*****` your release key passwords in the `android/gradle.properties` file.
-- Make sure to remove all default.realm.* folders and files.
-- Make sure to quit the React Native packager (launched by `react-native run-android)`).
-
-Finally you can run the following command to start building the release APK file
-
-```
-cd android && ./gradlew assembleRelease
-```
-
-The generated APK file will be located at  `android/app/build/output/apk/release/app-release.apk`
 
 ## Credits
 
