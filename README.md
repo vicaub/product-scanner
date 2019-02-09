@@ -152,12 +152,21 @@ If you want to change the expected output (and the snapshots so that future test
 ## Build application
 
 ### Android
+Running `react-native run-android` already generate a debug APK file located at `android/app/build/output/apk/debug/app-debug.apk`
 
-Make sure to remove all default.realm.* folders and files. Then:
+In order to build a release APK file:
+- Create a release key: `keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000` and move it under the `android/app` folder.
+- Replace the `*****` your release key passwords in the `android/gradle.properties` file.
+- Make sure to remove all default.realm.* folders and files
+- Make sure to quit the React Native packager (launched by `react-native run-android)`
+
+Finally you can run the following command to start building the release APK file
 
 ```
 cd android && ./gradlew assembleRelease
 ```
+
+The generated APK file will be located at  `android/app/build/output/apk/release/app-release.apk`
 
 ## Credits
 
