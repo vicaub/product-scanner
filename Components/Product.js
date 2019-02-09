@@ -252,7 +252,7 @@ class ProductScreen extends Component {
                 if (allergens.length !== 0) {
                     Alert.alert(
                         'Attention',
-                        'Nous avons détecté des ingrédients dont vous êtes allergique dans ce produit : ' + allergens.toString()
+                        'Nous avons détecté des ingrédients dont vous êtes allergique dans ce produit : ' + allergens.join(', ')
                     );
                 }
             }
