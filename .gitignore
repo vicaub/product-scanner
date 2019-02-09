@@ -38,6 +38,7 @@ build/
 .gradle
 local.properties
 *.iml
+gradle.properties
 
 # node.js
 #
@@ -65,7 +66,6 @@ buck-out/
 *.jsbundle
 
 # android and ios folders
-android/
 ios/
 
 package-lock.json
