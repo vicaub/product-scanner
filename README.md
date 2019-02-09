@@ -130,7 +130,9 @@ Finally you can run the following command to start building the release APK file
 react-native run-android --variant=release
 ```
 
-The generated APK file will be located at  `android/app/build/output/apk/release/app-release.apk`
+The generated APK file will be located at  `android/app/build/output/apk/release/app-release.apk`.
+
+Don't forget to change version number in `android/app/build.gradle`.
 
 ### iOS
 
