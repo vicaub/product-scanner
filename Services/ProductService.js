@@ -17,12 +17,12 @@ let ProductService = {
             const productinfo = {
                 barCode: data._id,
                 name: data.product_name,
-                categories: data.categories !== undefined ? data.categories.split(","): [],
+                categories: data.categories !== undefined ? data.categories.split(",").map(c => c.trim()): [],
                 scanDate: new Date(),
                 nbScans: 1,
                 imageUrl: data.image_url,
                 ingredients: data.ingredients ? [data.ingredients] : [],
-                allergens: data.allergens !== undefined ? data.allergens.split(","): []
+                allergens: data.allergens !== undefined ? data.allergens.split(",").map(c => c.trim()): []
             };
             return productinfo;
         }
