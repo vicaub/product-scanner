@@ -197,7 +197,7 @@ class ProductScreen extends Component {
                                 <Text style={styles.defaultText}>Quantité
                                     : {product.quantity ? product.quantity : "Non renseignée"}</Text>
                                 <Text style={styles.defaultText}>Marque
-                                    : {product.brands ? product.brands : "Non renseignée"}</Text>
+                                    : {product.brands ? product.brands.join(", ") : "Non renseignée"}</Text>
                                 <Text style={styles.descriptionText}>Code barre : {product._id}</Text>
                             </View>
                         </View>
