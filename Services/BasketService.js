@@ -82,7 +82,7 @@ let BasketService = {
             if (!found) {
                 let savedProduct = {
                     barcode: product._id,
-                    categories: product.categories !== undefined ? product.categories.split(",") : [],
+                    categories: product.categories !== undefined ? product.categories.split(",").map(c => c.trim()) : [],
                     score: product.nutrition_grades !== undefined ? product.nutrition_grades : '',
                     quantity,
                 };
