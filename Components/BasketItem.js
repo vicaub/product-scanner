@@ -1,13 +1,11 @@
-// Components/FilmItem.js
-
-import React from 'react'
+import React, { Component } from 'react'
 import {StyleSheet, View, Text, Image} from 'react-native'
 import moment from 'moment';
 import PropTypes from "prop-types";
 
 moment.locale("fr");
 
-class BasketItem extends React.Component {
+class BasketItem extends Component {
 
     _getTotalQuantity() {
         let totalQuantity = 0;
@@ -19,20 +17,18 @@ class BasketItem extends React.Component {
 
     render() {
         const basket = this.props.basket;
-        // const dateString = moment(basket.date).format("dddd Do MMMM YYYY")
         const dateString = moment(basket.date).format("DD/MM/YYYY");
         return (
             <View style={styles.mainContainer}>
                 <Image
                     style={styles.image}
-                    source={require('../assets/images/img_208967.png')}
+                    source={require('../assets/images/cart.png')}
                 />
                 <View style={styles.contentContainer}>
                     <View style={styles.headerContainer}>
                         <Text style={styles.titleText}>
                             Panier du {dateString}
                         </Text>
-                        {/*<Text style={styles.voteText}>{basket.nutritional_score}</Text>*/}
                     </View>
                     <View style={styles.descriptionContainer}>
                         <Text style={styles.descriptionText}>{this._getTotalQuantity()} produits</Text>

@@ -7,9 +7,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import NumericInput from 'react-native-numeric-input';
 import Emoji from 'react-native-emoji';
 import UserService from '../Services/UserService'
-import ProductService from "../Services/ProductService";
-import BasketService from "../Services/BasketService";
-import {todayTimeStamp} from "../Helper/basketHelper";
+import ProductService from '../Services/ProductService';
+import BasketService from '../Services/BasketService';
+import {todayTimeStamp} from '../Helper/basketHelper';
 
 
 
@@ -111,7 +111,6 @@ class ProductScreen extends Component {
 
     _removeProductFromCart() {
         BasketService.deleteProductFromBasket(this.state.basketTimestamp, this.state.product._id);
-        // const oldQuantityInBasket = this.state.quantity;
         this.setState({quantityInBasket: 0, cartCounter: this.state.quantityInBasket});
     }
 

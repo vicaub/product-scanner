@@ -70,7 +70,7 @@ class UpdateProfile extends Component {
 
     handleSubmit() {
         if (this._form) {
-            const userInfo = this._form.getValue(); // use that ref to get the form value
+            const userInfo = this._form.getValue();
             if (userInfo) {
                 if (this.state.new) {
                     UserService.save(userInfo, () => {

@@ -4,7 +4,6 @@ import {
     View,
     ScrollView,
     Text,
-    ActivityIndicator,
     Image,
 } from 'react-native';
 import AxesLine from './Charts/AxesLine';
@@ -14,6 +13,7 @@ import Theme from './Theme';
 import ProductService from '../../Services/ProductService';
 import BasketService from '../../Services/BasketService';
 import OupsScreen from '../Common/Oups';
+import Loader from '../Common/Loader';
 import {
     groupByCategories,
     quantityInCategory,
@@ -75,14 +75,12 @@ class Statistics extends Component {
     _displayLoading() {
         if (this.state.isLoading) {
             return (
-                <View style={styles.loadingContainer}>
-                    <ActivityIndicator size='large'/>
-                </View>
-            )
+                <Loader />
+            );
         }
     }
 
-    _onPieItemSelected(newIndex, newKey){
+    _onPieItemSelected(newIndex, newKey) {
         this.setState({
             activeIndex: newIndex,
             activeKey: newKey,
@@ -177,15 +175,6 @@ const styles = StyleSheet.create({
     },
     oupsContainer: {
         marginTop: 150,
-    },
-    loadingContainer: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 100,
-        bottom: 0,
-        alignItems: 'center',
-        justifyContent: 'center'
     },
     chartTitle: {
         paddingTop: 15,

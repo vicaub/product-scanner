@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react';
 import { StyleSheet, View, FlatList, TouchableOpacity } from 'react-native';
 import ProductItem from './ProductItem';
@@ -7,16 +5,16 @@ import OupsScreen from './Common/Oups';
 import ProductService from '../Services/ProductService';
 
 class HistoryScreen extends Component {
-    _searchInfo(code) { //3103220025338
-        this.props.navigation.navigate("Product", {barcode: code, fromHistory: true, update : false});
-    }
 
     constructor(props) {
         super(props);
         this.state = {
-            //products: ProductService.findAll(),
-            //empty : true,
-        }
+            products: [],
+        };
+    }
+    
+    _searchInfo(code) {
+        this.props.navigation.navigate("Product", {barcode: code, fromHistory: true, update : false});
     }
 
     componentDidMount() {
@@ -25,8 +23,7 @@ class HistoryScreen extends Component {
             () => {
                 this.setState({
                     products : ProductService.findAll(),
-                    //empty : false
-                })
+                });
             }
         );
     }

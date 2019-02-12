@@ -1,10 +1,10 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, Platform, View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, FlatList, TouchableOpacity } from 'react-native';
 import getTotalQuantityInBasket from '../Helper/basketHelper'
 import BasketItem from './BasketItem'
 import BasketService from '../Services/BasketService';
-import OupsScreen from "./Common/Oups";
+import OupsScreen from './Common/Oups';
 
 class BasketsScreen extends Component {
 
@@ -34,12 +34,11 @@ class BasketsScreen extends Component {
 
     _removeEmptyBaskets(baskets) {
         for (let i = 0; i<baskets.length; i++) {
-            // TODO: not working...
             if (getTotalQuantityInBasket(baskets[i]) <= 0) {
                 baskets.splice(i, 1);
             }
         }
-        return baskets
+        return baskets;
     }
 
     render() {

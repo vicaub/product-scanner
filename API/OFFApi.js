@@ -1,7 +1,6 @@
 import ProductService from "../Services/ProductService";
 
 const lang = 'fr';
-//TODO switch back to https
 const apiUrl = 'https://' + lang + '.openfoodfacts.org';
 
 export function getProductInfoFromApi(barcode) {
@@ -14,8 +13,6 @@ export function getProductInfoFromApi(barcode) {
 export function parseProductInfo(json, barcode) {
     if (json.status !== 0 && json.code && json.code.length > 0) {
         let jsonProduct = json.product;
-        // let product = ProductService.findProduct(jsonProduct, barcode);
-        // ProductService.scan(product);
 
         return {
             _id: json.code,
@@ -31,7 +28,6 @@ export function parseProductInfo(json, barcode) {
             nutrition_grades: jsonProduct.nutrition_grades,
             nova_group: jsonProduct.nova_group,
             allergens_ids: jsonProduct.allergens_tags
-
         };
     } else {
         return {};
@@ -47,6 +43,8 @@ export function getAllergensFromApi() {
             if (json.tags) {
                 allergens = json.tags
                     .filter((obj => (obj.id !== obj.name) && obj.products > 50))
+                    // only keep allergens with a meaningful name and which appear in more than 50 products
+                    // => the list is otherwise too long
                     .map((obj) => {
                         return {
                             obj: {

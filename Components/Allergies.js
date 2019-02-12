@@ -105,7 +105,7 @@ class Allergies extends Component {
             );
         } else if (!isLoading && !isConnected) {
             return (
-                <OupsScreen message="Tu n'as pas de connexion internet"/>
+                <OupsScreen message="Pas de connexion internet"/>
             );
         }
     }

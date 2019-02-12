@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Button, TextInput} from 'react-native';
+import {StyleSheet, View, TextInput} from 'react-native';
 import ActionButton from './Common/ActionButton';
 
 class SearchScreen extends Component {
@@ -15,7 +15,7 @@ class SearchScreen extends Component {
         this.setState({searchedText: text})
     }
 
-    _searchInfo() { //3103220025338
+    _searchInfo() {
         this.props.navigation.navigate("Product", {barcode: this.state.searchedText, update : true});
     }
 
