@@ -123,7 +123,7 @@ class Statistics extends Component {
                         <Text style={styles.helper}>Psst... Sélectionnez une catégorie pour voir son évolution dans vos paniers !</Text>
 
                         {/* Line Chart */}
-                        <Text style={styles.chartTitle}>Achats de{activeKey} par panier</Text>
+                        <Text style={styles.chartTitle}>Achats de {activeKey} par panier</Text>
                         <AxesLine
                             color={Theme.colors[activeIndex]}
                             data={quantityInCategory(baskets, activeKey)} />
