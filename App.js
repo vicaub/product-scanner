@@ -14,7 +14,9 @@ import { fillDB, deleteDB } from './Database/prefillDB';
 export default class App extends Component {
 
     componentDidMount() {
+        // uncomment the following line to erase basket and product database
         // deleteDB();
+        
         // uncomment the following line to prefill basket and product database
         // fillDB();
     }

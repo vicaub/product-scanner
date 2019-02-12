@@ -93,6 +93,12 @@ public class MainActivity extends ReactActivity {
 
 ## Run the application
 
+### Foreword
+
+> If you want to prefill the basket and product databases with some products, uncomment the corresponding lines in `App.js` before running the app.
+
+> Testing on an Android phone is faster and a little bit easier than testing on an iPhone which requires a MacBook.
+
 Connect your device to your computer. Make sure your laptop and your phone are on the **same** Wi-Fi network.
 
 ### Android
@@ -171,6 +177,12 @@ Additional things you need to do:
 #### Release version
 
 [Building the app for production](https://facebook.github.io/react-native/docs/running-on-device.html#building-your-app-for-production)
+
+If the app is not yet set for release, [configure release scheme](https://facebook.github.io/react-native/docs/running-on-device.html#2-configure-release-scheme): go to **Product → Scheme → Edit Scheme**. Select the **Run** tab in the sidebar, then set the Build Configuration dropdown to `Release`.
+
+You can now build the app for release by tapping ⌘B or selecting **Product → Build** from the menu bar. Once built for release, you'll be able to distribute the app to beta testers and submit the app to the App Store.
+
+To run the release version on your phone: just tap ⌘R or select Run from the Product menu.
 
 ## Run tests
 
