@@ -1,4 +1,3 @@
-
 import DBConnector from "./DBConnector";
 
 export function deleteDB() {
@@ -19,8 +18,10 @@ export function fillDB() {
 
     let date = new Date();
 
+    /* Prefill scans history */
+
     DBConnector.write(() => {
-        date.setDate(date.getDate() - 8);
+        date.setDate(date.getDate() - 8);  // scans from 8 days ago
         DBConnector.create('Product', {
             barCode: '3596710413829',
             name: 'Pause Snack Thon Oeuf',
@@ -41,7 +42,7 @@ export function fillDB() {
             // ingredients: {type: 'list', objectType: 'string', default: []},
             // allergens: {type: 'list', objectType: 'string', default: []}
         });
-        date.setDate(date.getDate() + 5);
+        date.setDate(date.getDate() + 5);  // scans from 3 days ago
         DBConnector.create('Product', {
             barCode: '3228881025258',
             name: 'Thé Vert Marrakech Mint',
@@ -62,7 +63,7 @@ export function fillDB() {
             // ingredients: {type: 'list', objectType: 'string', default: []},
             // allergens: {type: 'list', objectType: 'string', default: []}
         });
-        date.setDate(date.getDate() + 3);
+        date.setDate(date.getDate() + 3);  // today's scans
         DBConnector.create('Product', {
             barCode: '7613034232465',
             name: 'Le Bon Paris, À l\'Étouffée (6 Tranches)',
@@ -105,7 +106,9 @@ export function fillDB() {
         });
     });
 
-    date.setDate(date.getDate() - 13);
+    /* Prefill baskets */
+
+    date.setDate(date.getDate() - 13);  // first basket from 13 days ago
 
     DBConnector.write(() => {
         DBConnector.create('Basket', {
@@ -127,7 +130,7 @@ export function fillDB() {
             ],
         });
 
-        date.setDate(date.getDate() + 5);
+        date.setDate(date.getDate() + 5);  // second basket from 8 days ago 
         DBConnector.create('Basket', {
             dayTimestamp: dateTimeStamp(date),
             date: date,
@@ -153,7 +156,7 @@ export function fillDB() {
             ],
         });
 
-        date.setDate(date.getDate() + 3);
+        date.setDate(date.getDate() + 3);  // third basket from 5 days ago
         DBConnector.create('Basket', {
             dayTimestamp: dateTimeStamp(date),
             date: date,
@@ -173,7 +176,7 @@ export function fillDB() {
             ],
         });
 
-        date.setDate(date.getDate() + 5);
+        date.setDate(date.getDate() + 5);  // today's basket
         DBConnector.create('Basket', {
             dayTimestamp: dateTimeStamp(date),
             date: date,

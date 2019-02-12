@@ -1,6 +1,5 @@
-// Helpers/filmsData.js
+/* Used for Jest tests */
 
-var data;
 export default data = [
     {
         id: 1,

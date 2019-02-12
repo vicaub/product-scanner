@@ -8,6 +8,6 @@ export default function getTotalQuantityInBasket(basket) {
 
 export function todayTimeStamp() {
     const todayDate = new Date();
-    const todayTimstamp = Date.UTC(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate());
-    return todayTimstamp
+    const todayTimestamp = Date.UTC(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate());
+    return todayTimestamp
 }

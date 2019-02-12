@@ -37,10 +37,10 @@ class ProductItem extends Component {
 
 ProductItem.propTypes = {
     product: PropTypes.shape({
-        imageUrl: PropTypes.string.isRequired,
+        imageUrl: PropTypes.string,
         name: PropTypes.string.isRequired,
         barCode: PropTypes.string.isRequired,
-        categories: PropTypes.objectOf(PropTypes.string).isRequired,
+        categories: PropTypes.objectOf(PropTypes.string),
         nbScans: PropTypes.number.isRequired,
     }).isRequired,
     cartCounter: PropTypes.number,
