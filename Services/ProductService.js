@@ -5,6 +5,7 @@ import DBConnector from '../Database/DBConnector';
 let productDB = DBConnector.objects('Product');
 
 let ProductService = {
+    
     findAll: () => {
         return Array.from( (productDB.sorted('scanDate', true)))
     },
@@ -28,14 +29,11 @@ let ProductService = {
         }
     },
 
-//With a barcode, the product is either updated in the database or added if not registered yet
+    //With a barcode, the product is either updated in the database or added if not registered yet
     scan : (product) => {
         if (productDB.filtered("barCode = '" + product.barCode + "'").length) {
-
             ProductService.update(product);
-
-
-            return
+            return;
         }
         else {
             ProductService.add(product);
@@ -48,10 +46,7 @@ let ProductService = {
             product.scanDate = new Date();
             product.nbScans += 1;
             DBConnector.create('Product', product, true);
-
-        })
-
-
+        });
     },
 
     add : (product) => {
@@ -71,11 +66,12 @@ let ProductService = {
         }
 
     },
-// Retrieve a specific product in the database from the barcode (Used from the basket screen)
+
+    // Retrieve a specific product in the database from the barcode (Used from the basket screen)
     fetchProduct : (barcode) => {
         return Array.from(productDB.filtered("barCode = '" + barcode + "'"))[0]
     }
 
-
 }
+
 export default ProductService;

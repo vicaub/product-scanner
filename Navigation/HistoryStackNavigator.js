@@ -4,7 +4,8 @@ import { createStackNavigator } from 'react-navigation';
 import { View } from 'react-native';
 import HistoryScreen from '../Components/History';
 import HamburgerIcon from './HamburgerIcon';
-import ProductScreen from "../Components/Product";
+import ProductScreen from '../Components/Product';
+import { headerStyle, mainColor } from './HeaderStyle';
 
 const HistoryStackNavigator = createStackNavigator({
     History: {
@@ -13,15 +14,8 @@ const HistoryStackNavigator = createStackNavigator({
             title: 'Mes Scans',
             headerLeft: <HamburgerIcon navigationProps={ navigation }/>,
             headerRight: <View></View>,
-            headerTitleStyle: {
-                fontFamily: 'Lobster-Regular',
-                fontWeight: 'normal',
-                fontSize: 30,
-                textAlign: 'center',
-                flex: 1,
-                marginTop: 5,
-            },
-            headerTintColor: '#00C378',
+            headerTitleStyle: headerStyle,
+            headerTintColor: mainColor,
             headerStyle: {
                 backgroundColor: '#fff',
             }
@@ -32,15 +26,8 @@ const HistoryStackNavigator = createStackNavigator({
         navigationOptions: () => ({
             title: 'Détails Produit',
             headerRight: <View></View>,
-            headerTitleStyle: {
-                fontFamily: 'Lobster-Regular',
-                fontWeight: 'normal',
-                fontSize: 30,
-                textAlign: 'center',
-                flex: 1,
-                marginTop: 5,
-            },
-            headerTintColor: '#00C378',
+            headerTitleStyle: headerStyle,
+            headerTintColor: mainColor,
             headerStyle: {
                 backgroundColor: '#fff',
             }

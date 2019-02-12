@@ -1,5 +1,5 @@
 import DBConnector from '../Database/DBConnector';
-import {todayTimeStamp} from "../Helper/basketHelper";
+import {todayTimeStamp} from '../Helper/basketHelper';
 
 let basketDB = DBConnector.objects('Basket');
 
@@ -70,7 +70,7 @@ let BasketService = {
         const basket = BasketService.findBasketByTimestamp(basketTimestamp);
 
         DBConnector.write(() => {
-            // Check if product in basket ---- TODO: can we update the quantity of a product without deleting it?
+            // Check if product in basket
             let found = false;
             for (let i = 0; i < basket.content.length; i++) {
                 if (basket.content[i].barcode === product._id) {
