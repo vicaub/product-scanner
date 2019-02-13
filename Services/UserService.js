@@ -3,6 +3,7 @@ import DBConnector from '../Database/DBConnector';
 let userDB = DBConnector.objects('User');
 
 let UserService = {
+    
     findAll: () => {
         return Array.from(userDB);
     },

@@ -1,12 +1,11 @@
 
 const nbBasketsAnalysed = 6;
 
-
 function getCategory(product) {
     if (product.categories.length > 0 && product.categories[0].length > 0) {
         return product.categories[product.categories.length - 1];
     } else {
-        return ' Autre';
+        return 'Autre';
     }
 }
 
@@ -49,6 +48,7 @@ export function groupAllByCategories(baskets) {
 }
 
 function buildCategoriesStats(categories, total) {
+    /* Data for the pie chart */
     let keys = [];
     let values = [];
     Object.keys(categories).forEach((category) => {

@@ -7,9 +7,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import NumericInput from 'react-native-numeric-input';
 import Emoji from 'react-native-emoji';
 import UserService from '../Services/UserService'
-import ProductService from "../Services/ProductService";
-import BasketService from "../Services/BasketService";
-import {todayTimeStamp} from "../Helper/basketHelper";
+import ProductService from '../Services/ProductService';
+import BasketService from '../Services/BasketService';
+import {todayTimeStamp} from '../Helper/basketHelper';
 
 
 
@@ -22,6 +22,7 @@ class ProductScreen extends Component {
             isLoading: true,
             isConnected: true,
             fromHistory: this.props.navigation.getParam('fromHistory'),
+            fromBasket: !!this.props.navigation.getParam('basketTimestamp'),
             basketTimestamp: this.props.navigation.getParam('basketTimestamp') ? this.props.navigation.getParam('basketTimestamp') : todayTimeStamp(),
             hasCheckedAllergies: false,
             quantityInBasket: 0,
@@ -110,7 +111,6 @@ class ProductScreen extends Component {
 
     _removeProductFromCart() {
         BasketService.deleteProductFromBasket(this.state.basketTimestamp, this.state.product._id);
-        // const oldQuantityInBasket = this.state.quantity;
         this.setState({quantityInBasket: 0, cartCounter: this.state.quantityInBasket});
     }
 
@@ -197,7 +197,7 @@ class ProductScreen extends Component {
                                 <Text style={styles.defaultText}>Quantité
                                     : {product.quantity ? product.quantity : "Non renseignée"}</Text>
                                 <Text style={styles.defaultText}>Marque
-                                    : {product.brands ? product.brands : "Non renseignée"}</Text>
+                                    : {product.brands ? product.brands.split(",").map(m => m.trim()).join(", ") : "Non renseignée"}</Text>
                                 <Text style={styles.descriptionText}>Code barre : {product._id}</Text>
                             </View>
                         </View>
@@ -236,8 +236,8 @@ class ProductScreen extends Component {
     }
 
     _checkAllergies() {
-        const {product, isLoading, fromHistory, basketTimestamp, hasCheckedAllergies} = this.state;
-        if (!isLoading && product && Object.keys(product).length > 0 && !hasCheckedAllergies && !fromHistory && !basketTimestamp) {
+        const {product, isLoading, fromHistory, fromBasket, hasCheckedAllergies} = this.state;
+        if (!isLoading && product && Object.keys(product).length > 0 && !hasCheckedAllergies && !fromHistory && !fromBasket) {
             this.state.hasCheckedAllergies = true;
             let user = UserService.findAll()[0];
             if (user !== undefined && product.allergens_ids) {
@@ -252,7 +252,7 @@ class ProductScreen extends Component {
                 if (allergens.length !== 0) {
                     Alert.alert(
                         'Attention',
-                        'Nous avons détecté des ingrédients dont vous êtes allergique dans ce produit : ' + allergens.toString()
+                        'Nous avons détecté des ingrédients auquels vous êtes allergique dans ce produit : ' + allergens.join(', ')
                     );
                 }
             }

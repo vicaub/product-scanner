@@ -2,9 +2,10 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 import { View } from 'react-native';
 import HamburgerIcon from './HamburgerIcon';
-import ProductScreen from "../Components/Product";
-import BasketsScreen from "../Components/Baskets";
-import BasketDetails from "../Components/BasketDetails";
+import ProductScreen from '../Components/Product';
+import BasketsScreen from '../Components/Baskets';
+import BasketDetails from '../Components/BasketDetails';
+import { headerStyle, mainColor } from './HeaderStyle';
 
 const MyBasketsStackNavigator = createStackNavigator({
     Baskets: {
@@ -13,15 +14,8 @@ const MyBasketsStackNavigator = createStackNavigator({
             title: 'Mes Paniers',
             headerLeft: <HamburgerIcon navigationProps={ navigation }/>,
             headerRight: <View></View>,
-            headerTitleStyle: {
-                fontFamily: 'Lobster-Regular',
-                fontWeight: 'normal',
-                fontSize: 30,
-                textAlign: 'center',
-                flex: 1,
-                marginTop: 5,
-            },
-            headerTintColor: '#00C378',
+            headerTitleStyle: headerStyle,
+            headerTintColor: mainColor,
             headerStyle: {
                 backgroundColor: '#fff',
             }
@@ -32,15 +26,8 @@ const MyBasketsStackNavigator = createStackNavigator({
         navigationOptions: () => ({
             title: 'Détails Produit',
             headerRight: <View></View>,
-            headerTitleStyle: {
-                fontFamily: 'Lobster-Regular',
-                fontWeight: 'normal',
-                fontSize: 30,
-                textAlign: 'center',
-                flex: 1,
-                marginTop: 5,
-            },
-            headerTintColor: '#00C378',
+            headerTitleStyle: headerStyle,
+            headerTintColor: mainColor,
             headerStyle: {
                 backgroundColor: '#fff',
             }
@@ -51,15 +38,8 @@ const MyBasketsStackNavigator = createStackNavigator({
         navigationOptions: ({ navigation }) => ({
             title: 'Détails du Panier',
             headerRight: <View></View>,
-            headerTitleStyle: {
-                fontFamily: 'Lobster-Regular',
-                fontWeight: 'normal',
-                fontSize: 30,
-                textAlign: 'center',
-                flex: 1,
-                marginTop: 5,
-            },
-            headerTintColor: '#00C378',
+            headerTitleStyle: headerStyle,
+            headerTintColor: mainColor,
             headerStyle: {
                 backgroundColor: '#fff',
             }

@@ -6,6 +6,7 @@ import HamburgerIcon from './HamburgerIcon';
 import Profile from '../Components/Profile';
 import UpdateProfile from '../Components/UpdateProfile';
 import Allergies from '../Components/Allergies';
+import { headerStyle, mainColor } from './HeaderStyle';
 
 const ProfileStackNavigator = createStackNavigator({
     UserProfile: {
@@ -15,15 +16,8 @@ const ProfileStackNavigator = createStackNavigator({
             headerLeft: <HamburgerIcon navigationProps={ navigation }/>,
             
             headerRight: <View></View>,
-            headerTitleStyle: {
-                fontFamily: 'Lobster-Regular',
-                fontWeight: 'normal',
-                fontSize: 30,
-                textAlign: 'center',
-                flex: 1,
-                marginTop: 5,
-            },
-            headerTintColor: '#00C378',
+            headerTitleStyle: headerStyle,
+            headerTintColor: mainColor,
             headerStyle: {
                 backgroundColor: '#fff',
             }
@@ -34,15 +28,8 @@ const ProfileStackNavigator = createStackNavigator({
         navigationOptions: () => ({
             title: 'Créer',
             headerRight: <View></View>,
-            headerTitleStyle: {
-                fontFamily: 'Lobster-Regular',
-                fontWeight: 'normal',
-                fontSize: 30,
-                textAlign: 'center',
-                flex: 1,
-                marginTop: 5,
-            },
-            headerTintColor: '#00C378',
+            headerTitleStyle: headerStyle,
+            headerTintColor: mainColor,
             headerStyle: {
                 backgroundColor: '#fff',
             }
@@ -53,15 +40,8 @@ const ProfileStackNavigator = createStackNavigator({
         navigationOptions: () => ({
             title: 'Modifier',
             headerRight: <View></View>,
-            headerTitleStyle: {
-                fontFamily: 'Lobster-Regular',
-                fontWeight: 'normal',
-                fontSize: 30,
-                textAlign: 'center',
-                flex: 1,
-                marginTop: 5,
-            },
-            headerTintColor: '#00C378',
+            headerTitleStyle: headerStyle,
+            headerTintColor: mainColor,
             headerStyle: {
                 backgroundColor: '#fff',
             }
@@ -72,15 +52,8 @@ const ProfileStackNavigator = createStackNavigator({
         navigationOptions: () => ({
             title: 'Mes allergies',
             headerRight: <View></View>,
-            headerTitleStyle: {
-                fontFamily: 'Lobster-Regular',
-                fontWeight: 'normal',
-                fontSize: 30,
-                textAlign: 'center',
-                flex: 1,
-                marginTop: 5,
-            },
-            headerTintColor: '#00C378',
+            headerTitleStyle: headerStyle,
+            headerTintColor: mainColor,
             headerStyle: {
                 backgroundColor: '#fff',
             }

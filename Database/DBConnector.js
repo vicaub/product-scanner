@@ -1,8 +1,5 @@
 import Realm from 'realm';
 
-// exemple
-// https://github.com/realm/realm-js/tree/master/examples/ReactExample/components
-
 //Realm database : Allergens, User, Products and Baskets
 
 
@@ -77,8 +74,6 @@ Basket.schema = {
         content: {type: 'list', objectType: 'ProductBasket', default: []},
     },
 };
-
-
 
 
 // incrémenter schemaVersion à chaque modification des tables
