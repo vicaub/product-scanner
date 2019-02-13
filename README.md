@@ -156,8 +156,9 @@ In order to test on an iPhone, you need to develop on a MacBook.
 
 [React Native - Running On Device](https://facebook.github.io/react-native/docs/running-on-device.html)
 
-You need to [register an Apple developer account](https://developer.apple.com/account/#/welcome).
-Download XCode as well and open the `product-scanner/ios/NutriThink.xcodeproj` project in XCode.
+You need to [register an Apple developer account](https://developer.apple.com/account/#/welcome) for free by simply logging in with your Apple ID.
+(If you want to be able to upload the app on the App Store, you'll need to enroll in the Apple Developer program.)
+Then download XCode and open the `product-scanner/ios/NutriThink.xcodeproj` project in XCode.
 
 For the 1st time: [configure code signing](https://facebook.github.io/react-native/docs/running-on-device.html#2-configure-code-signing) for the project.
 
