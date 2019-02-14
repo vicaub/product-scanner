@@ -1,12 +1,12 @@
 import React from 'react';
 
-import sample from '../Helper/sample'
-import {parseProductInfo} from '../API/OFFApi';
+import { jsonResult } from '../Helper/testData';
+import { parseProductInfo } from '../API/OFFApi';
 
 
 describe('Parsing', () => {
     jest.unmock('../API/OFFApi');
     it('should parse things right', () => {
-        expect(parseProductInfo(sample)).toMatchSnapshot();
+        expect(parseProductInfo(jsonResult)).toMatchSnapshot();
     });
 });
