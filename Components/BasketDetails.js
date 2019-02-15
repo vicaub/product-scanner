@@ -29,7 +29,7 @@ class BasketDetails extends Component {
         this.willFocus.remove();
     }
 
-    _navigateToProduct(code, cartCounter) {
+    _navigateToProduct(code) {
         this.props.navigation.navigate("Product", {barcode: code, basketTimestamp: this.state.basketId});
     }
 
