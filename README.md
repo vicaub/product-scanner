@@ -103,8 +103,15 @@ Connect your device to your computer. Make sure your laptop and your phone are o
 
 ### Android
 
-You will need [Android Studio](https://developer.android.com/studio/install) (for Android SDK).
+Instructions for Android are in the [React Native installation guide](https://facebook.github.io/react-native/docs/getting-started).
+
+- Select `Building Projects with Native Code` tab, your target OS (Macos, Windows or Linux) and your target OS (Android)
+- Follow `Java Development Kit` instructions
+- Follow `Android development environment` instructions
+
 You then need to [enable USB Debugging](https://www.kingoapp.com/root-tutorials/how-to-enable-usb-debugging-mode-on-android.htm) on your Android device.
+
+After you installed a JDK and an Android development environment, you can read the next paragraphs to run the app in your Android device.
 
 #### Debug version
 
