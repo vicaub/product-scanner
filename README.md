@@ -16,6 +16,8 @@
 <img src="./Screenshots/Allergies.png" alt="Allergies" width="200" style="border: 1px solid grey"/>
 </p>
 
+If you have any question, please contact Victor Aubin aubin.victor@gmail.com
+
 ## Features
 
 - Scan products and get info from the Open Food Facts API
