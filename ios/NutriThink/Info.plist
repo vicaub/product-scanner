@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -33,6 +33,10 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Nous avons besoin d'accéder à votre caméra afin de vous permettre de scanner des produits.</string>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>
+    Nous avons besoin d'avoir accès au microphone car nous l'application utilise la caméra pour scanner les produits
+  </string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>UIAppFonts</key>
